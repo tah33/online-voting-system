@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-
 Route::get('/home', function() {
     if(Auth::user()->role == 'admin')
         return view('admin.home');
