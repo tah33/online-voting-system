@@ -14,15 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
 Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
-
-Auth::routes();
-
-Route::get('/home', function() {
-    return view('home');
+    if(Auth::user()->role == 'admin')
+        return view('admin.home');
+    elseif(Auth::user()->role == 'candidate')
+        return view('candidate.home');
+    elseif(Auth::user()->role == 'voter')
+        return view('voter.home');
 })->name('home')->middleware('auth');
