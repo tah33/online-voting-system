@@ -18,7 +18,6 @@ return [
     'title_prefix' => '',
 
     'title_postfix' => '',
-
     /*
     |--------------------------------------------------------------------------
     | Logo
@@ -130,19 +129,13 @@ return [
             'text' => 'search',
             'search' => true,
         ],
-        ['header' => 'main_navigation'],
+      /*  ['header' => 'main_navigation'],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
+        */
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -154,7 +147,13 @@ return [
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        ['header' => 'NID'],
         [
+            'text' => 'Request for NID',
+            'url'  => 'nid',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+      /*  [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -205,7 +204,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'aqua',
         ],
-    ],
+*/    ],
 
     /*
     |--------------------------------------------------------------------------

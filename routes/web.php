@@ -23,3 +23,4 @@ Route::get('/home', function() {
     elseif(Auth::user()->role == 'voter')
         return view('voter.home');
 })->name('home')->middleware('auth');
+Route::get('nid','HomeController@nid');

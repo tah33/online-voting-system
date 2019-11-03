@@ -1,15 +1,8 @@
-@extends('adminlte::master')
-
-@section('adminlte_css')
-    @yield('css')
-@stop
-
-@section('body_class', 'register-page')
-
-@section('body')
+@extends('adminlte::page')
+@section('content')
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+           Request for NID
         </div>
 
         <div class="register-box-body">
