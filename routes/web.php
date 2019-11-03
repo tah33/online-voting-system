@@ -23,4 +23,10 @@ Route::get('/home', function() {
     elseif(Auth::user()->role == 'voter')
         return view('voter.home');
 })->name('home')->middleware('auth');
+Route::get('profile','HomeController@profile');
+Route::get('edit-profile/{id}','HomeController@editProfile');
+Route::post('update-profile/{id}','HomeController@updateProfile');
+Route::get('password','HomeController@password');
+Route::post('update-password/{id}','HomeController@updatePassword');
 Route::get('nid','HomeController@nid');
+Route::post('update-password/{id}','HomeController@updatePassword');
