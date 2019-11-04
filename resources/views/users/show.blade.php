@@ -2,7 +2,7 @@
 @section('content')
 <center>
         <div class="card" style="width: 18rem;">
-            @if($user->image =='')
+            @if($user->image == '')
                 <img class="card-img-top" width="100%" src="{{asset('images/avatar.png')}}" class="img-circle">
             @else
                 <img class="card-img-top" width="100%" src="{{asset('images/'.$user->image)}}" class="img-circle">

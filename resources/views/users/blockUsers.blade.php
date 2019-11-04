@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 @section('content')
-<a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
     <div class="row"> 
         <div class="box">
             <div class="box-body">
@@ -30,16 +29,7 @@
                             <td style="text-align: center">{{ $user->address }}</td>
                             <td style="text-align: center"><img src="{{asset('images/'.$user->image)}}" width="80px" height="42px"></td>
                             <td style="text-align: center">
-                                <a href="{{url('users',$user->id)}}" style="float: left;" class="btn btn-success"><i
-                                        class="fa fa-eye"></i></a>
-                                <!-- <a href="{{url('delete-users',$user->id)}}"
-                                   onclick="return confirm('Are you sure you want to delete?')"
-                                   class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></a> -->
-                                   <form action="{{url('users',$user->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Block This User?');">
-                                   	@csrf
-                                   	@method('delete')
-									<button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>                                    	
-                                   </form>
+                                <a href="{{url('unblock',$user->id)}}" style="float: left;" class="btn btn-success" onclick="return confirm('Are you sure you want to unblock This User?');"><i class="glyphicon glyphicon-ok"></i></a>
                             </td>
                         </tr>
                     @endforeach

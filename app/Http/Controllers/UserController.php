@@ -109,4 +109,16 @@ class UserController extends Controller
         $user->delete($id);
         return back();
     }
+    public function blockUsers()
+    {
+        $users = User::onlyTrashed()->get();
+        return view('users.blockUsers',compact('users'));
+    }
+    public function unblock($id)
+    {
+        $user = User::withTrashed()
+        ->where('id', $id)->first();
+        $user->restore();
+        return redirect('users');
+    }
 }
