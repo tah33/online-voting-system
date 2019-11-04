@@ -34,14 +34,12 @@ class HomeController extends Controller
         $user->email=$request->email;
         $user->phone=$request->phone;
         $user->address=$request->address;
-        if ($request->image) {
+        if ($request->hasFile('image')) {
             $file=$request->File('image');
-            $ext=$file->getClientOriginalExtension();
-            $filename=$request->username . '.' . $ext;
-            /*if($user->image)
-                unlink(public_path('images/').$user->image);*/
-            $file->move('images/',$filename);
-            $user->image=$filename;
+            $ext=$request->username. " . " .$file->clientExtension();
+            $path = public_path(). '/images/';
+            $file->move($path,$ext);
+            $user->image=$ext;
         }
         $user->save();
         return redirect('home');

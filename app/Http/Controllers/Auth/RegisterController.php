@@ -40,13 +40,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $request = app('request');
-        if ($request->image) {
-        $file=$request->File('image');
-        $ext=$file->clientExtension();
-        $filename=$request->username . '.' . $ext;
-        $file->move('images/',$filename);
-        $user->image=$filename;
-    }
+     if ($request->hasFile('image')) {
+            $file=$request->File('image');
+            $ext=$request->username. " . " .$file->clientExtension();
+            $path = public_path(). '/images/';
+            $file->move($path,$ext);
+        }
         return User::create([
             'name' => $data['name'],
             'username' => $data['username'],
@@ -56,7 +55,7 @@ class RegisterController extends Controller
             'nid' => $data['nid'],
             'phone' => $data['phone'],
             'address' => $data['address'],
-            'image' => $filename,
+            'image' => $ext,
         ]);
     }
 }
