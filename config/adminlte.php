@@ -147,12 +147,18 @@ return [
             'url'  => 'password',
             'icon' => 'fas fa-fw fa-lock',
         ],
-    ['header' => 'NID'],
+        ['header' => 'User_Settings'],
+        [
+            'text'    => 'User',
+            'url'  => 'users',
+            'icon'    => 'fas fa-fw fa-users',
+        ],
+    /*['header' => 'NID'],
         [
             'text' => 'Request for NID',
             'url' => 'nid',
             'icon' => 'fas fa-fw fa-user',
-        ],
+        ],*/
       /*  [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

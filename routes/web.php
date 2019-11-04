@@ -30,3 +30,5 @@ Route::get('password','HomeController@password');
 Route::post('update-password/{id}','HomeController@updatePassword');
 Route::get('nid','HomeController@nid');
 Route::post('update-password/{id}','HomeController@updatePassword');
+Route::post('ni(d-request/{id}','HomeController@nidRequest');
+Route::resource('users','UserController');

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content')
-    <center>
+<center>
         <div class="card" style="width: 18rem;">
             @if($user->image =='')
                 <img class="card-img-top" width="100%" src="{{asset('images/avatar.png')}}" class="img-circle">
@@ -24,9 +24,11 @@
                 <li class="list-group-item">NID : {{$user->nid}}</li>
                 <li class="list-group-item">Address : {{$user->address}}</li>
             </ul>
+            @if($user->id == Auth::id())
             <div class="card-body">
-                <a href="{{url('nid-request',$user->id)}}" class="btn btn-primary">Request</a>
+                <a href="{{url('edit-profile',$user->id)}}" class="btn btn-primary">Edit Profile</a>
             </div>
+            @endif
         </div>
     </center>
 @stop

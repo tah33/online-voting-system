@@ -73,7 +73,13 @@ class HomeController extends Controller
             $user = Auth::user();
             return view('home.nid', compact('user'));
         }
-        else
-            return back()->with('msg','You already have a NID,You cant request for a new one');
+        else{
+            /*$alert ='<script language="javascript">
+             alert("You already Have an NID")
+             </script>';
+             If($alert)
+                return back();*/
+                return '<script type="text/javascript">alert("hello!");</script>';
+        }
     }
 }
