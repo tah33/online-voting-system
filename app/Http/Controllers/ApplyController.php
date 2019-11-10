@@ -48,7 +48,8 @@ class ApplyController extends Controller
 
     public function destroy(Apply $apply)
     {
-        //
+        $apply->delete();
+        return redirect('home');
     }
     public function pending()
     {

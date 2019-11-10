@@ -38,3 +38,5 @@ Route::get('unblock/{id}','UserController@unblock');
 Route::resource('elections','ElectionController');
 Route::resource('applies','ApplyController');
 Route::get('pending-application','ApplyController@pending');
+Route::resource('candidates','CandidateController');
+

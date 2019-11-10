@@ -184,7 +184,13 @@ return [
                     'url'  => 'pending-application',
                 ],
             ],
-        ],      
+        ],    
+         ['header' => 'Canidate Section'],
+        [
+            'text'    => 'Candidates',
+            'url'  => 'candidates',
+            'icon'    => 'fas fa-fw fa-users',
+        ],  
     /*['header' => 'NID'],
         [
             'text' => 'Request for NID',
