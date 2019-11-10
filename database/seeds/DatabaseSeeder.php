@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Election;
 class DatabaseSeeder extends Seeder
 {
 
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
             'password' =>bcrypt('123456'),
             'role' =>'admin',
         ]);
+
     }
 }

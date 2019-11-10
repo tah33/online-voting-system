@@ -13,7 +13,7 @@
                         <th style="text-align: center">Email</th>
                         <th style="text-align: center">NID</th>
                         <th style="text-align: center">Phone</th>
-                        <th style="text-align: center">Address</th>
+                        <th style="text-align: center">Type</th>
                         <th style="text-align: center">Image</th>
                         <th style="text-align: center">Action</th>
                     </tr>
@@ -27,18 +27,14 @@
                             <td style="text-align: center">{{ $user->email }}</td>
                             <td style="text-align: center">{{ $user->nid }}</td>
                             <td style="text-align: center">{{ $user->phone }}</td>
-                            <td style="text-align: center">{{ $user->address }}</td>
+                            <td style="text-align: center">{{ $user->rolename }}</td>
                             <td style="text-align: center"><img src="{{asset('images/'.$user->image)}}" width="80px" height="42px"></td>
                             <td style="text-align: center">
-                                <a href="{{url('users',$user->id)}}" style="float: left;" class="btn btn-success"><i
-                                        class="fa fa-eye"></i></a>
-                                <!-- <a href="{{url('delete-users',$user->id)}}"
-                                   onclick="return confirm('Are you sure you want to delete?')"
-                                   class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></a> -->
+                                <a href="{{url('users',$user->id)}}" style="float: left" class="btn btn-success"><i class="fa fa-eye"></i></a>
                                    <form action="{{url('users',$user->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Block This User?');">
                                    	@csrf
                                    	@method('delete')
-									<button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>                                    	
+									<button type="submit" style="float: left" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>                                    	
                                    </form>
                             </td>
                         </tr>

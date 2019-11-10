@@ -29,7 +29,12 @@ Route::post('update-profile/{id}','HomeController@updateProfile');
 Route::get('password','HomeController@password');
 Route::post('update-password/{id}','HomeController@updatePassword');
 Route::post('update-password/{id}','HomeController@updatePassword');
-Route::post('ni(d-request/{id}','HomeController@nidRequest');
+Route::post('nid-request/{id}','HomeController@nidRequest');
+
 Route::resource('users','UserController');
 Route::get('blocked-users','UserController@blockUsers');
 Route::get('unblock/{id}','UserController@unblock');
+
+Route::resource('elections','ElectionController');
+Route::resource('applies','ApplyController');
+Route::get('pending-application','ApplyController@pending');

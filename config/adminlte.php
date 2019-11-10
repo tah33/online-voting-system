@@ -149,10 +149,42 @@ return [
         ],
         ['header' => 'User_Settings'],
         [
-            'text'    => 'User',
+            'text'    => 'Users',
             'url'  => 'users',
             'icon'    => 'fas fa-fw fa-users',
         ],
+        ['header' => 'Election Settings'],
+       [
+            'text'    => 'Election',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Create Election',
+                    'url'  => 'elections/create',
+                ],
+                      
+                [
+                    'text' => 'Elections',
+                    'url'  => 'elections',
+                ],
+            ],
+        ],
+        ['header' => 'Application Settings'],
+       [
+            'text'    => 'Application',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Apply',
+                    'url'  => 'applies',
+                ],
+                      
+                [
+                    'text' => 'Pending Application',
+                    'url'  => 'pending-application',
+                ],
+            ],
+        ],      
     /*['header' => 'NID'],
         [
             'text' => 'Request for NID',

@@ -22,8 +22,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function voter()
+    public function apply()
     {
-        return $this->belongsTo(Voter::class);
+        return $this->hasOne(Apply::class);
+    }
+    
+    public function getRoleNameAttribute()
+    {
+        return ucwords($this->role);
     }
 }
