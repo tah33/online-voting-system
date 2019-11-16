@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 @section('content')
     @if ($message = Session::get('error'))
         <div class="alert alert-error alert-block">

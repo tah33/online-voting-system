@@ -191,7 +191,7 @@ return [
             'url'  => 'candidates',
             'icon'    => 'fas fa-fw fa-users',
         ],  
-    /*['header' => 'NID'],
+    /*['header' => 'NID']
         [
             'text' => 'Request for NID',
             'url' => 'nid',

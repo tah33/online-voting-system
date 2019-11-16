@@ -21,6 +21,14 @@ class HomeController extends Controller
     }
     public function updateProfile(Request $request,$id)
     {
+        if (Auth::user()->role == 'admin') {
+            $request->validate([
+            'name' => 'required|string|max:255',
+            'username'=>'required|unique:users,username,'.$id,
+            'email' => 'required|unique:users,email,'.$id,
+        ]);
+        }
+        else{
         $request->validate([
             'name' => 'required|string|max:255',
             'username'=>'required|unique:users,username,'.$id,
@@ -28,6 +36,7 @@ class HomeController extends Controller
             'phone' => 'required',
             'address' => 'required',
         ]);
+    }
         $user= User::find($id);
         $user->name=$request->name;
         $user->username=$request->username;

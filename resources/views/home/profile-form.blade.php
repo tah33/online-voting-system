@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 @section('content')
 <div class="register-box">
         <div class="register-box-body">
@@ -7,7 +7,7 @@
                 {{ csrf_field() }}
 
                 <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <input type="text" name="name" class="form-control" value="{{ $user->name }}">
+                    <input type="text" name="name" class="form-control" value="{{ $user->name }}" placeholder="Enter Name">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block">
@@ -16,7 +16,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('username') ? 'has-error' : '' }}">
-                    <input type="text" name="username" class="form-control" value="{{ $user->username }}">
+                    <input type="text" name="username" class="form-control" value="{{ $user->username }}" placeholder="Enter Username">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('username'))
                         <span class="help-block">
@@ -25,7 +25,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                    <input type="email" name="email" class="form-control" value="{{ $user->email }}" placeholder="Enter Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block">
@@ -34,7 +34,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
-                    <input type="text" name="phone" class="form-control" value="{{ $user->phone }}">
+                    <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" placeholder="Enter Phone">
                     <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
                     @if ($errors->has('phone'))
                         <span class="help-block">
@@ -43,7 +43,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <input type="text" name="address" class="form-control" value="{{ $user->address }}">
+                    <input type="text" name="address" class="form-control" value="{{ $user->address }}" placeholder="Enter Address">
                     <span class="glyphicon glyphicon-question-sign form-control-feedback"></span>
                     @if ($errors->has('address'))
                         <span class="help-block">

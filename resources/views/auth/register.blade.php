@@ -1,22 +1,9 @@
-@extends('adminlte::master')
-
-@section('adminlte_css')
-    @yield('css')
-@stop
-
-@section('body_class', 'register-page')
-
-@section('body')
-    <div class="register-box">
-        <div class="register-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
-        </div>
-
+@extends('layouts.header')
+<div class="register-box">
         <div class="register-box-body">
-            <p class="login-box-msg">{{ __('adminlte::adminlte.register_message') }}</p>
-            <form action="{{ route( 'register') }}" method="post" enctype="multipart/form-data">
+            <p class="login-box-msg">Registration</p>
+            <form action="{{ url( 'register') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
-
                 <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter Name">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -27,7 +14,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('username') ? 'has-error' : '' }}">
-                    <input type="text" name="username" class="form-control" value="{{ old('username') }}" placeholder="Enter UserName">
+                    <input type="text" name="username" class="form-control" value="{{ old('username') }}" placeholder="Enter Username">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('username'))
                         <span class="help-block">
@@ -45,8 +32,8 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <input type="password" name="password" class="form-control" placeholder="Enter Password">
-                    <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
+                    <input type="password" name="password" class="form-control" value="{{ old('password') }}" placeholder="Enter Password">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('password'))
                         <span class="help-block">
                             <strong>{{ $errors->first('password') }}</strong>
@@ -54,27 +41,33 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Passwordd">
-                    <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('role') ? 'has-error' : '' }}">
-                    <select name="role" id="" class="form-control">
-                        <option value="">Register As</option>
-                        <option value="voter">Voter</option>
-                        <option value="candidate">Candidate</option>
-                    </select>
+                    <input type="password" name="password_confirmation" class="form-control" value="{{ old('password') }}" placeholder="Confirm Password">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('nid') ? 'has-error' : '' }}">
-                    <input type="int" name="nid" class="form-control" value="{{ old('nid') }}" placeholder="Enter NID Number">
-                    <span class="glyphicon glyphicon-ok-sign form-control-feedback"></span>
+                    <input type="number" name="nid" class="form-control" value="{{ old('nid') }}" placeholder="Enter NID">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('nid'))
                         <span class="help-block">
                             <strong>{{ $errors->first('nid') }}</strong>
                         </span>
                     @endif
                 </div>
+                <div class="form-group has-feedback {{ $errors->has('role') ? 'has-error' : '' }}">
+                    <select name='role' class="form-control">
+                        <option value="">Registered As</option>
+                        <option value="candidate">Candidate</option>
+                        <option value="voter">Voter</option>
+                    </select>
+                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('role'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('role') }}</strong>
+                        </span>
+                    @endif
+                </div>
                 <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
-                    <input type="int" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter phone Number">
+                    <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter Phone">
                     <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
                     @if ($errors->has('phone'))
                         <span class="help-block">
@@ -83,7 +76,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <input type="text" name="address" class="form-control" value="{{ old('adress') }}" placeholder="Enter Address">
+                    <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Enter Address">
                     <span class="glyphicon glyphicon-question-sign form-control-feedback"></span>
                     @if ($errors->has('address'))
                         <span class="help-block">
@@ -102,17 +95,6 @@
                 </div>
                 <input type="submit" value="Create Account" class="btn btn-success">
             </form>
-            <br>
-            <p>
-                <a href="{{ url(config('adminlte.login_url', 'login')) }}" class="text-center">
-                    {{ __('adminlte::adminlte.i_already_have_a_membership') }}
-                </a>
-            </p>
         </div>
         <!-- /.form-box -->
     </div><!-- /.register-box -->
-@stop
-
-@section('adminlte_js')
-    @yield('js')
-@stop

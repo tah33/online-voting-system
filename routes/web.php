@@ -29,7 +29,6 @@ Route::post('update-profile/{id}','HomeController@updateProfile');
 Route::get('password','HomeController@password');
 Route::post('update-password/{id}','HomeController@updatePassword');
 Route::post('update-password/{id}','HomeController@updatePassword');
-Route::post('nid-request/{id}','HomeController@nidRequest');
 
 Route::resource('users','UserController');
 Route::get('blocked-users','UserController@blockUsers');

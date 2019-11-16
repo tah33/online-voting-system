@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 @section('content')
 <center>
         <div class="card" style="width: 18rem;">

@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 @section('content')
     <div class="row"> 
         <div class="box" style="width: 600px">

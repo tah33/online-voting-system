@@ -1,12 +1,3 @@
-@extends('adminlte::page')
-
-@section('title', 'AdminLTE')
-
-@section('content_header')
-    <h1>Dashboard</h1>
-@stop
-
+@extends('layouts.app')
 @section('content')
-    <p>Welcome {{Auth::user()->name}} </p>
-    <p>You are admin</p>
 @stop

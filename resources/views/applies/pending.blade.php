@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 @section('content')
     <div class="row"> 
         <div class="box" style="width: 600px">
@@ -18,6 +18,7 @@
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $apply->user->email }}</td>
                             <td style="text-align: center">{{ $apply->election->name }}</td>
+                            @if(Auth::user()->role == 'admin')
                             <td><a href="{{url('applies',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to approve')" style="float: right"><i class="glyphicon glyphicon-ok"></i></a>  
                             <form action="{{url('applies',$apply->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Reject?');">
                                     @csrf
@@ -26,6 +27,7 @@
                                    </form>
 
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>
