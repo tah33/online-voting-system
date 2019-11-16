@@ -130,6 +130,7 @@
             <br>
             <li><a href="{{url('password')}}"><i class="glyphicon glyphicon-wrench"></i>Change Password</a></li>
             <br><ul class="sidebar-menu" data-widget="tree">
+                @if(Auth::user()->role == 'admin')
                         <li>
                                     <a href="{{url('users')}}"><i class="fa fa-users"></i> View Registered Users</a>
                                 </li>
@@ -147,6 +148,7 @@
                                 </li>
                         </ul>
                         </li>
+                        @endif
                         @if(Auth::user()->role == 'candidate')
                            <li class="treeview">
                         <a href="#">
@@ -172,6 +174,12 @@
 
                                 <li>
                                     <a href="{{url('candidates')}}"><i class="fa fa-users"></i>Candidates</a>
+                                </li>
+                                @endif
+                         @if(Auth::user()->role == 'voter')
+
+                                <li>
+                                    <a href="{{url('votes')}}"><i class="fa fa-users"></i>Voter Area</a>
                                 </li>
                                 @endif
 

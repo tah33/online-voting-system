@@ -15,21 +15,21 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('start_time') ? 'has-error' : '' }}">
-                    <input type="date" name="start_time" class="form-control" placeholder="Enter the Starting Date"> 
+                <div class="form-group has-feedback {{ $errors->has('start_date') ? 'has-error' : '' }}">
+                    <input type="date" name="start_date" class="form-control" placeholder="Enter the Starting Date"> 
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('start_time'))
+                    @if ($errors->has('start_date'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('start_time') }}</strong>
+                            <strong>{{ $errors->first('start_date') }}</strong>
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('end_time') ? 'has-error' : '' }}">
-                    <input type="date" name="end_time" class="form-control" placeholder="Enter the Ending Date"> 
+                <div class="form-group has-feedback {{ $errors->has('end_date') ? 'has-error' : '' }}">
+                    <input type="date" name="end_date" class="form-control" placeholder="Enter the Ending Date"> 
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('end_time'))
+                    @if ($errors->has('end_date'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('end_time') }}</strong>
+                            <strong>{{ $errors->first('end_date') }}</strong>
                         </span>
                     @endif
                 </div>

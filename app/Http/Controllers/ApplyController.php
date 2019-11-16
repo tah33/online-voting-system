@@ -28,7 +28,7 @@ class ApplyController extends Controller
     {
         $apply->status=1;
         $apply->save();
-        return redirect('home');
+        return back();
     }
 
     public function edit($id)

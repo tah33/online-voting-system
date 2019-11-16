@@ -23,6 +23,9 @@ class ElectionController extends Controller
     {
         $request->validate([
             'name' =>'required|unique:elections,name',
+            'start_date' =>'required|after_or_equal:tomorrow',
+            'end_date' =>'required|after:start_date',
+            'election_date' =>'required|before:end_date|after:start_date',
         ]);
         Election::create($request->all());
         return redirect('elections');
@@ -49,9 +52,15 @@ class ElectionController extends Controller
     public function update(Request $request, Election $election)
     {
         $request->validate([
-            'name' => 'required|unique:elections,name,'.$election->id
+            'name' =>'required|unique:elections,name',
+            'start_date' =>'required|after_or_equal:tomorrow',
+            'end_date' =>'required|after:start_date',
+            'election_date' =>'required|before:end_date|after:start_date',
         ]);
         $election->name=$request->name;
+        $election->start_date=$request->start_date;
+        $election->end_date=$request->end_date;
+        $election->election_date=$request->election_date;
         $election->save();
         return redirect('elections');
     }

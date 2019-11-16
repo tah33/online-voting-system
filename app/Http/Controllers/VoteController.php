@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Vote;
 use App\Apply;
+use App\Election;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
-class CandidateController extends Controller
+class VoteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +17,8 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $user=Auth::user();
-        $applies=Apply::where('status',1)->where('election_id',$user->apply->election_id)->get();
-        return view('candidate.list',compact('applies'));
+        $elections=Election::where('status',1)->whereDate('election_date', Carbon::now('Asia/Dhaka'))->get();
+        return view('votes.index',compact('elections'));
     }
 
     /**
@@ -42,33 +45,44 @@ class CandidateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Vote  $vote
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $applies = Apply::where('election_id',$id)->where('status',1)->get();
+        return view('votes.show',compact('applies'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Vote  $vote
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $vote=Vote::where('apply_id',$id)->where('user_id',Auth::id())->first();
+        if (! $vote) {
+        $vote= new Vote;
+        $vote->user_id = Auth::id(); 
+        $vote->apply_id = $id; 
+        $vote->total=1;
+        $vote->save();
+        return back()->with('success','You Successfully Voted for this Candidate');
+    }
+    else
+        return back()->with('error','You already Voted for this Candidate');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Vote $vote)
     {
         //
     }
@@ -76,10 +90,10 @@ class CandidateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Vote $vote)
     {
         //
     }

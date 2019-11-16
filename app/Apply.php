@@ -11,8 +11,15 @@ class Apply extends Model
     {
     	return $this->belongsTo(User::class);
     }
+
     public function election()
     {
     	return $this->belongsTo(Election::class);
     }
+
+    public function vote()
+    {
+    	return $this->belongsTo(Vote::class);
+    }
+
 }

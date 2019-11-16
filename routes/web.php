@@ -38,4 +38,5 @@ Route::resource('elections','ElectionController');
 Route::resource('applies','ApplyController');
 Route::get('pending-application','ApplyController@pending');
 Route::resource('candidates','CandidateController');
+Route::resource('votes','VoteController');
 
