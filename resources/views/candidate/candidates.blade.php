@@ -14,17 +14,19 @@
                     </tr>
                     </thead>
                     <tbody align="center">
-                    @foreach ($elections as $key => $election)
+                        @if(!empty($candidates))
+                    @foreach ($candidates as $key => $candidate)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $election->name }}</td>
-                            <td>@if(! $candidate && Auth::user()->role == 'admin')
-                                <a href="{{url('candidate-store',$election->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to apply for this position')"><i class="glyphicon glyphicon-check"></i></a>
-                                @endif
+                            <td style="text-align: center">{{ $candidate->user->name }}</td>
+                            <td>
+                                <a href="{{url('profiles',$candidate->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to apply for this position')"><i class="glyphicon glyphicon-check"></i></a>
                                    
                             </td>
                         </tr>
                     @endforeach
+                                @endif
+
                     </tbody>
                 </table>
             </div>

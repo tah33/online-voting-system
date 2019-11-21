@@ -176,7 +176,7 @@
                         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'candidate')
 
                                 <li>
-                                    <a href="{{url('candidates')}}"><i class="fa fa-users"></i>Candidates</a>
+                                    <a href="{{url('candidate')}}"><i class="fa fa-users"></i>Candidates</a>
                                 </li>
                                 @endif
                          @if(Auth::user()->role == 'voter')

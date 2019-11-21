@@ -104,4 +104,15 @@ class CandidateController extends Controller
         $rejects=Candidate::onlyTrashed()->get();
         return view('candidate.reject',compact('rejects'));
     }
+
+    public function candidate()
+    {
+        $candidate = $candidates = '';
+        $user = Auth::id();
+        $candidate = Candidate::where('user_id',$user)->latest()->first();
+        if($candidate)
+            $candidates = Candidate::where('election_id',$candidate->election_id)->get();
+        return view('candidate.candidates',compact('candidates'));
+        
+    }
 }
