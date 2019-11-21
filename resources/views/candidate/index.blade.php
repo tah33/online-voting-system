@@ -16,8 +16,8 @@
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $election->name }}</td>
-                            <td>@if(! $apply)
-                                <a href="{{url('applies/'.$election->id.'/edit')}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to apply for this position')"><i class="glyphicon glyphicon-check"></i></a>
+                            <td>@if(! $candidate)
+                                <a href="{{url('candidate-store',$election->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to apply for this position')"><i class="glyphicon glyphicon-check"></i></a>
                                 @endif
                                    
                             </td>

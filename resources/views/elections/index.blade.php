@@ -7,7 +7,7 @@
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>
-                        <th style="text-align: center">Name</th>
+                        <th style="text-align: center">Election Name</th>
                         <th style="text-align: center">Status</th>
                         <th style="text-align: center">Action</th>
                     </tr>

@@ -7,7 +7,7 @@
                 {{ csrf_field() }}
 
                 <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <input type="text" name="name" class="form-control" placeholder="Enter the name of Election category"> 
+                    <input type="text" name="name" class="form-control" placeholder="Enter the name of Election category" value="{{old('name')}}"> 
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block">
@@ -15,26 +15,8 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('start_date') ? 'has-error' : '' }}">
-                    <input type="date" name="start_date" class="form-control" placeholder="Enter the Starting Date"> 
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('start_date'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('start_date') }}</strong>
-                        </span>
-                    @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('end_date') ? 'has-error' : '' }}">
-                    <input type="date" name="end_date" class="form-control" placeholder="Enter the Ending Date"> 
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('end_date'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('end_date') }}</strong>
-                        </span>
-                    @endif
-                </div>
                 <div class="form-group has-feedback {{ $errors->has('election_date') ? 'has-error' : '' }}">
-                    <input type="date" name="election_date" class="form-control" placeholder="Enter the Ending Date"> 
+                    <input type="date" name="election_date" class="form-control" placeholder="Enter the Ending Date" value="{{old('election_date')}}"> 
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('election_date'))
                         <span class="help-block">

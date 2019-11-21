@@ -19,8 +19,8 @@
                             <td style="text-align: center">{{ $apply->user->email }}</td>
                             <td style="text-align: center">{{ $apply->election->name }}</td>
                             @if(Auth::user()->role == 'admin')
-                            <td><a href="{{url('applies',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to approve')"><i class="glyphicon glyphicon-ok"></i></a>  
-                            <form action="{{url('applies',$apply->id)}}" method="post" style="float: left" onsubmit="return confirm('Are you sure you want to Reject?');">
+                            <td><a href="{{url('candidates',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to approve')"><i class="glyphicon glyphicon-ok"></i></a>  
+                            <form action="{{url('candidates',$apply->id)}}" method="post" style="float: left" onsubmit="return confirm('Are you sure you want to Reject?');">
                                     @csrf
                                     @method('delete')
                                     <button type="submit"  class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>                                       

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Vote;
-use App\Apply;
+use App\Candidate;
 use App\Election;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,9 +18,9 @@ class VoteController extends Controller
     public function index()
     {
         $elections=Election::where('status',1)->whereDate('election_date', Carbon::now('Asia/Dhaka'))->get();
-        return view('votes.index',compact('elections'));
+        $candidates = Candidate::where('status',1)->whereIn('election_id',$elections)->get();
+        return view('votes.index',compact('elections','candidates'));
     }
-
     /**
      * Show the form for creating a new resource.
      *

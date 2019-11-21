@@ -15,24 +15,19 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('start_time') ? 'has-error' : '' }}">
-                    <input type="date" name="start_time" class="form-control" placeholder="Enter the Starting Date" value="{{$election->start_date}}> 
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('start_time'))
+
+                <div class="form-group has-feedback {{ $errors->has('status') ? 'has-error' : '' }}">
+                   <select name="status" class="form-control">
+                       <option value="{{$election->status}}">{{$election->status == 0 ? 'Inactive' : "Active"}}</option>
+                       <option value="{{$election->status == 0 ? 1 : 0}}">{{$election->status == 0 ? 'Active' : "Inactive"}}</option>
+                   </select>
+                    @if ($errors->has('status'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('start_time') }}</strong>
+                            <strong>{{ $errors->first('status') }}</strong>
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('end_time') ? 'has-error' : '' }}">
-                    <input type="date" name="end_time" class="form-control" placeholder="Enter the Ending Date" value="{{$election->end_date}}> 
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('end_time'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('end_time') }}</strong>
-                        </span>
-                    @endif
-                </div>
+                
                 <div class="form-group has-feedback {{ $errors->has('election_date') ? 'has-error' : '' }}">
                     <input type="date" name="election_date" class="form-control" placeholder="Enter the Ending Date" value="{{$election->election_date}}"> 
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>

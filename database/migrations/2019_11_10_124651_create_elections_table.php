@@ -17,8 +17,6 @@ class CreateElectionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('status')->default(0);
-            $table->date('start_date');
-            $table->date('end_date');
             $table->date('election_date');
             $table->timestamps();
         });

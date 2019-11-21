@@ -158,9 +158,12 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url('applies')}}"><i class="fa fa-user-plus"></i>Apply</a></li>
+                            <li><a href="{{url('candidates')}}"><i class="fa fa-user-plus"></i>Apply</a></li>
                                 <li>
                                     <a href="{{url('pending-application')}}"><i class="fa fa-users"></i> Pending Application</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('reject-applications')}}"><i class="fa fa-users"></i> Reject Application</a>
                                 </li>
                         </ul>
                         </li>

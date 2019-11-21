@@ -35,8 +35,10 @@ Route::get('blocked-users','UserController@blockUsers');
 Route::get('unblock/{id}','UserController@unblock');
 
 Route::resource('elections','ElectionController');
-Route::resource('applies','ApplyController');
-Route::get('pending-application','ApplyController@pending');
-Route::resource('candidates','CandidateController');
+Route::resource('candidates','CandidateController')->except('store');
+Route::get('candidate-store/{id}','CandidateController@store');
+Route::get('pending-application','CandidateController@pending');
+Route::get('reject-applications','CandidateController@reject');
+// Route::resource('candidates','CandidateController');
 Route::resource('votes','VoteController');
 

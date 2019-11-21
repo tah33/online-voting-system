@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Apply;
+
+use App\Candidate;
+use App\Election;
 use Illuminate\Http\Request;
 use Auth;
 class CandidateController extends Controller
@@ -13,9 +15,9 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $user=Auth::user();
-        $applies=Apply::where('status',1)->where('election_id',$user->apply->election_id)->get();
-        return view('candidate.list',compact('applies'));
+        $candidate=Candidate::where('status',0)->where('user_id',Auth::id())->latest()->first();
+        $elections=Election::where('status',1)->get();
+        return view('candidate.index',compact('elections','candidate'));
     }
 
     /**
@@ -34,29 +36,35 @@ class CandidateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
+        $candidate = new Candidate;
+        $candidate->user_id = Auth::id();
+        $candidate->election_id = $id;
+        $candidate->save();
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Candidate  $candidate
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Candidate $candidate)
     {
-        //
+        $candidate->status=1;
+        $candidate->save();
+        return back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Candidate  $candidate
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Candidate $candidate)
     {
         //
     }
@@ -65,10 +73,10 @@ class CandidateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Candidate  $candidate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Candidate $candidate)
     {
         //
     }
@@ -76,11 +84,24 @@ class CandidateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Candidate  $candidate
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Candidate $candidate)
     {
-        //
+        $candidate->delete();
+        return back();
+    }
+
+     public function pending()
+    {
+        $applies=Candidate::where('status',0)->get();
+        return view('candidate.pending',compact('applies'));
+    }
+
+     public function reject()
+    {
+        $rejects=Candidate::onlyTrashed()->get();
+        return view('candidate.reject',compact('rejects'));
     }
 }

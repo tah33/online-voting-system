@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElectionUserTable extends Migration
+class CreateCandidatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateElectionUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('election_user', function (Blueprint $table) {
+        Schema::create('candidates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('election_id');
+            $table->boolean('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateElectionUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applies');
+        Schema::dropIfExists('candidates');
     }
 }

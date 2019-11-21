@@ -10,9 +10,7 @@ class ApplyController extends Controller
 {
     public function index()
     {
-        $apply=Apply::where('status',0)->where('user_id',Auth::id())->latest()->first();
-        $elections=Election::where('status',1)->get();
-        return view('applies.index',compact('elections','apply'));
+        
     }
 
     public function create()
@@ -51,9 +49,5 @@ class ApplyController extends Controller
         $apply->delete();
         return redirect('home');
     }
-    public function pending()
-    {
-        $applies=Apply::where('status',0)->get();
-        return view('applies.pending',compact('applies'));
-    }
+   
 }
