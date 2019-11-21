@@ -18,6 +18,7 @@ class CreateCandidatesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('election_id');
             $table->boolean('status')->default(0);
+            $table->integer('votes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

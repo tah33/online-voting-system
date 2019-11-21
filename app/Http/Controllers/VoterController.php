@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Voter;
+use App\Election;
+use App\Candidate;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class VoterController extends Controller
@@ -12,10 +16,13 @@ class VoterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
-        //
+        $elections=Election::where('status',1)->whereDate('election_date', Carbon::now('Asia/Dhaka'))->get();
+        $candidates = Candidate::where('status',1)->whereIn('election_id',$elections)->get();
+        return view('voter.index',compact('elections','candidates'));
     }
+   
 
     /**
      * Show the form for creating a new resource.
@@ -44,9 +51,25 @@ class VoterController extends Controller
      * @param  \App\Voter  $voter
      * @return \Illuminate\Http\Response
      */
-    public function show(Voter $voter)
+    public function show($id)
     {
-        //
+        $candidate = Candidate::find($id);
+        $voter=Voter::where('user_id',Auth::id())->where('election_id',$candidate->election_id)->first();
+        if ($voter) {
+            return back()->with('error','You Already Voted for this Election');
+        }
+        else{
+        $voter= new Voter;
+        $voter->user_id         = Auth::id();
+        $voter->candidate_id    = $id;
+        $voter->election_id    = $candidate->election_id;
+        $voter->save();
+        }
+        if ($voter->save()) {
+            $candidate->votes +=1;
+            $candidate->save();
+        }
+        return back();
     }
 
     /**

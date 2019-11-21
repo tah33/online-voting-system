@@ -40,5 +40,5 @@ Route::get('candidate-store/{id}','CandidateController@store');
 Route::get('pending-application','CandidateController@pending');
 Route::get('reject-applications','CandidateController@reject');
 // Route::resource('candidates','CandidateController');
-Route::resource('votes','VoteController');
+Route::resource('voters','VoterController');
 

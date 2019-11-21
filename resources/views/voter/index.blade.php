@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
-
+@if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="row"> 
         <div class="box">
             <div class="box-body">
@@ -33,7 +38,7 @@
                               @foreach($candidates as $key => $candidate)
                               <table class="table table-hover table-bordered">
                                 <tr><td style=" text-align: center ">
-                                <a href="{{'candidates'.$candidate->id.'/edit'}}" class="btn btn-success btn-sm" style="margin-top: -10px"><i class="glyphicon glyphicon-ok"></i></a> </td>
+                                <a href="{{url('voters', $candidate->id)}}" class="btn btn-success btn-sm" style="margin-top: -10px" onclick="return confirm('Are you Sure You want to vote this candidates?')"><i class="glyphicon glyphicon-ok"></i></a> </td>
                                 </tr>
                             </table>
                             @endforeach

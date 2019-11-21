@@ -182,7 +182,7 @@
                          @if(Auth::user()->role == 'voter')
 
                                 <li>
-                                    <a href="{{url('votes')}}"><i class="fa fa-users"></i>Voter Area</a>
+                                    <a href="{{url('voters')}}"><i class="fa fa-users"></i>Voter Area</a>
                                 </li>
                                 @endif
 

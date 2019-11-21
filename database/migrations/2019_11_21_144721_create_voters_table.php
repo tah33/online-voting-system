@@ -17,6 +17,7 @@ class CreateVotersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('election_id');
             $table->timestamps();
         });
     }
