@@ -56,7 +56,13 @@ class VoterController extends Controller
         $candidate = Candidate::find($id);
         $voter=Voter::where('user_id',Auth::id())->where('election_id',$candidate->election_id)->first();
         if ($voter) {
-            return back()->with('error','You Already Voted for this Election');
+            if ($voter->wrong_attempt == 1) {
+                Auth::logout();
+                $user=User::find($voter->user_id);
+                $user->delete();
+                return route('logout')->with('error','You Account was Permanently Deleted for too many attemps');
+            }
+            return back()->with('warning','You Already Voted for this Election');
         }
         else{
         $voter= new Voter;

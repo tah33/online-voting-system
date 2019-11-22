@@ -1,29 +1,45 @@
 @extends('layouts.app')
 @section('content')
+@if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="row"> 
-        <div class="box" style="width: 600px">
+        <div class="box">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
+                    <caption>Voting Area</caption>
                     <thead>
                     <tr>
-                        <th style="text-align: center">No.</th>
-                        <th style="text-align: center">Name</th>
-                        @if(Auth::user()->role == 'admin')
-                        <th style="text-align: center">Action</th>
-                        @endif
+                        <th style="text-align: center">Election Name</th>
+                        <th style="text-align: center">Candidates</th>
+                        <th style="text-align: center">Total Votes</th>
                     </tr>
                     </thead>
                     <tbody align="center">
                     @foreach ($elections as $key => $election)
                         <tr>
-                            <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $election->name }}</td>
-                            <td>@if(! $candidate && Auth::user()->role == 'admin')
-                                <a href="{{url('candidate-store',$election->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to apply for this position')"><i class="glyphicon glyphicon-check"></i></a>
-                                @endif
-                                   
+                            <td style="text-align: center">
+                              @foreach($election->candidates as $key => $candidate)
+                              <table class="table table-hover table-bordered">
+                              <tr><td>
+                                <b>{{$key+1}} </b>:  <b>{{$candidate->user->name}}</b> 
+                                </td></tr>
+                            </table>
+                              @endforeach
                             </td>
-                        </tr>
+                            <td>
+                              @foreach($election->candidates as $key => $candidate)
+                              <table class="table table-hover table-bordered">
+                                <tr><td style=" text-align: center ">{{$candidate->votes}}</td>
+                                </tr>
+                            </table>
+                            @endforeach
+                            </td>
+                                </tr>
                     @endforeach
                     </tbody>
                 </table>

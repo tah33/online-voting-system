@@ -15,11 +15,9 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $candidate=Candidate::where('status',0)->where('user_id',Auth::id())->latest()->first();
         $elections=Election::where('status',1)->get();
-        return view('candidate.index',compact('elections','candidate'));
+        return view('candidate.index',compact('elections'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -112,7 +110,7 @@ class CandidateController extends Controller
         $candidate = Candidate::where('user_id',$user)->latest()->first();
         if($candidate)
             $candidates = Candidate::where('election_id',$candidate->election_id)->get();
-        return view('candidate.candidates',compact('candidates'));
+        return view('candidate.candidates',compact('candidates','candidate'));
         
     }
 }

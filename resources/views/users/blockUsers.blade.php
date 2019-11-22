@@ -4,6 +4,7 @@
         <div class="box">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
+                    <caption>Blocked Users List</caption>
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>

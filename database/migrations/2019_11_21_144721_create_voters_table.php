@@ -18,6 +18,7 @@ class CreateVotersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('election_id');
+            $table->integer('wrong_attempt')->default(0);
             $table->timestamps();
         });
     }

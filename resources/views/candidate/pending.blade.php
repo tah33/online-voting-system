@@ -4,6 +4,7 @@
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
+                    <caption>Pending Applications</caption>
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>

@@ -173,7 +173,12 @@
                                     <a href="{{url('pending-application')}}"><i class="fa fa-users"></i> Pending Application</a>
                                 </li>
                                 @endif
-                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'candidate')
+                        @if(Auth::user()->role != 'candidate')
+                                <li>
+                                    <a href="{{url('candidates')}}"><i class="fa fa-users"></i>Candidates</a>
+                                </li>
+                                @endif
+                        @if( Auth::user()->role == 'candidate')
 
                                 <li>
                                     <a href="{{url('candidate')}}"><i class="fa fa-users"></i>Candidates</a>

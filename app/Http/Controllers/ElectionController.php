@@ -31,7 +31,10 @@ class ElectionController extends Controller
 
     public function show(Election $election)
     {
-        $election->status=1;
+        if ($election->status == 0) 
+            $election->status=1;
+        else
+            $election->status=0;
         $election->save();
         return redirect('elections');
     }
@@ -62,6 +65,7 @@ class ElectionController extends Controller
 
     public function destroy(Election $election)
     {
+        $election->candidates()->delete();
         $election->delete();
         return back();
     }
