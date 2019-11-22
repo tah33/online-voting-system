@@ -91,6 +91,12 @@ class CandidateController extends Controller
         return back();
     }
 
+    public function apply()
+    {
+        $applies=Election::where('status',1)->get();
+        return view('candidate.list',compact('applies'));
+    }
+
      public function pending()
     {
         $applies=Candidate::where('status',0)->get();

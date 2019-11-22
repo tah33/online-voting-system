@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return ucwords($this->role);
     }
+
+    public function candidate()
+    {
+        return $this->hasOne(Candidate::class);
+    }
 }
