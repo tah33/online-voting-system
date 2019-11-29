@@ -102,7 +102,23 @@ Registration
                     @endif
 </div>
 <div class="wrap-input100 validate-input" data-validate="Password is required">
-<select name="role" class="input100">
+<select name="gender" class="input100">
+<option value="">Select Gender</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+</select>
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+  @if ($errors->has('gender'))
+                        <span class="help-block">
+                            <strong style="color : red">{{ $errors->first('gender') }}</strong>
+                        </span>
+                    @endif
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<select name="role" class="input100 role" onchange="choiceSelected('role', this.selectedIndex);">
 <option>Registered As</option>
 <option value="voter">Voter</option>
 <option value="candidate">Candidate</option>
@@ -114,6 +130,15 @@ Registration
   @if ($errors->has('role'))
                         <span class="help-block">
                             <strong style="font-color : red">{{ $errors->first('role') }}</strong>
+                        </span>
+                    @endif
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<input type="file" class="symbol" name="symbol" placeholder="Image" style="display: none">
+
+  @if ($errors->has('symbol'))
+                        <span class="help-block">
+                            <strong style="font-color : red">{{ $errors->first('symbol') }}</strong>
                         </span>
                     @endif
 </div>
@@ -193,6 +218,13 @@ Create your Account
             scale: 1.1
         })
         $(".select2").select2();
+        $('.role').on('change', function() {
+  if ($(".role").val() === "candidate") {
+    $(".symbol").show()
+  } else {
+    $(".symbol").hide()
+  }
+});
     </script>
 <!--===============================================================================================-->
     <script src="js/main.js"></script>

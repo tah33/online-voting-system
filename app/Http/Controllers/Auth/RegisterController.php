@@ -33,7 +33,9 @@ class RegisterController extends Controller
             'nid' => ['nullable','unique:users,nid','min:10'],
             'phone' => ['required','max:14','min:11','unique:users,phone'],
             'area' => ['required'],
-            'image' => ['required'],
+            'image' => ['nullable','required'],
+            'symbol' => ['nullable','required_if:role,==,candidate'],
+            'gender' => ['required'],
         ]);
     }
 
@@ -43,6 +45,13 @@ class RegisterController extends Controller
      if ($request->hasFile('image')) {
             $file=$request->File('image');
             $ext=$request->username. " . " .$file->clientExtension();
+            $path = public_path(). '/images/';
+            $file->move($path,$ext);
+        }
+        $symbol='';
+        if ($request->hasFile('symbol')) {
+            $file=$request->File('symbol');
+            $symbol=$request->email. " . " .$file->clientExtension();
             $path = public_path(). '/images/';
             $file->move($path,$ext);
         }
@@ -56,6 +65,8 @@ class RegisterController extends Controller
             'nid' => $data['nid'],
             'phone' => $data['phone'],
             'area' => $data['area'],
+            'gender' => $data['gender'],
+            'symbol' => $symbol,
             'image' => $ext,
         ]);
     }

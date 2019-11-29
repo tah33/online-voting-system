@@ -2,7 +2,7 @@
 
 <html>
     <head>
-    <title>Login V1</title>
+    <title>Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->  
@@ -94,6 +94,7 @@ Create your Account
         $('.js-tilt').tilt({
             scale: 1.1
         })
+        
     </script>
 <!--===============================================================================================-->
     <script src="js/main.js"></script>
