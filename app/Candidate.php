@@ -8,7 +8,7 @@ class Candidate extends Model
 {
 	use SoftDeletes;
 
-    protected $fillable = ['user_id','election_id'];
+    protected $fillable = ['user_id','election_id','votes'];
 
     public function user()
     {

@@ -190,7 +190,9 @@
                                     <a href="{{url('voters')}}"><i class="fa fa-users"></i>Voter Area</a>
                                 </li>
                                 @endif
-
+                                <li>
+                                    <a href="{{url('results')}}"><i class="fa fa-users"></i>Result</a>
+                                </li>
 
             </ul>
             @yield('sidebar')

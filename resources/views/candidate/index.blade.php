@@ -10,18 +10,17 @@
         <div class="box">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
-                    <caption>Voting Area</caption>
+                    <caption>Candidate List</caption>
                     <thead>
                     <tr>
-                        <th style="text-align: center">Election Name</th>
-                        <th style="text-align: center">Candidates</th>
-                        <th style="text-align: center">Total Votes</th>
+                       <th class="text-center">Election</th>
+                       <th class="text-center">Candidates</th>
                     </tr>
                     </thead>
                     <tbody align="center">
                     @foreach ($elections as $key => $election)
                         <tr>
-                            <td style="text-align: center">{{ $election->name }}</td>
+                            <td style="text-align: center; margin: auto:">{{ $election->name }}</td>
                             <td style="text-align: center">
                               @foreach($election->candidates as $key => $candidate)
                               <table class="table table-hover table-bordered">
@@ -30,14 +29,6 @@
                                 </td></tr>
                             </table>
                               @endforeach
-                            </td>
-                            <td>
-                              @foreach($election->candidates as $key => $candidate)
-                              <table class="table table-hover table-bordered">
-                                <tr><td style=" text-align: center ">{{$candidate->votes}}</td>
-                                </tr>
-                            </table>
-                            @endforeach
                             </td>
                                 </tr>
                     @endforeach

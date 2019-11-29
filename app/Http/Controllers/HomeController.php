@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use App\Area;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -17,7 +18,8 @@ class HomeController extends Controller
     public function editProfile($id)
     {
         $user= Auth::user();
-        return view('home.profile-form',compact('user'));
+        $areas = Area::all();
+        return view('home.profile-form',compact('user','areas'));
     }
     public function updateProfile(Request $request,$id)
     {
@@ -26,6 +28,9 @@ class HomeController extends Controller
             'name' => 'required|string|max:255',
             'username'=>'required|unique:users,username,'.$id,
             'email' => 'required|unique:users,email,'.$id,
+            'image' => 'nullable',
+            'phone' => 'nullable',
+
         ]);
         }
         else{
@@ -34,7 +39,7 @@ class HomeController extends Controller
             'username'=>'required|unique:users,username,'.$id,
             'email' => 'required|unique:users,email,'.$id,
             'phone' => 'required',
-            'address' => 'required',
+            'area' => 'required',
         ]);
     }
         $user= User::find($id);
@@ -42,7 +47,7 @@ class HomeController extends Controller
         $user->username=$request->username;
         $user->email=$request->email;
         $user->phone=$request->phone;
-        $user->address=$request->address;
+        $user->area=$request->area;
         if ($request->hasFile('image')) {
             $file=$request->File('image');
             $ext=$request->username. " . " .$file->clientExtension();

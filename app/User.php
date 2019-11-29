@@ -22,11 +22,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function apply()
-    {
-        return $this->hasOne(Apply::class);
-    }
-    
+ 
     public function getRoleNameAttribute()
     {
         return ucwords($this->role);
@@ -35,5 +31,10 @@ class User extends Authenticatable
     public function candidate()
     {
         return $this->hasOne(Candidate::class);
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
     }
 }

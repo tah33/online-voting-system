@@ -75,7 +75,7 @@ class VoterController extends Controller
             $candidate->votes +=1;
             $candidate->save();
         }
-        return back();
+        return back()->with('success','Your valuable vote was successfully submitted');
     }
 
     /**

@@ -22,7 +22,6 @@
                 <li class="list-group-item">UserName : {{$user->username}}</li>
                 <li class="list-group-item">Phone : {{$user->phone}}</li>
                 <li class="list-group-item">NID : {{$user->nid}}</li>
-                <li class="list-group-item">Address : {{$user->address}}</li>
             </ul>
             @if($user->id == Auth::id())
             <div class="card-body">

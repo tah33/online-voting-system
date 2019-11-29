@@ -9,6 +9,7 @@
                     <tr>
                         <th style="text-align: center">No.</th>
                         <th style="text-align: center">Election</th>
+                        <th style="text-align: center">Action</th>
                     </tr>
                     </thead>
                     <tbody align="center">

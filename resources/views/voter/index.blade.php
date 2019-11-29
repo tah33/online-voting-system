@@ -6,6 +6,12 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="row"> 
         <div class="box">
             <div class="box-body">
@@ -36,11 +42,13 @@
                             <td>
                                 @if($candidates)
                               @foreach($candidates as $key => $candidate)
+                              @if($candidate->user->area == Auth::user()->area)
                               <table class="table table-hover table-bordered">
                                 <tr><td style=" text-align: center ">
                                 <a href="{{url('voters', $candidate->id)}}" class="btn btn-success btn-sm" style="margin-top: -10px" onclick="return confirm('Are you Sure You want to vote this candidates?')"><i class="glyphicon glyphicon-ok"></i></a> </td>
                                 </tr>
                             </table>
+                            @endif
                             @endforeach
                             @endif
                             </td>

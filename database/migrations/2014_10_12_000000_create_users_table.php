@@ -22,8 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('nid');
             $table->string('role');
             $table->string('gender')->nullable();
+            $table->date('dob')->nullable();
             $table->string('phone')->nullable();
-            $table->string('area')->nullable();
+            $table->unsignedBigInteger('area')->nullable();
             $table->string('image')->nullable();
             $table->string('symbol')->nullable();
             $table->softDeletes();

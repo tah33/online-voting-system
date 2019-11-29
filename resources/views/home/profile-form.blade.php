@@ -33,6 +33,7 @@
                         </span>
                     @endif
                 </div>
+                @if(Auth::user()->role != 'admin')
                 <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
                     <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" placeholder="Enter Phone">
                     <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
@@ -42,12 +43,28 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <input type="text" name="address" class="form-control" value="{{ $user->address }}" placeholder="Enter Address">
-                    <span class="glyphicon glyphicon-question-sign form-control-feedback"></span>
-                    @if ($errors->has('address'))
+                <div class="form-group has-feedback {{ $errors->has('area') ? 'has-error' : '' }}">
+                    <select name="area" class="form-control select2">
+                        <option value="{{$user->area}}">{{$user->area}}</option>
+                        @foreach($areas as $area)
+                        <option value="{{$area->id}}">{{$area->name}}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('area'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('address') }}</strong>
+                            <strong>{{ $errors->first('area') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group has-feedback {{ $errors->has('gender') ? 'has-error' : '' }}">
+                    <select name="gender" class="form-control">
+                        <option value="{{$user->gender}}">{{$user->gender}}</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    @if ($errors->has('gender'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('gender') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -60,6 +77,7 @@
                         </span>
                     @endif
                 </div>
+               @endif
                 <input type="submit" value="Update Info" class="btn btn-success">
             </form>
         </div>

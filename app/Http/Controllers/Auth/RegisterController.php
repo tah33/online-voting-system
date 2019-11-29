@@ -44,16 +44,16 @@ class RegisterController extends Controller
         $request = app('request');
      if ($request->hasFile('image')) {
             $file=$request->File('image');
-            $ext=$request->username. " . " .$file->clientExtension();
+            $ext=$request->username." . ".$file->clientExtension();
             $path = public_path(). '/images/';
             $file->move($path,$ext);
         }
         $symbol='';
         if ($request->hasFile('symbol')) {
             $file=$request->File('symbol');
-            $symbol=$request->email. " . " .$file->clientExtension();
+            $symbol=$request->email." . ".$file->clientExtension();
             $path = public_path(). '/images/';
-            $file->move($path,$ext);
+            $file->move($path,$symbol);
         }
 
         return User::create([
