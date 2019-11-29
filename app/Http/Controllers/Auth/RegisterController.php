@@ -32,7 +32,7 @@ class RegisterController extends Controller
             'role' => ['required'],
             'nid' => ['nullable','unique:users,nid','min:10'],
             'phone' => ['required','max:14','min:11','unique:users,phone'],
-            'address' => ['required'],
+            'area' => ['required'],
             'image' => ['required'],
         ]);
     }
@@ -46,6 +46,7 @@ class RegisterController extends Controller
             $path = public_path(). '/images/';
             $file->move($path,$ext);
         }
+
         return User::create([
             'name' => $data['name'],
             'username' => $data['username'],
@@ -54,7 +55,7 @@ class RegisterController extends Controller
             'role' => $data['role'],
             'nid' => $data['nid'],
             'phone' => $data['phone'],
-            'address' => $data['address'],
+            'area' => $data['area'],
             'image' => $ext,
         ]);
     }

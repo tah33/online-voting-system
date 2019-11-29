@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->string('nid');
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
+            $table->string('area')->nullable();
             $table->string('image')->nullable();
             $table->softDeletes();
             $table->timestamps();

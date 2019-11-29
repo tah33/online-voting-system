@@ -1,100 +1,201 @@
-@extends('layouts.header')
-<div class="register-box">
-        <div class="register-box-body">
-            <p class="login-box-msg">Registration</p>
-            <form action="{{ url( 'register') }}" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter Name">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('name'))
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+    <title>Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->  
+    <link rel="icon" type="image/png" href="login_components/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login_components/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login_components/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login_components/vendor/animate/animate.css">
+<!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="login_components/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login_components/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login_components/css/util.css">
+    <link rel="stylesheet" type="text/css" href="login_components/css/main.css">
+<!--===============================================================================================-->
+</head>
+    <body>
+<div class="limiter">
+<div class="container-login100">
+<div class="wrap-login100">
+<div class="login100-pic js-tilt" data-tilt>
+<img src="login_components/images/img-01.png" alt="IMG">
+</div>
+<form class="login100-form validate-form" action="{{route('register')}}" method="post" enctype="multipart/form-data">
+    @csrf
+<span class="login100-form-title">
+Registration
+</span>
+<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+<input class="input100" type="text" name="name" placeholder="Name" value="{{old('name')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+@if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('username') ? 'has-error' : '' }}">
-                    <input type="text" name="username" class="form-control" value="{{ old('username') }}" placeholder="Enter Username">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('username'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+<input class="input100" type="text" name="username" placeholder="Username" value="{{old('username')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+@if ($errors->has('username'))
                         <span class="help-block">
                             <strong>{{ $errors->first('username') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter Email">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('email'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+<input class="input100" type="text" name="email" placeholder="Email" value="{{old('email')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+@if ($errors->has('email'))
                         <span class="help-block">
                             <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <input type="password" name="password" class="form-control" value="{{ old('password') }}" placeholder="Enter Password">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('password'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<input class="input100" type="password" name="password" placeholder="Password">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+  @if ($errors->has('password'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('password') }}</strong>
+                            <strong style="font-color : red">{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <input type="password" name="password_confirmation" class="form-control" value="{{ old('password') }}" placeholder="Confirm Password">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('nid') ? 'has-error' : '' }}">
-                    <input type="number" name="nid" class="form-control" value="{{ old('nid') }}" placeholder="Enter NID">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('nid'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<input class="input100" type="password" name="password_confirmation" placeholder="Confirm Password">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<input class="input100" type="number" name="nid" placeholder="NID" value="{{old('nid')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+  @if ($errors->has('nid'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('nid') }}</strong>
+                            <strong style="font-color : red">{{ $errors->first('nid') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('role') ? 'has-error' : '' }}">
-                    <select name='role' class="form-control">
-                        <option value="">Registered As</option>
-                        <option value="candidate">Candidate</option>
-                        <option value="voter">Voter</option>
-                    </select>
-                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('role'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<select name="role" class="input100">
+<option>Registered As</option>
+<option value="voter">Voter</option>
+<option value="candidate">Candidate</option>
+</select>
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+  @if ($errors->has('role'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('role') }}</strong>
+                            <strong style="font-color : red">{{ $errors->first('role') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
-                    <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter Phone">
-                    <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
-                    @if ($errors->has('phone'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<input class="input100" type="tel" name="phone" placeholder="Phone" value="{{old('phone')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+  @if ($errors->has('phone'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('phone') }}</strong>
+                            <strong style="font-color : red">{{ $errors->first('phone') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Enter Address">
-                    <span class="glyphicon glyphicon-question-sign form-control-feedback"></span>
-                    @if ($errors->has('address'))
+</div>
+<div class="wrap-input100 validate-input">
+    <span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+<select  name="area" class="input100 select2">
+<option>Choose Area</option>
+@foreach($areas as $area)
+<option value="{{$area->id}}">{{$area->name}}</option>
+@endforeach
+</select>
+
+  @if ($errors->has('area'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('address') }}</strong>
+                            <strong style="font-color : red">{{ $errors->first('area') }}</strong>
                         </span>
                     @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('image') ? 'has-error' : '' }}">
-                    <input type="file" name="image" class="form-control">
-                    <span class="glyphicon glyphicon-picture form-control-feedback"></span>
-                    @if ($errors->has('image'))
+</div>
+<div class="wrap-input100 validate-input" data-validate="Password is required">
+<input type="file" name="image" placeholder="Image">
+
+  @if ($errors->has('image'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('image') }}</strong>
+                            <strong style="font-color : red">{{ $errors->first('image') }}</strong>
                         </span>
                     @endif
-                </div>
-                <input type="submit" value="Create Account" class="btn btn-success">
-            </form>
-        </div>
-        <!-- /.form-box -->
-    </div><!-- /.register-box -->
+</div>
+<div class="container-login100-form-btn">
+<button class="login100-form-btn">
+Create Account
+</button>
+</div>
+<div class="text-center p-t-12">
+<span style="font-size: 20px" class="txt1">
+Go to
+</span>
+<a style="font-size: 20px" class="txt2" href="{{url('/')}}">
+Home
+</a>
+</div>
+<div class="text-center p-t-136">
+<a class="txt2" href="#">
+Create your Account
+<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!--===============================================================================================-->  
+    <script src="login_components/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+    <script src="login_components/vendor/bootstrap/js/popper.js"></script>
+    <script src="login_components/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+    <script src="login_components/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+    <script src="login_components/vendor/tilt/tilt.jquery.min.js"></script>
+    <script >
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+        $(".select2").select2();
+    </script>
+<!--===============================================================================================-->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
