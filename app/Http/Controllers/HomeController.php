@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Area;
+use App\Party;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -23,6 +25,7 @@ class HomeController extends Controller
     }
     public function updateProfile(Request $request,$id)
     {
+        $min = Carbon::now()->subYear(18);
         if (Auth::user()->role == 'admin') {
             $request->validate([
             'name' => 'required|string|max:255',
@@ -36,10 +39,16 @@ class HomeController extends Controller
         else{
         $request->validate([
             'name' => 'required|string|max:255',
-            'username'=>'required|unique:users,username,'.$id,
-            'email' => 'required|unique:users,email,'.$id,
-            'phone' => 'required',
-            'area' => 'required',
+            'username' => 'required|unique:users,username,'.$id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'phone' => 'required|max:14|min:11|unique:users,phone,' . $id,
+            'area' => ['required'],
+            'image' => ['nullable'],
+            'gender' => ['required'],
+            'dob' => "required|date|before:$min",
+            'party' => "nullable",
+            'symbol' => "nullable",
+            'symbol_name' => "nullable",
         ]);
     }
         $user= User::find($id);
@@ -50,10 +59,24 @@ class HomeController extends Controller
         $user->area=$request->area;
         if ($request->hasFile('image')) {
             $file=$request->File('image');
-            $ext=$request->username. " . " .$file->clientExtension();
+            $ext=$request->username. "." .$file->clientExtension();
             $path = public_path(). '/images/';
             $file->move($path,$ext);
             $user->image=$ext;
+        }
+        if ($user->role == 'candidate') {
+            $party = Party::find($user->party->id);
+            $party->name = $request->party;
+            $party->symbol_name = $request->symbol_name;
+        if ($request->hasFile('symbol')) {
+            $file=$request->File('symbol');
+            $symbol=$request->email."." .$file->clientExtension();
+            $path = public_path(). '/images/';
+            $file->move($path,$symbol);
+            $party->symbol=$symbol;
+        }
+            $party->save();
+        
         }
         $user->save();
         return redirect('home');

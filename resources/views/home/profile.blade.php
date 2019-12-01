@@ -86,7 +86,7 @@
                                <b>Gender</b> <a class="pull-right">{{$user->gender}}</a>
                             </li>
                             <li class="list-group-item">
-                               <b>Area</b> <a class="pull-right">{{$user->area}}</a>
+                               <b>Area</b> <a class="pull-right">{{$user->userArea->name}}</a>
                             </li>
                             <li class="list-group-item">
                                <b>Age</b> <a class="pull-right">{{Carbon\Carbon::createFromDate($user->dob)->diff(Carbon\Carbon::now())->format('%y years')}}</a>

@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('area') ? 'has-error' : '' }}">
                     <select name="area" class="form-control select2">
-                        <option value="{{$user->area}}">{{$user->area}}</option>
+                        <option value="{{$user->area}}">{{$user->userarea->name}}</option>
                         @foreach($areas as $area)
                         <option value="{{$area->id}}">{{$area->name}}</option>
                         @endforeach
@@ -68,6 +68,15 @@
                         </span>
                     @endif
                 </div>
+                <div class="form-group has-feedback {{ $errors->has('dob') ? 'has-error' : '' }}">
+                    <input type="date" name="dob" class="form-control" value="{{ $user->dob }}" placeholder="Enter Date of Birth">
+                    <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                    @if ($errors->has('dob'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('dob') }}</strong>
+                        </span>
+                    @endif
+                </div>
                 <div class="form-group has-feedback {{ $errors->has('image') ? 'has-error' : '' }}">
                     <input type="file" name="image" class="form-control">
                     <span class="glyphicon glyphicon-picture form-control-feedback"></span>
@@ -77,6 +86,38 @@
                         </span>
                     @endif
                 </div>
+                @if($user->role == 'candidate')
+                <div class="panel panel-primary">
+                     <div class="panel-heading">Party Info</div>
+                 <div class="form-group has-feedback {{ $errors->has('party') ? 'has-error' : '' }}">
+                    <input type="party" name="party" class="form-control" value="{{ $user->party->name }}" placeholder="Enter Party Name">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('party'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('party') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                 <div class="form-group has-feedback {{ $errors->has('symbol_name') ? 'has-error' : '' }}">
+                    <input type="text" name="symbol_name" class="form-control" value="{{ $user->party->symbol_name }}" placeholder="Enter Phone">
+                    <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                    @if ($errors->has('symbol_name'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('symbol_name') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group has-feedback {{ $errors->has('symbol') ? 'has-error' : '' }}">
+                    <input type="file" name="symbol" class="form-control">
+                    <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+                    @if ($errors->has('symbol'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('symbol') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+                @endif
                @endif
                 <input type="submit" value="Update Info" class="btn btn-success">
             </form>

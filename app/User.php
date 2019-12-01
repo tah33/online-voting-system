@@ -33,9 +33,9 @@ class User extends Authenticatable
         return $this->hasOne(Candidate::class);
     }
 
-    public function area()
+    public function userArea()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsTo(Area::class,'area');
     }
 
     public function party()
