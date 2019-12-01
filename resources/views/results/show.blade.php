@@ -16,9 +16,8 @@
                     @foreach ($election->candidates as $key => $candidate)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $candidate->user->area->name }}</td>
-                            <td> <a href="{{url('results/'.$candidate->user->area_id.'/edit')}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                
+                            <td style="text-align: center">{{ $candidate->user->userarea->name }}</td>
+                            <td> <a href="{{url('results/'.$candidate->user->area.'/edit')}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
                             </td>
                         </tr>
                     @endforeach

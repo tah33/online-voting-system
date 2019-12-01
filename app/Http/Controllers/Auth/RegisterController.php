@@ -83,7 +83,8 @@ class RegisterController extends Controller
                 'symbol_name' =>$data['symbol_name']
             ]);
 
-            return $user;
         }
+            return $user;
+        
     }
 }

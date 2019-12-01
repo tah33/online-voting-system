@@ -11,7 +11,7 @@
             <div class="box-body">
                 <table class="table table-hover table-bordered">
                     <caption>Candidate List</caption>
-                    <thead>
+                   <thead>
                     <tr>
                        <th class="text-center">Election</th>
                        <th class="text-center">Candidates</th>
@@ -24,9 +24,13 @@
                             <td style="text-align: center">
                               @foreach($election->candidates as $key => $candidate)
                               <table class="table table-hover table-bordered">
-                              <tr><td>
+                              <tr>
+                                @if($candidate->status == 1)
+                                <td>
                                 <b>{{$key+1}} </b>:  <b>{{$candidate->user->name}}</b> 
-                                </td></tr>
+                                </td>
+                                @endif
+                            </tr>
                             </table>
                               @endforeach
                             </td>

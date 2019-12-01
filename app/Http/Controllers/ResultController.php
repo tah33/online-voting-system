@@ -7,7 +7,7 @@ use App\Area;
 use App\Election;
 use App\Candidate;
 use App\User;
-use DB;
+use Carbon\Carbon;
 class ResultController extends Controller
 {
     /**
@@ -17,7 +17,7 @@ class ResultController extends Controller
      */
     public function index()
     {
-        $elections = Election::where('status',1)->get();
+        $elections = Election::where('status',1)->whereDate('election_date',Carbon::now())->get();
         return view('results.index',compact('elections'));
     }
 
@@ -62,8 +62,9 @@ class ResultController extends Controller
      */
     public function edit($id)
     {
-        $users = User::where('area_id',$id)->get();
-        return view('results.edit',compact('users'));
+        $users = User::where('area',$id)->where('role','candidate')->get();
+        $vote = $users->max('candidate.votes');
+        return view('results.edit',compact('users','vote'));
     }
 
     /**
