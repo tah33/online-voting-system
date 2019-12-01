@@ -34,7 +34,7 @@
 <span class="login100-form-title">
 Registration
 </span>
-<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+<div class="wrap-input100 validate-input">
 <input class="input100" type="text" name="name" placeholder="Name" value="{{old('name')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -46,7 +46,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+<div class="wrap-input100 validate-input">
 <input class="input100" type="text" name="username" placeholder="Username" value="{{old('username')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -89,7 +89,7 @@ Registration
 <i class="fa fa-lock" aria-hidden="true"></i>
 </span>
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
 <input class="input100" type="number" name="nid" placeholder="NID" value="{{old('nid')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -101,7 +101,19 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
+<input class="input100" type="date" name="dob" placeholder="Date of Birth" value="{{old('dob')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+  @if ($errors->has('dob'))
+                        <span class="help-block">
+                            <strong style="font-color : red">{{ $errors->first('dob') }}</strong>
+                        </span>
+                    @endif
+</div>
+<div class="wrap-input100">
 <select name="gender" class="input100">
 <option value="">Select Gender</option>
 <option value="male">Male</option>
@@ -117,7 +129,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
 <select name="role" class="input100 role" onchange="choiceSelected('role', this.selectedIndex);">
 <option>Registered As</option>
 <option value="voter">Voter</option>
@@ -133,8 +145,21 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
-<input type="file" class="symbol" name="symbol" placeholder="Image" style="display: none">
+<div class="candidate">
+    <div class="wrap-input100" >
+<input class="input100" type="text" name="party" placeholder="Name" value="{{old('party')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+@if ($errors->has('party'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('party') }}</strong>
+                        </span>
+                    @endif
+</div>
+<div class="wrap-input100 validate-input">
+<input type="file" name="symbol" placeholder="Image">
 
   @if ($errors->has('symbol'))
                         <span class="help-block">
@@ -142,7 +167,20 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
+<input class="input100" type="text" name="symbol_name" placeholder="Symbol Name" value="{{old('symbol_name')}}">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+@if ($errors->has('symbol_name'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('symbol_name') }}</strong>
+                        </span>
+                    @endif
+</div>
+  </div>
+<div class="wrap-input100">
 <input class="input100" type="tel" name="phone" placeholder="Phone" value="{{old('phone')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -154,7 +192,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input">
+<div class="wrap-input100">
     <span class="focus-input100"></span>
 <span class="symbol-input100">
 <i class="fa fa-lock" aria-hidden="true"></i>
@@ -172,7 +210,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
 <input type="file" name="image" placeholder="Image">
 
   @if ($errors->has('image'))
@@ -219,12 +257,12 @@ Create your Account
         })
         $(".select2").select2();
         $('.role').on('change', function() {
-  if ($(".role").val() === "candidate") {
-    $(".symbol").show()
-  } else {
-    $(".symbol").hide()
-  }
-});
+        if ($(".role").val() === "candidate") {
+            $(".candidate").show()
+        } else {
+            $(".candidate").hide()
+                }
+            });
     </script>
 <!--===============================================================================================-->
     <script src="js/main.js"></script>

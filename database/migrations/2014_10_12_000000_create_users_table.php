@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->unsignedBigInteger('area')->nullable();
             $table->string('image')->nullable();
-            $table->string('symbol')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable,SoftDeletes;
 
     protected $fillable = [
-        'name', 'email', 'password','username','role','nid','phone','area','image','symbol','gender',
+        'name', 'email', 'password','username','dob','role','nid','phone','area','image','symbol','gender',
     ];
 
 
@@ -36,5 +36,10 @@ class User extends Authenticatable
     public function area()
     {
         return $this->belongsTo(Area::class);
+    }
+
+    public function party()
+    {
+        return $this->hasOne(Party::class);
     }
 }

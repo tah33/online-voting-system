@@ -5,7 +5,7 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use App\Area;
 trait RegistersUsers
 {
     use RedirectsUsers;
@@ -17,7 +17,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $areas = DB::table('area')->get();
+        $areas = Area::all();
         return view('auth.register',compact('areas'));
     }
 

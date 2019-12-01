@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
-
+use App\Party;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,6 +25,7 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
+        $min = Carbon::now()->subYear(18);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required'],
@@ -34,8 +36,12 @@ class RegisterController extends Controller
             'phone' => ['required','max:14','min:11','unique:users,phone'],
             'area' => ['required'],
             'image' => ['nullable','required'],
-            'symbol' => ['nullable','required_if:role,==,candidate'],
             'gender' => ['required'],
+            'dob' => "required|date|before:$min",
+            'party' => ['required_if:role,==,candidate'],
+            'symbol' => ['required_if:role,==,candidate'],
+            'symbol_name' => ['required_if:role,==,candidate'],
+
         ]);
     }
 
@@ -56,7 +62,7 @@ class RegisterController extends Controller
             $file->move($path,$symbol);
         }
 
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
@@ -65,9 +71,19 @@ class RegisterController extends Controller
             'nid' => $data['nid'],
             'phone' => $data['phone'],
             'area' => $data['area'],
+            'dob' => $data['dob'],
             'gender' => $data['gender'],
-            'symbol' => $symbol,
             'image' => $ext,
         ]);
+        if ($request->role == 'candidate') {
+            Party::create([
+                'name' =>$data['party'],
+                'user_id' =>$user->id,
+                'symbol' =>$symbol,
+                'symbol_name' =>$data['symbol_name']
+            ]);
+
+            return $user;
+        }
     }
 }

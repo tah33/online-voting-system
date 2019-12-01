@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAppliesTable extends Migration
+class CreatePartiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateAppliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('applies', function (Blueprint $table) {
+        Schema::create('parties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('election_id');
-            $table->boolean('status')->default(0);
+            $table->string('name');
+            $table->string('symbol');
+            $table->string('symbol_name');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateAppliesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applies');
+        Schema::dropIfExists('parties');
     }
 }
