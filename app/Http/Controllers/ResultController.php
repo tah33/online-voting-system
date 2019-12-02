@@ -64,7 +64,8 @@ class ResultController extends Controller
         $users = User::where('area',$id)->where('role','candidate')->get();
         $max = $users->max('candidate.votes');
         $users_max_vote = $users->where('candidate.votes', $max);
-        return view('results.winner',compact('users','max','users_max_vote'));
+        $voters = User::where('area',$id)->where('role','voter')->get();
+        return view('results.winner',compact('users','max','users_max_vote','voters'));
     }
 
     /**
