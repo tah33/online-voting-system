@@ -7,6 +7,8 @@ use Auth;
 use App\User;
 use App\Area;
 use App\Party;
+use App\Election;
+use App\Candidate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -104,19 +106,15 @@ class HomeController extends Controller
         else
             return back()->with('error','Your Current Password Doesnot Match');
     }
-    public function nid()
+    public function home()
     {
-        if(empty(Auth::user()->nid)) {
-            $user = Auth::user();
-            return view('home.nid', compact('user'));
-        }
-        else{
-            /*$alert ='<script language="javascript">
-             alert("You already Have an NID")
-             </script>';
-             If($alert)
-                return back();*/
-                return '<script type="text/javascript">alert("hello!");</script>';
-        }
+       if (Auth::user()->role == 'admin') {
+           $voters = User::where('role','voter')->get();
+           $candidates = User::where('role','candidate')->get();
+           $elections = Election::all();
+           $pending = Candidate::where('status',0)->get();
+           $ongoing = Election::whereDate('election_date','<=',Carbon::now())->get();
+           return view('admin.home',compact('voters','candidates','elections','pending','ongoing'));
+       }
     }
 }
