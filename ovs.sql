@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2019 at 07:52 PM
+-- Generation Time: Dec 02, 2019 at 04:14 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -362,10 +362,10 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`id`, `user_id`, `election_id`, `status`, `votes`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 3, 1, 0, 0, '2019-12-01 10:56:54', '2019-12-01 10:56:54', NULL),
-(2, 6, 1, 0, 0, '2019-12-01 10:57:07', '2019-12-01 10:57:07', NULL),
-(3, 4, 1, 0, 0, '2019-12-01 11:39:07', '2019-12-01 11:39:07', NULL),
-(4, 5, 1, 0, 1, '2019-12-01 11:39:49', '2019-12-01 11:39:49', NULL);
+(1, 3, 1, 1, 0, '2019-12-01 10:56:54', '2019-12-01 10:56:54', NULL),
+(2, 6, 1, 1, 1, '2019-12-01 10:57:07', '2019-12-02 09:06:04', NULL),
+(3, 4, 1, 1, 0, '2019-12-01 11:39:07', '2019-12-01 11:39:07', NULL),
+(4, 5, 1, 1, 1, '2019-12-01 11:39:49', '2019-12-01 11:39:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -412,7 +412,7 @@ CREATE TABLE `elections` (
 --
 
 INSERT INTO `elections` (`id`, `name`, `status`, `election_date`, `created_at`, `updated_at`) VALUES
-(1, 'Presidency', 1, '2019-12-01', '2019-12-01 10:55:55', '2019-12-01 10:56:01');
+(1, 'Presidency', 1, '2019-12-02', '2019-12-01 10:55:55', '2019-12-01 10:56:01');
 
 -- --------------------------------------------------------
 
@@ -497,7 +497,8 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `nid`, `role
 (4, 'Malik Trevino', 'gywepyhese', 'tah3@mailinator.net', '$2y$10$BATiBsSHz6h7hdcQ5x.bMej/K01W2I0ooHn2rGECd0ILcVcTISsr2', '1234567898', 'candidate', 'male', '1993-06-21', '01631102837', 52, 'gywepyhese . jpeg', NULL, '2019-12-01 10:07:00', '2019-12-01 10:07:00'),
 (5, 'Silas Randall', 'gapol', 'tah33@mailinator.com', '$2y$10$aGXKv3xFlQcieOaPaUE0C.cDQvjpzQmUDpL91NDQGHsrAyyxn6jMa', '1234567897', 'candidate', 'male', '1982-01-25', '01631102839', 5, 'gapol . jpeg', NULL, '2019-12-01 10:09:57', '2019-12-01 10:09:57'),
 (6, 'Yvette Curtis', 'gusipy', 'tah333@mailinator.com', '$2y$10$Nr846WjpWxFqvtcTejhF6OZAHPyfbUOAOKXiCLD5A5CMndZxyLaFi', '1234567896', 'candidate', 'female', '2000-12-12', '01631102840', 5, 'gusipy . jpeg', NULL, '2019-12-01 10:18:48', '2019-12-01 10:18:48'),
-(7, 'Nola Sutton', 'wixoqa', 'sa@gmail.com', '$2y$10$5aPkU1tGcrcAg0SonJ48d.pMC7M4NCbAA/3q2ZSGzNePm.pmMfPiq', '1234567891', 'voter', 'male', '1982-12-19', '01631102841', 5, 'wixoqa.jpeg', NULL, '2019-12-01 12:19:40', '2019-12-01 12:19:40');
+(7, 'Nola Sutton', 'wixoqa', 'sa@gmail.com', '$2y$10$5aPkU1tGcrcAg0SonJ48d.pMC7M4NCbAA/3q2ZSGzNePm.pmMfPiq', '1234567891', 'voter', 'male', '1982-12-19', '01631102842', 5, 'wixoqa.jpeg', NULL, '2019-12-01 12:19:40', '2019-12-02 09:12:25'),
+(8, 'Nola Sutton', 'sa', 's@gmail.com', '$2y$10$5aPkU1tGcrcAg0SonJ48d.pMC7M4NCbAA/3q2ZSGzNePm.pmMfPiq', '1234567892', 'voter', 'female', '1982-12-19', '01631102841', 5, 'wixoqa.jpeg', NULL, '2019-12-01 12:19:40', '2019-12-01 12:19:40');
 
 -- --------------------------------------------------------
 
@@ -514,6 +515,13 @@ CREATE TABLE `voters` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `voters`
+--
+
+INSERT INTO `voters` (`id`, `user_id`, `candidate_id`, `election_id`, `wrong_attempt`, `created_at`, `updated_at`) VALUES
+(1, 7, 2, 1, 0, '2019-12-02 09:06:04', '2019-12-02 09:06:04');
 
 --
 -- Indexes for dumped tables
@@ -600,13 +608,13 @@ ALTER TABLE `parties`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `voters`
 --
 ALTER TABLE `voters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
