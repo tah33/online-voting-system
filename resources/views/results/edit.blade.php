@@ -22,8 +22,16 @@
                     <td><img src="{{url('images/',$user->symbol)}}" width="50px" height="50px"></td>
                     <td>{{$user->party->symbol_name}}</td>
                     <td>{{$user->candidate ? $user->candidate->votes : ''}}</td>
-                    <td> @if($user->candidate->votes == $users->max('candidate.votes')) 
-                        Winner @endif
+                    <td> @if($user->candidate->votes == $max) 
+        @if($users_max_vote->count()>1)
+            Draw between 
+            @foreach($users_max_vote as $vote) 
+               {{$vote->name}} 
+            @endforeach 
+        @else
+            Winner 
+        @endif
+        @endif
                     </td> 
                     </tr>
                         @endforeach

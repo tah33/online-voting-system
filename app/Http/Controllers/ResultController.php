@@ -53,7 +53,6 @@ class ResultController extends Controller
         $election = Election::find($id);
         return view('results.show',compact('election'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -63,8 +62,9 @@ class ResultController extends Controller
     public function edit($id)
     {
         $users = User::where('area',$id)->where('role','candidate')->get();
-        $vote = $users->max('candidate.votes');
-        return view('results.edit',compact('users','vote'));
+        $max = $users->max('candidate.votes');
+        $users_max_vote = $users->where('candidate.votes', $max);
+        return view('results.edit',compact('users','max','users_max_vote'));
     }
 
     /**
