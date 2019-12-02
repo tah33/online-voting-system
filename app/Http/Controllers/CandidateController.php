@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Candidate;
 use App\Election;
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
+use Carbon\Carbon;
 class CandidateController extends Controller
 {
     /**
@@ -15,8 +17,14 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $elections=Election::where('status',1)->get();
-        return view('candidate.index',compact('elections'));
+        $ids=[];
+        $elections = Election::where('status',1)->get();
+        foreach ($elections as $key => $election) {
+            foreach ($election->candidates as $key => $candidate)
+                $ids[] = $candidate->user_id;
+            }
+        $users = User::whereIn('id',$ids)->groupBy('area')->get();
+        return view('candidate.index',compact('elections','users'));
     }
     /**
      * Show the form for creating a new resource.
@@ -93,7 +101,7 @@ class CandidateController extends Controller
 
     public function apply()
     {
-        $applies=Election::where('status',1)->get();
+        $applies = Election::whereDate('election_date','<=',Carbon::now())->where('status',1)->get();
         return view('candidate.list',compact('applies'));
     }
 

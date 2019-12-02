@@ -13,7 +13,7 @@
               <div class="icon">
                 <img src="{{asset('images/voter.svg')}}" width="70px" height="70px">
               </div>
-              <a href="{{url('students')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
+              <a href="{{url('all-voter')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
           </div>
           <div class="col-lg-3 col-6">
@@ -26,7 +26,7 @@
               <div class="icon">
                 <img src="{{asset('images/candidate.svg')}}" width="70px" height="70px">
               </div>
-              <a href="{{url('students')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
+              <a href="{{url('all-candidate')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
               <div class="icon">
                 <img src="{{asset('images/election.svg')}}" width="70px" height="70px">
               </div>
-              <a href="{{url('students')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
+              <a href="{{url('elections')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
           </div>
           <div class="col-lg-3 col-6">
@@ -53,7 +53,7 @@
               <div class="icon">
                 <img src="{{asset('images/pending.svg')}}" width="70px" height="70px">
               </div>
-              <a href="{{url('students')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
+              <a href="{{url('pending-application')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
           </div>
           <div class="col-lg-3 col-6">
@@ -66,7 +66,7 @@
               <div class="icon">
                 <img src="{{asset('images/ongoing.svg')}}" width="70px" height="70px">
               </div>
-              <a href="{{url('students')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
+              <a href="{{url('ongoing')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
           </div>
           

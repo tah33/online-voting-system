@@ -14,22 +14,13 @@
                     <thead>
                     <tr>
                         <th style="text-align: center">Election Name</th>
-                        <th style="text-align: center">Area</th>
                         <th style="text-align: center">Candidates</th>
+                        <th style="text-align: center">Area</th>
                     </tr>
                     </thead>
                     <tbody align="center">
-                        @foreach($elections as $election)
                         <tr>
                             <td style="text-align: center">{{ $election->name }}</td>
-                            <td>
-                              @foreach($election->candidates as $key => $candidate)
-                              <table class="table table-hover table-bordered">
-                                <tr><td style=" text-align: center ">{{$candidate->user->userarea->name}}</td>
-                                </tr>
-                            </table>
-                            @endforeach
-                            </td>
                             <td style="text-align: center">
                               @foreach($election->candidates as $key => $candidate)
                               <table class="table table-hover table-bordered">
@@ -39,9 +30,15 @@
                             </table>
                               @endforeach
                             </td>
-                            
+                            <td>
+                              @foreach($election->candidates as $key => $candidate)
+                              <table class="table table-hover table-bordered">
+                                <tr><td style=" text-align: center ">{{$candidate->user->userarea->name}}</td>
                                 </tr>
-                                @endforeach
+                            </table>
+                            @endforeach
+                            </td>
+                                </tr>
                     </tbody>
                 </table>
             </div>

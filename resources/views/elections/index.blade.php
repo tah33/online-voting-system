@@ -20,9 +20,9 @@
                             <td style="text-align: center">{{ $election->name }}</td>
                             <td style="text-align: center">{{ $election->status == 0 ? "Inactive" : "Active"  }}</td>
                             <td>@if($election->status == 0)
-                                <a href="{{url('elections',$election->id)}}" style="float: left;" class="btn btn-info" onclick="return confirm('Are you sure you want to Active This Election?');"><i class="glyphicon glyphicon-ok"></i></a>
+                                <a href="{{url('elections',$election->id)}}" style="float: left;" class="btn btn-success" onclick="return confirm('Are you sure you want to Active This Election?');"><i class="glyphicon glyphicon-ok"></i></a>
                                 @else
-                                <a href="{{url('elections',$election->id)}}" style="float: left;" class="btn btn-info" onclick="return confirm('Are you sure you want to hold This Election?');"><i class="glyphicon glyphicon-remove"></i></a>
+                                <a href="{{url('elections',$election->id)}}" style="float: left;" class="btn btn-danger" onclick="return confirm('Are you sure you want to hold This Election?');"><i class="glyphicon glyphicon-remove"></i></a>
                                 @endif
                                 <a href="{{url('elections/'.$election->id.'/edit')}}" style="float: left" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
                                    <form action="{{url('elections',$election->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Delete This Election?');">

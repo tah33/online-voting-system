@@ -17,7 +17,7 @@
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $apply->name }}</td>
-                            @if(! Auth::user()->candidate)
+                            @if( Auth::user()->role == 'candidate')
                             <td><a href="{{url('candidate-store',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you Sure you want  to apply for this position')"><i class="glyphicon glyphicon-ok"></i></a></td>
                             @endif
                             </tr>

@@ -116,5 +116,18 @@ class HomeController extends Controller
            $ongoing = Election::whereDate('election_date','<=',Carbon::now())->get();
            return view('admin.home',compact('voters','candidates','elections','pending','ongoing'));
        }
+       elseif (Auth::user()->role == 'candidate') {
+           $voters = User::where('role','voter')->get();
+           $candidates = User::where('role','candidate')->get();
+           $elections = Election::all();
+           $pending = Candidate::where('status',0)->get();
+           $ongoing = Election::whereDate('election_date','<=',Carbon::now())->get();
+           return view('admin.home',compact('voters','candidates','elections','pending','ongoing'));
+       }
+       elseif (Auth::user()->role == 'voter') {
+           $ongoings = Election::whereDate('election_date','<=',Carbon::now())->get();
+           return view('voter.home',compact('ongoings'));
+       }
+
     }
 }
