@@ -17,13 +17,16 @@ class CandidateController extends Controller
      */
     public function index()
     {
+        $users = User::where('role','candidate')
+        ->orderBy('area','asc')->get();
         $ids=[];
         $elections = Election::where('status',1)->get();
         foreach ($elections as $key => $election) {
             foreach ($election->candidates as $key => $candidate)
                 $ids[] = $candidate->user_id;
             }
-        $users = User::whereIn('id',$ids)->groupBy('area')->get();
+        $areas = User::where('role','candidate')->groupBy('area')->get();
+
         return view('candidate.index',compact('elections','users'));
     }
     /**
@@ -35,7 +38,6 @@ class CandidateController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
