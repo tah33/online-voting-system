@@ -48,7 +48,7 @@ class CandidateController extends Controller
         $candidate->user_id = Auth::id();
         $candidate->election_id = $id;
         $candidate->save();
-        return back();
+        return back()->with('succes','Succesfully Your application has been sent');
     }
 
     /**
@@ -101,7 +101,7 @@ class CandidateController extends Controller
 
     public function apply()
     {
-        $applies = Election::whereDate('election_date','<=',Carbon::now())->where('status',1)->get();
+        $applies = Election::whereDate('election_date','<',Carbon::now())->where('status',1)->get();
         return view('candidate.list',compact('applies'));
     }
 
@@ -125,6 +125,14 @@ class CandidateController extends Controller
         if($candidate)
             $candidates = Candidate::where('election_id',$candidate->election_id)->get();
         return view('candidate.candidates',compact('candidates','candidate'));
+        
+    }
+
+    public function upcoming()
+    {
+        $upcomings = Election::whereDate('election_date','<',Carbon::now())
+        ->whereYear('election_date','=',Carbon::now())->get();
+        return view('candidate.candidates',compact('upcomings'));
         
     }
 }

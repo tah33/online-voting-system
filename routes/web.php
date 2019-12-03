@@ -34,3 +34,5 @@ Route::get('all-voter','AdminController@voter');
 Route::get('all-candidate','AdminController@candidate');
 Route::get('ongoing','AdminController@ongoing');
 Route::get('election-candidate/{id}','VoterController@edit');
+//Can
+Route::get('upcoming','CandidateController@upcoming');
