@@ -1,11 +1,13 @@
 @extends('layouts.app')
 @section('content')
-<a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
     <div class="row"> 
         <div class="box">
             <div class="box-body">
+<a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
+<a href="{{url('candidate-pdf')}}" class="btn btn-primary" target="_blank" style="text-align:  center;">Get PDF</a>
+
                 <table class="table table-hover table-bordered">
-                    <caption>Users List</caption>
+                    <caption>Candidates List</caption>
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>

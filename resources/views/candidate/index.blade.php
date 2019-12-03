@@ -9,6 +9,7 @@
     <div class="row"> 
         <div class="box">
             <div class="box-body">
+                <a href="{{url('candidates-pdf')}}" class="btn btn-primary">Get PDF</a>
                 <table class="table table-hover table-bordered">
                     <caption>Candidate List</caption>
                     <thead>

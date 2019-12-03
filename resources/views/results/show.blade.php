@@ -4,7 +4,7 @@
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
-                    <caption>Canidate Areas for {{$election->name}}</caption>
+                    <caption>Canidate Areas for {{$users->first()->candidate->election->name}}</caption>
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>
@@ -13,11 +13,11 @@
                     </tr>
                     </thead>
                     <tbody align="center">
-                    @foreach ($election->candidates as $key => $candidate)
+                    @foreach ($users as $key => $user)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $candidate->user->userarea->name }}</td>
-                            <td> <a href="{{url('results/'.$candidate->user->area.'/edit')}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+                            <td style="text-align: center">{{ $user->userarea->name }}</td>
+                            <td> <a href="{{url('results/'.$user->area.'/edit')}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
                             </td>
                         </tr>
                     @endforeach

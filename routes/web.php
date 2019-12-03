@@ -36,3 +36,10 @@ Route::get('ongoing','AdminController@ongoing');
 Route::get('election-candidate/{id}','VoterController@edit');
 //Can
 Route::get('upcoming','CandidateController@upcoming');
+
+//PDFController
+Route::get('area-pdf/{area}','PdfController@area');
+Route::get('users-pdf','PdfController@user');
+Route::get('voters-pdf','PdfController@voter');
+Route::get('candidate-pdf','PdfController@candidate');
+

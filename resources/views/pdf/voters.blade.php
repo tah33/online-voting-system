@@ -23,36 +23,35 @@
  <div class="panel panel-default">
   <div class="panel-body">
                 <table class="table table-bordered table-hover">
-                    <caption>{{$area->name}}</caption>
+                    <caption>Voter List</caption>
                     <thead>
                         <tr>
                         <th>Serial</th>
-                        <th>Candidate</th>
-                        <th>Party</th>
-                        <th>Symbol Name</th>
-                        <th>Vote</th>
-                        <th>Result</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>NID</th>
+                        <th>Phone</th>
+                        <th>Area</th>
+                        <th>Gender</th>
+                        <th>Type</th>
+                        <th>Date of Birth</th>
+                        <th>Age</th>
                         </tr>
                     </thead>
-                    @foreach($area->users->where('role','candidate') as $key => $user)
+                    @foreach($users as $key => $user)
                     <tr>
                         <td>{{$key+1}}</td>
                     <td>{{$user->name}}</td>
-                    <td>{{$user->party->name}}</td>
-                    
-                    <td>{{$user->party->symbol_name}}</td>
-                    <td>{{$user->candidate ? $user->candidate->votes : ''}}</td>
-                    <td> @if($user->candidate->votes == $max) 
-        @if($users_max_vote->count()>1)
-            Draw between 
-            @foreach($users_max_vote as $vote) 
-               {{$vote->name}} 
-            @endforeach 
-        @else
-            Winner 
-        @endif
-        @endif
-                    </td> 
+                    <td>{{$user->username}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->nid}}</td>
+                    <td>{{$user->phone}}</td>
+                    <td>{{$user->userarea->name}}</td>
+                    <td>{{$user->gender}}</td>
+                    <td>{{$user->role}}</td>
+                    <td>{{$user->dob}}</td>
+                    <td>{{Carbon\Carbon::createFromDate($user->dob)->diff(Carbon\Carbon::now())->format('%y years')}}</td>
                     </tr>
                         @endforeach
                    

@@ -17,7 +17,7 @@ class ResultController extends Controller
      */
     public function index()
     {
-        $elections = Election::where('status',1)->whereDate('election_date',Carbon::now())->get();
+        $elections = Election::where('status',1)->whereDate('election_date','>=',Carbon::now())->get();
         return view('results.index',compact('elections'));
     }
 
@@ -50,8 +50,12 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-        $election = Election::find($id);
-        return view('results.show',compact('election'));
+        $candidates = Candidate::where('election_id',$id)->get();
+        foreach ($candidates as $key => $candidate) {
+            $ids[] = $candidate->user_id;
+        }
+        $users = User::whereIn('id',$ids)->groupBy('area')->get();
+        return view('results.show',compact('users'));
     }
     /**
      * Show the form for editing the specified resource.

@@ -1,9 +1,10 @@
 @extends('layouts.app')
 @section('content')
+<a href="{{url('area-pdf/'.$users->first()->area)}}" target="_blank" class="btn btn-primary">Get PDF</a>
 <div class="panel panel-primary">
 	<div class="panel-heading">{{$users->first()->userarea->name}}</div>
 	<div class="panel-body">
-  @foreach($users as $key => $user)
+  @foreach($users->where('role','candidate') as $key => $user)
   <div class="panel panel-primary" style="width:400px;  float: left; margin-right: 10px">
   	<center>
   	<div class="panel-body">
