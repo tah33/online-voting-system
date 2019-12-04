@@ -1,10 +1,26 @@
-@extends('layouts.app')
-@section('content')
-    <div class="row"> 
-        <div class="box" >
-            <div class="box-body">
-                <a href="{{url('elections-pdf')}}" target="_blank" class="btn btn-primary">Get Pdf</a>
-    <table class="table table-hover table-bordered" width="300">
+<head>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    #a{
+        color: red;
+    }
+</style>
+<center>
+<h2 id="a" style="font-size: 25px">Online Voting System</h2>
+<h4><?php echo date("F-Y")?></h4>
+</center>
+  <table class="table table-hover table-bordered" width="300">
         <thead>
         <tr>
             <th>Serial</th>
@@ -34,22 +50,3 @@
             @endforeach
              </tbody>
     </table>
-     </div>
-        </div>
-    </div>
-    @stop
-    <!--    <tr>
-            <td rowspan="4">Precedency</td>
-            <td rowspan="2">Dhaka-1</td>
-            <td>Tanvir</td>
-        </tr>
-        <tr>/
-            <td>Tanvir</td>
-        </tr>
-        <tr>
-            <td rowspan="2">Dhaka-1</td>
-            <td>Tanvir</td>
-        </tr>
-        <tr>
-            <td>Tanvir</td>
-        </tr> -->

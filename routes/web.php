@@ -42,4 +42,5 @@ Route::get('area-pdf/{area}','PdfController@area');
 Route::get('users-pdf','PdfController@user');
 Route::get('voters-pdf','PdfController@voter');
 Route::get('candidate-pdf','PdfController@candidate');
+Route::get('elections-pdf','PdfController@elections');
 

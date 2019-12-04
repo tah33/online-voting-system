@@ -74,9 +74,12 @@ class PdfController extends Controller
      * @param  \App\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cr $cr)
+    public function elections()
     {
-        //
+        $users = User::where('role','candidate')
+        ->orderBy('area','asc')->get();
+        $pdf = PDF::loadView('pdf.elections',compact('users'));
+        return $pdf->stream("elections.pdf");
     }
 
     /**

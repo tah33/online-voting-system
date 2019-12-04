@@ -19,8 +19,6 @@ class CandidateController extends Controller
     {
         $users = User::where('role','candidate')
         ->orderBy('area','asc')->get();
-
-
         return view('candidate.index',compact('users'));
     }
     /**
