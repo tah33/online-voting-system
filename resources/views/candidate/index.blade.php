@@ -13,16 +13,22 @@
             <th>Elections</th>
         </tr>
         </thead>
-
+<?php $renderedElections = []; ?>
+<?php $renderedAreas = []; ?>
         <tbody>
             @foreach($users as $key => $user)
             <tr>
               <td>{{$key+1}}</td>
               <td>{{$user->name}}</td>
+               @if (!in_array($user->userarea->name, $renderedAreas))
+        <?php  $renderedAreas[] = $user->userarea->name ?>
               <td rowspan="{{count($users->where('area',$user->area))}}">
                  {{$user->userarea->name}}</td>
-
+                 @endif
+@if (!in_array($user->candidate->election->name, $renderedElections))
+        <?php $renderedElections[] = $user->candidate->election->name ?>
               <td rowspan="{{count($user->candidate->election->candidates)}}">{{$user->candidate->election->name}}</td>
+              @endif
             </tr>
             @endforeach
              </tbody>

@@ -19,15 +19,9 @@ class CandidateController extends Controller
     {
         $users = User::where('role','candidate')
         ->orderBy('area','asc')->get();
-        $ids=[];
-        $elections = Election::where('status',1)->get();
-        foreach ($elections as $key => $election) {
-            foreach ($election->candidates as $key => $candidate)
-                $ids[] = $candidate->user_id;
-            }
-        $areas = User::where('role','candidate')->groupBy('area')->get();
 
-        return view('candidate.index',compact('elections','users'));
+
+        return view('candidate.index',compact('users'));
     }
     /**
      * Show the form for creating a new resource.
