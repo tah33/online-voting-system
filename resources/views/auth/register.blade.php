@@ -145,7 +145,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="candidate">
+<div class="candidate" style="display: none">
     <div class="wrap-input100" >
 <input class="input100" type="text" name="party" placeholder="Name" value="{{old('party')}}">
 <span class="focus-input100"></span>

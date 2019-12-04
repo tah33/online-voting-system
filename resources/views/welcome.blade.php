@@ -33,20 +33,20 @@
 
                         <div>
                             <span class="icon fa-car"></span>
-                            <h3>Aliquam</h3>
-                            <p>Suspendisse amet ullamco</p>
+                            <h3>{{count($voters)}}</h3>
+                            <p>Total Voters</p>
                         </div>
 
                         <div>
                             <span class="icon fa-camera"></span>
-                            <h3>Elementum</h3>
-                            <p>Class aptent taciti ad litora</p>
+                            <h3>{{count($candidates)}}</h3>
+                            <p>Total Candidates</p>
                         </div>
 
                         <div>
                             <span class="icon fa-bug"></span>
-                            <h3>Ultrices</h3>
-                            <p>Nulla vitae mauris non felis</p>
+                            <h3>{{count($elections)}}</h3>
+                            <p>Total elections</p>
                         </div>
 
                     </div>

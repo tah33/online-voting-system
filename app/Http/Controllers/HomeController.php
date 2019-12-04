@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
+    public function welcome()
+    {
+        $voters= User::where('role','voter')->get();
+        $candidates= User::where('role','candidate')->get();
+        $elections= Election::all();
+        return view('welcome',compact('voters','candidates','elections'));
+    }
     public function profile()
     {
     	$user= Auth::user();
@@ -119,8 +126,7 @@ class HomeController extends Controller
        elseif (Auth::user()->role == 'candidate') {
            $elections = Election::all();
            $ongoings = Election::whereDate('election_date','=',Carbon::now())->get();
-           
-           return view('candidate.home',compact('voters','candidates','elections','ongoings'));
+           return view('candidate.home',compact('elections','ongoings'));
        }
        elseif (Auth::user()->role == 'voter') {
            $ongoings = Election::whereDate('election_date','=',Carbon::now())->get();
