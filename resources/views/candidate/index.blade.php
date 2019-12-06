@@ -12,7 +12,9 @@
             <th>Area</th>
 
             <th>Elections</th>
+            <th>Election Date</th>
         </tr>
+    
         </thead>
 <?php $renderedElections = []; ?>
 <?php $renderedAreas = []; ?>
@@ -30,6 +32,10 @@
         <?php $renderedElections[] = $user->candidate->election->name ?>
               <td rowspan="{{count($user->candidate->election->candidates)}}">{{$user->candidate->election->name}}</td>
               @endif
+              @if (!in_array($user->candidate->election->updated_at, $renderedElections))
+        <?php $renderedElections[] = $user->candidate->election->updated_at ?>
+              <td rowspan="{{count($user->candidate->election->candidates)}}">{{$user->candidate->election->updated_at->toDateString()}}</td>
+              @endif 
             </tr>
             @endforeach
              </tbody>
@@ -38,18 +44,4 @@
         </div>
     </div>
     @stop
-    <!--    <tr>
-            <td rowspan="4">Precedency</td>
-            <td rowspan="2">Dhaka-1</td>
-            <td>Tanvir</td>
-        </tr>
-        <tr>/
-            <td>Tanvir</td>
-        </tr>
-        <tr>
-            <td rowspan="2">Dhaka-1</td>
-            <td>Tanvir</td>
-        </tr>
-        <tr>
-            <td>Tanvir</td>
-        </tr> -->
+

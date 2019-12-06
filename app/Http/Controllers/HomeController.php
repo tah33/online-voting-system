@@ -95,6 +95,7 @@ class HomeController extends Controller
         $user=Auth::user();
         return view('home.password',compact('user'));
     }
+
     public function updatePassword(Request $request,$id)
     {
         $request->validate([
@@ -107,8 +108,7 @@ class HomeController extends Controller
         {
             $user->password=bcrypt($request->password);
             $user->save();
-            Auth::logout();
-            return redirect('/');
+            return back()->with('success','Your Password Changed Succesfully');
         }
         else
             return back()->with('error','Your Current Password Doesnot Match');

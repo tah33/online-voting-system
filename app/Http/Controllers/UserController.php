@@ -107,7 +107,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete($id);
-        return back();
+        return back()->with('success','Users Blocked Succesfully');
     }
     public function blockUsers()
     {

@@ -17,7 +17,7 @@ class ResultController extends Controller
      */
     public function index()
     {
-        $elections = Election::where('status',1)->whereDate('election_date','>=',Carbon::now())->get();
+        $elections = Election::where('status',1)->get();
         return view('results.index',compact('elections'));
     }
 
@@ -55,6 +55,7 @@ class ResultController extends Controller
             $ids[] = $candidate->user_id;
         }
         $users = User::whereIn('id',$ids)->groupBy('area')->get();
+
         return view('results.show',compact('users'));
     }
     /**

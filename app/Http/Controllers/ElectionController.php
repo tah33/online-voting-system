@@ -26,7 +26,7 @@ class ElectionController extends Controller
             'election_date' =>'required|after_or_equal:tomorrow',
         ]);
         Election::create($request->all());
-        return redirect('elections');
+        return back()->with('success','Election Created Successffully Succesfully');
     }
 
     public function show(Election $election)
@@ -36,7 +36,7 @@ class ElectionController extends Controller
         else
             $election->status=0;
         $election->save();
-        return redirect('elections');
+        return redirect('elections')->with('success','Election Succesfylly Modified');
     }
 
     /**
@@ -60,13 +60,13 @@ class ElectionController extends Controller
         $election->status = $request->status;
         $election->election_date=$request->election_date;
         $election->save();
-        return redirect('elections');
+        return redirect('elections')->with('success','Election info Succesfylly Updated');
     }
 
     public function destroy(Election $election)
     {
         $election->candidates()->delete();
         $election->delete();
-        return back();
+        return back()->with('success','Election was Succesfylly Deleted');
     }
 }

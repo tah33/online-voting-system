@@ -6,7 +6,12 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
-
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Edit Password</p>

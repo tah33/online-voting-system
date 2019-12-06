@@ -1,10 +1,16 @@
 @extends('layouts.app')
 @section('content')
+@if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="row"> 
         <div class="box">            
             <div class="box-body">
 <a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
-<a href="{{url('users-pdf')}}" class="btn btn-primary" target="_blank" style="text-align:  center;">Get PDF Users</a>
+<a href="{{url('users-pdf')}}" class="btn btn-primary" target="_blank" style="text-align:  center;">Get PDF</a>
 
                 <table class="table table-hover table-bordered">
                     <caption>Users List</caption>

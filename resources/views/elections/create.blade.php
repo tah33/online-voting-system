@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+@if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
 <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Add Elections</p>
@@ -8,7 +14,7 @@
 
                 <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
                     <input type="text" name="name" class="form-control" placeholder="Enter the name of Election category" value="{{old('name')}}"> 
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-plus form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -17,7 +23,7 @@
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('election_date') ? 'has-error' : '' }}">
                     <input type="date" name="election_date" class="form-control" placeholder="Enter the Ending Date" value="{{old('election_date')}}"> 
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-time form-control-feedback"></span>
                     @if ($errors->has('election_date'))
                         <span class="help-block">
                             <strong>{{ $errors->first('election_date') }}</strong>

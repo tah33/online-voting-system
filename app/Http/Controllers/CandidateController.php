@@ -17,8 +17,13 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $users = User::where('role','candidate')
-        ->orderBy('area','asc')->get();
+        $ids=[];
+        $elections = Election::where('status',1)->get();
+        foreach ($elections as $key => $election) {
+        foreach ($election->candidates as $candidate)
+            $ids [] = $candidate->user_id;
+        }
+        $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();
         return view('candidate.index',compact('users'));
     }
     /**
@@ -55,7 +60,7 @@ class CandidateController extends Controller
     {
         $candidate->status=1;
         $candidate->save();
-        return back();
+        return back()->with('success','Candidate Approved Succesfully');
     }
 
     /**
@@ -90,12 +95,12 @@ class CandidateController extends Controller
     public function destroy(Candidate $candidate)
     {
         $candidate->delete();
-        return back();
+        return back()->with('success','Candidate Rejected Succesfully');
     }
 
     public function apply()
     {
-        $applies = Election::whereDate('election_date','<',Carbon::now())->where('status',1)->get();
+        $applies = Election::where('status',1)->get();
         return view('candidate.list',compact('applies'));
     }
 

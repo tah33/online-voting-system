@@ -1,5 +1,4 @@
 <?php
-
 Route::get('/', 'HomeController@welcome' );
 Auth::routes();
 //HomeController

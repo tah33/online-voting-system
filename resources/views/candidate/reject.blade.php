@@ -18,7 +18,7 @@
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $reject->user->email }}</td>
                             <td style="text-align: center">{{ $reject->election->name }}</td>
-                            
+                            <td><a href="{{url('candidates',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to approve')"><i class="glyphicon glyphicon-ok"></i></a></td> 
                         </tr>
                     @endforeach
                     </tbody>

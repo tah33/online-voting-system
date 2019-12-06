@@ -144,7 +144,6 @@
                         </ul>
                         </li>
                         @endif
-                        @if(Auth::user()->role == 'candidate')
                            <li class="treeview">
                         <a href="#">
                             <i class="fa fa-share"></i> <span>Application</span>
@@ -153,7 +152,10 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
+                            @if(Auth::user()->role == 'candidate')
                             <li><a href="{{url('applies')}}"><i class="fa fa-check"></i>Apply</a></li>
+                        @endif
+
                                 <li>
                                     <a href="{{url('pending-application')}}"><i class="fa fa-hourglass-3"></i> Pending Application</a>
                                 </li>
@@ -162,25 +164,30 @@
                                 </li>
                         </ul>
                         </li>
-                        @endif
-                        @if(Auth::user()->role == 'admin')
-                        <li>
-                                    <a href="{{url('pending-application')}}"><i class="fa fa-tasks"></i> Pending Application</a>
-                                </li>
-                                @endif
+                     
                                 <li>
                                     <a href="{{url('candidates')}}"><i class="fa fa-user"></i>Candidates</a>
                                 </li>
                        
-                         @if(Auth::user()->role == 'voter')
 
                                 <li>
                                     <a href="{{url('voters')}}"><i class="fa fa-area-chart"></i>Voter Area</a>
                                 </li>
-                                @endif
+                                 <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-share"></i> <span>Result</span>
+                            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{url('applies')}}"><i class="fa fa-check"></i>Winner</a></li>
+
                                 <li>
-                                    <a href="{{url('results')}}"><i class="fa fa-check"></i>Result</a>
+                                    <a href="{{url('results')}}"><i class="glyphicon glyphicon-filter"></i> Area Wise</a>
                                 </li>
+                        </ul>
+                        </li>
 
             </ul>
             @yield('sidebar')
