@@ -91,8 +91,13 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function winner()
     {
-        //
+        $elections = Election::where('status',1)->get();
+        foreach ($elections as $key => $election) {
+            $candidates[] = Candidate::where('election_id',$election->id)
+            ->orderBy('votes','desc')->first();
+        }
+        return view('results.election-winner',compact('elections','candidates'));
     }
 }

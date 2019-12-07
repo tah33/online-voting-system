@@ -181,7 +181,7 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url('applies')}}"><i class="fa fa-check"></i>Winner</a></li>
+                            <li><a href="{{url('winner')}}"><i class="fa fa-check"></i>Winner</a></li>
 
                                 <li>
                                     <a href="{{url('results')}}"><i class="glyphicon glyphicon-filter"></i> Area Wise</a>

@@ -18,8 +18,11 @@ class VoterController extends Controller
      */
      public function index()
     {
-        $elections=Election::where('status',1)->whereDate('election_date', Carbon::now('Asia/Dhaka'))->get();
-        $candidates = Candidate::where('status',1)->whereIn('election_id',$elections)->get();
+        $elections=Election::where('status',1)get();
+        foreach ($elections as $key => $election) {
+            $ids[] = $election->id;
+        }
+        $candidates = Candidate::where('status',1)->whereIn('election_id',$ids)->get();
         return view('voter.index',compact('elections','candidates'));
     }
    
