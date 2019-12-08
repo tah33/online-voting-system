@@ -18,7 +18,7 @@ class VoterController extends Controller
      */
      public function index()
     {
-        $elections=Election::where('status',1)get();
+        $elections=Election::where('status',1)->get();
         foreach ($elections as $key => $election) {
             $ids[] = $election->id;
         }

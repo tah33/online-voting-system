@@ -60,6 +60,9 @@ class CandidateController extends Controller
     {
         $candidate->status=1;
         $candidate->save();
+        $party = Party::where('user_id',$candidate->user_id)->latest()->first();
+        $party->election_id = $candidate->election_id;
+        $party->save();
         return back()->with('success','Candidate Approved Succesfully');
     }
 

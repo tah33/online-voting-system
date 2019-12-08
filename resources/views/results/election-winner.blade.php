@@ -9,7 +9,6 @@
                     <tr>
                         <th style="text-align: center">No.</th>
                         <th style="text-align: center">Election Name</th>
-                        <th style="text-align: center">Winner</th>
                         <th style="text-align: center">Action</th>
                     </tr>
                     </thead>
@@ -18,12 +17,7 @@
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $election->name }}</td>
-                            @foreach($candidates as $candidate)
-                            @if($candidate->election_id == $election->id)
-                            <td style="text-align: center">{{ $candidate->user->name }}</td>
-                            @endif
-                            @endforeach
-                            <td> <a href="{{url('results/'.$election->id)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+                            <td> <a href="{{url('result-election/'.$election->id)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
                                 
                             </td>
                         </tr>

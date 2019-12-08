@@ -19,6 +19,8 @@ class CreatePartiesTable extends Migration
             $table->string('name');
             $table->string('symbol');
             $table->string('symbol_name');
+            $table->unsignedBigInteger('election_id');
+            $table->integer('seats')->default(0);
             $table->timestamps();
         });
     }

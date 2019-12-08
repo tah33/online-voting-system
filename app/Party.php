@@ -12,4 +12,9 @@ class Party extends Model
     {
     	return $this->belongsTo(User::class);
     }
+
+    public function election()
+    {
+    	return $this->belongsTo(Election::class);
+    }
 }

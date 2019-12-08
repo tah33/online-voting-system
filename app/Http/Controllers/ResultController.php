@@ -7,7 +7,9 @@ use App\Area;
 use App\Election;
 use App\Candidate;
 use App\User;
+use App\Party;
 use Carbon\Carbon;
+use DB;
 class ResultController extends Controller
 {
     /**
@@ -80,9 +82,32 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function result($id)
     {
-        //
+        $seat = Party::where('election_id',$id)->orderBy('id','desc')
+                ->max('seats');
+        $parties = Party::where('election_id',$id)->get();
+        $winner = Party::where('election_id',$id)->orderBy('id','desc')
+                ->where('seats',$seat)->first();
+        $candidates =Candidate::where('election_id',$id)->groupBy('area')->get();
+        foreach ($candidates as $key => $candidate) {
+            $areas [] = $candidate->area;
+            $max_vote = Candidate::where('election_id',$id)
+                        ->where('area',$candidate->area)->max('votes');
+
+        $party = Party::where('user_id',$candidate->user_id)
+                        ->where('election_id',$id)->latest()->first();
+        $party->seats = $party->seats + 1;
+        $party->save();
+        $parties = Party::where('user_id','!=',$candidate->user_id)
+                        ->where('election_id',$id)->orderBy('id','desc')->get();
+                        foreach ($parties as $key => $party) {
+                            $party->seats += 0;
+                            $party->save();
+                        }
+        }
+
+        return view('results.result',compact('parties','seat','winner'));
     }
 
     /**
@@ -94,10 +119,6 @@ class ResultController extends Controller
     public function winner()
     {
         $elections = Election::where('status',1)->get();
-        foreach ($elections as $key => $election) {
-            $candidates[] = Candidate::where('election_id',$election->id)
-            ->orderBy('votes','desc')->first();
-        }
-        return view('results.election-winner',compact('elections','candidates'));
+        return view('results.election-winner',compact('elections'));
     }
 }

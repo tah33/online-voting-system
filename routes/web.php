@@ -27,6 +27,7 @@ Route::resource('voters','VoterController');
 //ResultController
 Route::resource('results','ResultController');
 Route::get('winner','ResultController@winner');
+Route::get('result-election/{id}','ResultController@result');
 //AdminController
 Route::get('all-voter','AdminController@voter');
 Route::get('all-candidate','AdminController@candidate');
