@@ -16,31 +16,38 @@
         </tr>
     
         </thead>
-<?php $renderedElections = []; ?>
-<?php $renderedAreas = []; ?>
-@if(!empty($users))
+@php 
+$userElections = [];
+$ids = [];
+$user_elections = [];
+$user = 1;
+@endphp
         <tbody>
-            @foreach($users as $key => $user)
+            @foreach ($elections as $election)                
+            @foreach($election->candidates as $key => $candidate)
             <tr>
               <td>{{$key+1}}</td>
-              <td>{{$user->name}}</td>
-               @if (!in_array($user->userarea->name, $renderedAreas))
-        <?php  $renderedAreas[] = $user->userarea->name ?>
-              <td rowspan="{{count($users->where('area',$user->area))}}">
-                 {{$user->userarea->name}}</td>
+              <td>{{$candidate->user->name}}</td>
+               @if (!in_array($candidate->user_id, $ids))
+        @php  
+        $ids[] = $candidate->user_id ;
+        @endphp
+              <td rowspan="{{count($election->candidates->where('area',$candidate->area))}}">
+                 {{$candidate->user->userarea->name}}</td>
                  @endif
-@if (!in_array($user->candidate->election->name, $renderedElections))
-        <?php $renderedElections[] = $user->candidate->election->name ?>
-              <td rowspan="{{count($user->candidate->election->candidates)}}">{{$user->candidate->election->name}}</td>
+@if (!in_array($election->name, $userElections))
+        @php $userElections[] = $election->name; @endphp
+              <td rowspan="{{count($election->candidates)}}">{{$election->name}}</td>
               @endif
-              @if (!in_array($user->candidate->election->updated_at, $renderedElections))
-        <?php $renderedElections[] = $user->candidate->election->updated_at ?>
-              <td rowspan="{{count($user->candidate->election->candidates)}}">{{$user->candidate->election->updated_at->toDateString()}}</td>
+              @if (!in_array($election->updated_at, $userElections))
+        @php $userElections[] = $election->updated_at; @endphp
+              <td rowspan="{{count($election->candidates)}}">{{$election->updated_at->toDateString()}}</td>
               @endif 
             </tr>
             @endforeach
+            @endforeach
+
              </tbody>
-             @endif
     </table>
      </div>
         </div>

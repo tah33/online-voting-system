@@ -11,11 +11,6 @@ use Auth;
 use Carbon\Carbon;
 class CandidateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $users='';
@@ -27,23 +22,14 @@ class CandidateController extends Controller
         }
         if(!empty($ids))
             $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();
-        return view('candidate.index',compact('users'));
+        return view('candidate.index',compact('elections'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function create()
     {
         //
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(Request $request,$id)
     {
         $canidate_exist = Candidate::where('user_id',Auth::id())
@@ -54,16 +40,11 @@ class CandidateController extends Controller
         $candidate = new Candidate;
         $candidate->user_id = Auth::id();
         $candidate->election_id = $id;
+        $candidate->area = Auth::user()->area;
         $candidate->save();
         return back()->with('success','Succesfully Your application has been sent');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Candidate  $candidate
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $candidate = Candidate::withTrashed()->find($id);
@@ -79,35 +60,17 @@ class CandidateController extends Controller
         return back()->with('success','Candidate Approved Succesfully');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Candidate  $candidate
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Candidate $candidate)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Candidate  $candidate
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Candidate $candidate)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Candidate  $candidate
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Candidate $candidate)
     {
         $candidate->delete();
