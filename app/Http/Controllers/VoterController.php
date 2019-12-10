@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Voter;
 use App\Election;
+use App\User;
 use App\Candidate;
 use Auth;
 use Carbon\Carbon;
@@ -18,11 +19,14 @@ class VoterController extends Controller
      */
      public function index()
     {
+        $ids = [];
+        $candidates = '';
         $elections=Election::where('status',1)->get();
         foreach ($elections as $key => $election) {
             $ids[] = $election->id;
         }
-        $candidates = Candidate::where('status',1)->whereIn('election_id',$ids)->get();
+        if(!empty($ids))
+            $candidates = Candidate::where('status',1)->whereIn('election_id',$ids)->get();
         return view('voter.index',compact('elections','candidates'));
     }
    
@@ -63,8 +67,11 @@ class VoterController extends Controller
                 Auth::logout();
                 $user=User::find($voter->user_id);
                 $user->delete();
-                return route('logout')->with('error','You Account was Permanently Deleted for too many attemps');
+                 return redirect('login');
             }
+
+            $voter->wrong_attempt = 1;
+            $voter->save();
             return back()->with('warning','You Already Voted for this Election');
         }
         else{

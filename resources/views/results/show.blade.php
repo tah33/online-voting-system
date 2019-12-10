@@ -4,7 +4,9 @@
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
+                    @if(! empty($users))
                     <caption>Canidate Areas for {{$users->first()->candidate->election->name}}</caption>
+                    @endif
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>
@@ -13,6 +15,7 @@
                     </tr>
                     </thead>
                     <tbody align="center">
+                    @if(!empty($users))
                     @foreach ($users as $key => $user)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
@@ -21,6 +24,7 @@
                             </td>
                         </tr>
                     @endforeach
+                    @endif
                     </tbody>
                 </table>
             </div>

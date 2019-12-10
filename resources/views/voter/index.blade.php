@@ -33,7 +33,7 @@
                               @foreach($candidates as $key => $candidate)
                               <table class="table table-hover table-bordered">
                               <tr><td>
-                                <b>{{$key+1}} </b>:  <b>{{$candidate->user->name}}</b> 
+                                <b>{{$key+1}} </b>:  <b>{{$candidate->user['name']}}</b> 
                                 </td></tr>
                             </table>
                               @endforeach
@@ -42,7 +42,7 @@
                             <td>
                                 @if($candidates)
                               @foreach($candidates as $key => $candidate)
-                              @if($candidate->user->area == Auth::user()->area)
+                              @if($candidate->user['area'] == Auth::user()->area || Auth::user()->role == 'admin')
                               <table class="table table-hover table-bordered">
                                 <tr><td style=" text-align: center ">
                                 <a href="{{url('voters', $candidate->id)}}" class="btn btn-success btn-sm" style="margin-top: -10px" onclick="return confirm('Are you Sure You want to vote this candidates?')"><i class="glyphicon glyphicon-ok"></i></a> </td>

@@ -18,7 +18,7 @@
                         <a href="{{route('login')}}">Login</a>
                         <a href="{{route('register')}}">Registration</a>
                         <a href="#about_us">About Us</a>
-                        <a href="">Contact Us</a>
+                        
                     </nav>
                     <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
                 </div>
@@ -61,12 +61,17 @@
  <section id="banner">
                 <div class="inner section-padding" id="about_us">
                     <h2 style="color: white">About Us</h2>
-                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p style="color: white">
+                    Presently voting is performed using ballot paper and the counting is done 
+                    manually, hence it consumes a lot of time. There can be possibility of 
+                    invalid votes. All these make election a tedious task. 
+                    In our Online Voting System, voting and counting is done with the help
+                    of computer. It saves time, avoid error in counting and there will be no
+                    invalid votes. It makes the election process easy. The user interface is 
+                    designed keeping in mind that many people are not computer savvy. 
+                    It is very user friendly and convenient application to use. 
+                    It minimizes human errors as everything is automated and is integrated 
+                    with systematic procedure.</p>
                 </div>
             </section>
 
@@ -76,7 +81,7 @@
         <!-- Footer -->
             <footer id="footer">
 
-                    <div class="copyright" style="font-size: 25px">
+                    <div class="copyright" style="font-size: 25px;color: white">
                         &copy; Online Voting System
                     </div>
 

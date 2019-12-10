@@ -18,6 +18,7 @@
         </thead>
 <?php $renderedElections = []; ?>
 <?php $renderedAreas = []; ?>
+@if(!empty($users))
         <tbody>
             @foreach($users as $key => $user)
             <tr>
@@ -39,6 +40,7 @@
             </tr>
             @endforeach
              </tbody>
+             @endif
     </table>
      </div>
         </div>

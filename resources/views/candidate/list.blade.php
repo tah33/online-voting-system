@@ -6,6 +6,12 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
+    @if ($message = Session::get('error'))
+        <div class="alert alert-error alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="row"> 
         <div class="box" style="width: 600px">
             <div class="box-body">
@@ -24,11 +30,10 @@
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $apply->name }}</td>
                             @if( Auth::user()->role == 'candidate')
-                            <td>@if(! $apply->candidates->where('user_id',Auth::id()))
+                            <td>
                                 <a href="{{url('candidate-store',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you Sure you want  to apply for this position')"><i class="glyphicon glyphicon-ok"></i></a>
                             @endif
                         </td>
-                            @endif
                             </tr>
                     @endforeach
                     </tbody>

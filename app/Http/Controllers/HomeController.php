@@ -91,7 +91,7 @@ class HomeController extends Controller
         return redirect('home');
     }
     public function password()
-    {
+   {
         $user=Auth::user();
         return view('home.password',compact('user'));
     }

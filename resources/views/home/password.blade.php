@@ -16,7 +16,7 @@
         <div class="register-box-body">
             <p class="login-box-msg">Edit Password</p>
             <form action="{{ url( 'update-password',$user->id) }}" method="post" enctype="multipart/form-data" 
-                onsubmit="return confirm('Do you really want to change the Password? It will logged you out?');">
+                onsubmit="return confirm('Do you really want to change the Password?');">
                 {{ csrf_field() }}
 
                 <div class="form-group has-feedback {{ $errors->has('old') ? 'has-error' : '' }}">

@@ -23,7 +23,7 @@
                     @foreach ($applies as $key => $apply)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $apply->user->email }}</td>
+                            <td style="text-align: center">{{ $apply->user['email'] }}</td>
                             <td style="text-align: center">{{ $apply->election->name }}</td>
                             @if(Auth::user()->role == 'admin')
                             <td><a href="{{url('candidates',$apply->id)}}" class="btn btn-success" onclick="return confirm('Are you sure, You want to approve')"><i class="glyphicon glyphicon-ok"></i></a>  

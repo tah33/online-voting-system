@@ -28,7 +28,9 @@
                                 <b>Actor</b> <a class="pull-right">{{ $user->role }}</a>
                             </li>
                         </ul>
+                        @if(Auth::id() == $user->id)
                         <a href="{{'edit-profile/'.$user->id}}" class="btn btn-primary btn-block"><b>Edit Profile</b></a>
+                        @endif
                     </div>
                     <!-- /.box-body -->
                 </div>

@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('dob') ? 'has-error' : '' }}">
                     <input type="date" name="dob" class="form-control" value="{{ $user->dob }}" placeholder="Enter Date of Birth">
-                    <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-date form-control-feedback"></span>
                     @if ($errors->has('dob'))
                         <span class="help-block">
                             <strong>{{ $errors->first('dob') }}</strong>
@@ -100,7 +100,7 @@
                 </div>
                  <div class="form-group has-feedback {{ $errors->has('symbol_name') ? 'has-error' : '' }}">
                     <input type="text" name="symbol_name" class="form-control" value="{{ $user->party->symbol_name }}" placeholder="Enter Phone">
-                    <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('symbol_name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('symbol_name') }}</strong>

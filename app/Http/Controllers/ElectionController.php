@@ -26,7 +26,7 @@ class ElectionController extends Controller
             'election_date' =>'required|after_or_equal:tomorrow',
         ]);
         Election::create($request->all());
-        return back()->with('success','Election Created Successffully Succesfully');
+        return back()->with('success','Election Created Successffully');
     }
 
     public function show(Election $election)

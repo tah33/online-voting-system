@@ -52,11 +52,14 @@ class ResultController extends Controller
      */
     public function show($id)
     {
+        $users = '';
+        $ids = [];
         $candidates = Candidate::where('election_id',$id)->get();
         foreach ($candidates as $key => $candidate) {
             $ids[] = $candidate->user_id;
         }
-        $users = User::whereIn('id',$ids)->groupBy('area')->get();
+        if($ids)
+            $users = User::whereIn('id',$ids)->groupBy('area')->get();
 
         return view('results.show',compact('users'));
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Candidate;
 use App\Election;
 use App\User;
+use App\Party;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -17,13 +18,15 @@ class CandidateController extends Controller
      */
     public function index()
     {
+        $users='';
         $ids=[];
         $elections = Election::where('status',1)->get();
         foreach ($elections as $key => $election) {
         foreach ($election->candidates as $candidate)
             $ids [] = $candidate->user_id;
         }
-        $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();
+        if(!empty($ids))
+            $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();
         return view('candidate.index',compact('users'));
     }
     /**
@@ -43,11 +46,16 @@ class CandidateController extends Controller
      */
     public function store(Request $request,$id)
     {
+        $canidate_exist = Candidate::where('user_id',Auth::id())
+                        ->where('election_id',$id)->exists();
+        if ($canidate_exist) {
+            return back()->with('error','You are alaredy Applied');
+        }
         $candidate = new Candidate;
         $candidate->user_id = Auth::id();
         $candidate->election_id = $id;
         $candidate->save();
-        return back()->with('succes','Succesfully Your application has been sent');
+        return back()->with('success','Succesfully Your application has been sent');
     }
 
     /**
@@ -56,8 +64,13 @@ class CandidateController extends Controller
      * @param  \App\Candidate  $candidate
      * @return \Illuminate\Http\Response
      */
-    public function show(Candidate $candidate)
+    public function show($id)
     {
+        $candidate = Candidate::withTrashed()->find($id);
+        if($candidate->trashed())
+        {
+            $candidate->restore();
+        }
         $candidate->status=1;
         $candidate->save();
         $party = Party::where('user_id',$candidate->user_id)->latest()->first();

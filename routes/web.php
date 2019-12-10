@@ -8,7 +8,6 @@ Route::get('edit-profile/{id}','HomeController@editProfile');
 Route::post('update-profile/{id}','HomeController@updateProfile');
 Route::get('password','HomeController@password');
 Route::post('update-password/{id}','HomeController@updatePassword');
-Route::post('update-password/{id}','HomeController@updatePassword');
 //UserController
 Route::resource('users','UserController');
 Route::get('blocked-users','UserController@blockUsers');
@@ -42,4 +41,3 @@ Route::get('users-pdf','PdfController@user');
 Route::get('voters-pdf','PdfController@voter');
 Route::get('candidate-pdf','PdfController@candidate');
 Route::get('elections-pdf','PdfController@elections');
-
