@@ -2,11 +2,12 @@
 @section('content')
     <div class="row"> 
         <div class="box">
+            <center>
 <a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
 <a href="{{url('voters-pdf')}}" class="btn btn-primary" target="_blank" style="text-align:  center;">Get Pdf</a>
-
+</center>
             <div class="box-body">
-                <table class="table table-hover table-bordered">
+                <table id="search" class="table table-hover table-bordered">
                     <caption>Voters List</caption>
                     <thead>
                     <tr>

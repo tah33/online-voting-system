@@ -3,8 +3,10 @@
     <div class="row"> 
         <div class="box" >
             <div class="box-body">
+                <center>
                 <a href="{{url('elections-pdf')}}" target="_blank" class="btn btn-primary">Get Pdf</a>
-    <table class="table table-hover table-bordered" width="300">
+            </center>
+    <table id="search" class="table table-hover table-bordered" width="300">
         <thead>
         <tr>
             <th>Serial</th>

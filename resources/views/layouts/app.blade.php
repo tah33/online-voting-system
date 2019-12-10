@@ -27,6 +27,7 @@
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+          <link rel="stylesheet" href="{{URL::asset('bower_components/datatables/css/dataTables.bootstrap.min.css')}}">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -230,7 +231,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="{{URL::asset('bower_components/datatables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{URL::asset('bower_components/datatables/js/dataTables.bootstrap.min.js')}}"></script>
 <script src="sweetalert2.all.min.js"></script>
 @stack('script-file');
 <script>
@@ -244,7 +246,11 @@
         $("body").on("click", ".btn-danger", function () {
             $(this).parents(".control-group").remove();
         });
-
+        $('#search').DataTable({
+                language: {
+                    searchPlaceholder: "Type Something to Search"
+                }
+            });
 
     })
 

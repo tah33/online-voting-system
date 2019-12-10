@@ -15,7 +15,7 @@
 <div class="row">
     <div class="box">
         <div class="box-body">
-            <table class="table table-hover table-bordered">
+            <table id="search" class="table table-hover table-bordered">
                 <caption>Voting Area</caption>
                 <thead>
                     <tr>

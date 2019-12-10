@@ -9,10 +9,11 @@
     <div class="row"> 
         <div class="box">            
             <div class="box-body">
+                <center>
 <a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
 <a href="{{url('users-pdf')}}" class="btn btn-primary" target="_blank" style="text-align:  center;">Get PDF</a>
-
-                <table class="table table-hover table-bordered">
+</center>
+                <table class="table table-hover table-bordered" id="search">
                     <caption>Users List</caption>
                     <thead>
                     <tr>

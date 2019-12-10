@@ -9,7 +9,7 @@
     <div class="row"> 
         <div class="box" style="width: 600px">
             <div class="box-body">
-                <table class="table table-hover table-bordered">
+                <table id="search" class="table table-hover table-bordered">
                     <caption>Election List</caption>
                     <thead>
                     <tr>

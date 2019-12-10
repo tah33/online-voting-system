@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-
     use RegistersUsers;
 
     protected $redirectTo = '/home';
@@ -32,7 +31,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'role' => ['required'],
-            'nid' => ['nullable','unique:users,nid','max:10'],
+            'nid' => 'required|regex:/\+?[1-9][0-9]{9}\b/|min:10|unique:users,nid',
             'phone' => ['required','max:14','min:11','unique:users,phone'],
             'area' => ['required'],
             'image' => ['nullable','required'],

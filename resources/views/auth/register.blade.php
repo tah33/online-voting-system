@@ -29,12 +29,12 @@
 <div class="login100-pic js-tilt" data-tilt>
 <img src="login_components/images/img-01.png" alt="IMG">
 </div>
-<form class="login100-form validate-form" action="{{route('register')}}" method="post" enctype="multipart/form-data">
+<form class="login100-form" action="{{route('register')}}" method="post" enctype="multipart/form-data">
     @csrf
 <span class="login100-form-title">
 Registration
 </span>
-<div class="wrap-input100 validate-input">
+<div class="wrap-input100">
 <input class="input100" type="text" name="name" placeholder="Name" value="{{old('name')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -46,7 +46,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input">
+<div class="wrap-input100">
 <input class="input100" type="text" name="username" placeholder="Username" value="{{old('username')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -58,7 +58,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+<div class="wrap-input100">
 <input class="input100" type="text" name="email" placeholder="Email" value="{{old('email')}}">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -70,7 +70,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
 <input class="input100" type="password" name="password" placeholder="Password">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
@@ -82,7 +82,7 @@ Registration
                         </span>
                     @endif
 </div>
-<div class="wrap-input100 validate-input" data-validate="Password is required">
+<div class="wrap-input100">
 <input class="input100" type="password" name="password_confirmation" placeholder="Confirm Password">
 <span class="focus-input100"></span>
 <span class="symbol-input100">
