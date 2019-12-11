@@ -19,49 +19,30 @@
                 <caption>Voting Area</caption>
                 <thead>
                     <tr>
-                        <th style="text-align: center">Election Name</th>
-                        <th style="text-align: center">Candidates</th>
-                        <th style="text-align: center">Action</th>
+                        <th rowspan="2" style="text-align: center">Election Name</th>
+                        <th colspan="2" style="text-align: center">Candidates</th>
+                    </tr>
+                    <tr class="bg-grey">
+                        <th>Name</th>
+                        <th>Symbol</th>
                     </tr>
                 </thead>
                 <tbody align="center">
-                    @foreach ($elections as $key => $election)
+                    @foreach ($elections as $election)
                     <tr>
-                        <td style="text-align: center">{{ $election->name }}</td>
-                        <td style="text-align: center">
-                            @if($candidates)
-                            @foreach($election->candidates as $key => $candidate)
-                            <table class="table table-hover table-bordered">
-                                <tr>
-                                    <td>
-                                        <b>{{$key+1}} </b>: <b>{{$candidate->user['name']}}</b>
-                                    </td>
-                                </tr>
-                            </table>
-                            @endforeach
-                            @endif
-                        </td>
-                        <td>
-                            @if($candidates)
-                            @foreach($election->candidates as $key => $candidate)
-                            @if($candidate->user['area'] == Auth::user()->area || Auth::user()->role == 'admin')
-                            <table class="table table-hover table-bordered">
-                                <tr>
-                                    <td style=" text-align: center ">
-                                        <a href="{{url('voters', $candidate->id)}}" class="btn btn-success btn-sm"
-                                            style="margin-top: -10px"
-                                            onclick="return confirm('Are you Sure You want to vote this candidates?')"><i
-                                                class="glyphicon glyphicon-ok"></i></a> </td>
-                                </tr>
-                            </table>
-                            @endif
-                            @endforeach
-                            @endif
-                        </td>
-                    </tr>
+                    <td rowspan="{{count($election->candidates)+1}}">{{$election->name}}</td>
+                @foreach ($election->candidates as $candidate)
+                <tr>
+
+                    <td>{{$candidate->user->name}}</td>
+                <td><a href="{{url('voters',$candidate->id)}}" onclick="return confirm('Are you Sure You want to vote this candidates?')"> 
+                    <img src="{{url('images/'.$candidate->user->party->symbol)}}" height="50px" width="50px"></a></td>
+                </tr>
+                @endforeach    
                     @endforeach
+                    </tr>
                 </tbody>
-            </table>
+                            </table>
         </div>
     </div>
 </div>
