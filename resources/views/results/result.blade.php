@@ -14,7 +14,6 @@
                         <th style="text-align: center">Seats Win</th>
                         <th style="text-align: center">Total Seats</th>
                         <th style="text-align: center">Winner</th>
-                    
                     </tr>
                     </thead>
                     @php
@@ -28,7 +27,6 @@
                             <td style="text-align: center">{{ $party->name }}</td>
                             <td style="text-align: center">{{ $party->seats }}</td>
                             @if($count != 0)
-
                             <td rowspan="{{count($parties)}}" style="text-align: center">{{ count(($party->election->candidates->groupBy('area'))) }}</td>
                             <td rowspan="{{count($parties)}}" style="text-align: center">{{$winner->name}}</td>
                             @endif

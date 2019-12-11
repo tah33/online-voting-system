@@ -56,7 +56,8 @@ class ResultController extends Controller
     {
         $seat = Party::where('election_id',$id)->orderBy('id','desc')
                 ->max('seats');
-        $parties = Party::where('election_id',$id)->get();
+        $parties = Party::selectRaw('*, sum(seats) as seats')->where('election_id',$id)
+                    ->groupBy('name')->get();
         $winner = Party::where('election_id',$id)->orderBy('id','desc')
                 ->where('seats',$seat)->first();
         $candidates =Candidate::where('election_id',$id)->groupBy('area')->get();
@@ -77,12 +78,12 @@ class ResultController extends Controller
             $party->save();
             $count++;
             }
-        $looserparties = Party::where('user_id','!=',$candidate->user_id)
-                        ->where('election_id',$id)->orderBy('id','desc')->get();
-                        foreach ($looserparties as $key => $party) {
-                            $party->seats += 0;
-                            $party->save();
-                        }
+        // $looserparties = Party::where('user_id','!=',$candidate->user_id)
+        //                 ->where('election_id',$id)->orderBy('id','desc')->get();
+        //                 foreach ($looserparties as $key => $party) {
+        //                     $party->seats += 0;
+        //                     $party->save();
+        //                 }
         }
     }
         return view('results.result',compact('parties','seat','winner'));
