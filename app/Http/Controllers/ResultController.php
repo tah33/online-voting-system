@@ -51,13 +51,12 @@ class ResultController extends Controller
         $voters = User::where('area',$id)->where('role','voter')->get();
         return view('results.winner',compact('users','max','users_max_vote','voters'));
     }
-
     public function result($id)
     {
         $seat = Party::where('election_id',$id)->orderBy('id','desc')
                 ->max('seats');
-        $parties = Party::selectRaw('*, sum(seats) as seats')->where('election_id',$id)
-                    ->groupBy('name')->get();
+        $parties = Party::groupBy('name')->selectRaw('*, sum(seats) as seats')
+                        ->where('election_id',$id)->get();
         $winner = Party::where('election_id',$id)->orderBy('id','desc')
                 ->where('seats',$seat)->first();
         $candidates =Candidate::where('election_id',$id)->groupBy('area')->get();

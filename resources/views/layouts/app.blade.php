@@ -251,14 +251,10 @@
                     searchPlaceholder: "Type Something to Search"
                 }
             });
-
-    })
-
-    $(document).ready(function () {
         $("#formButton").click(function () {
             $("#form1").toggle();
         });
-    });
+});
 </script>
 
 </body>
