@@ -12,7 +12,6 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
-    <div class="row"> 
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table id="search" class="table table-hover table-bordered">
@@ -40,5 +39,4 @@
                 </table>
             </div>
         </div>
-    </div>
 @endsection

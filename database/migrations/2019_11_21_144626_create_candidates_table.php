@@ -19,9 +19,15 @@ class CreateCandidatesTable extends Migration
             $table->unsignedBigInteger('election_id');
             $table->boolean('status')->default(0);
             $table->integer('votes')->default(0);
-            $table->integer('area')->nullable();
+            $table->unsignedBigInteger('area_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('area_id')->references('id')->on('areas')
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('election_id')->references('id')->on('elections')
+            ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

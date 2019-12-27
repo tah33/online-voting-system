@@ -24,10 +24,12 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable();
             $table->date('dob')->nullable();
             $table->string('phone')->nullable();
-            $table->unsignedBigInteger('area')->nullable();
+            $table->unsignedBigInteger('area_id')->nullable();
             $table->string('image')->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('area_id')->references('id')->on('areas')
+                    ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

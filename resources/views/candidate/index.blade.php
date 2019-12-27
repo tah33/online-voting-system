@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <div class="row"> 
         <div class="box" >
             <div class="box-body">
                 <center>
@@ -53,6 +52,5 @@ $user = 1;
     </table>
      </div>
         </div>
-    </div>
     @stop
 

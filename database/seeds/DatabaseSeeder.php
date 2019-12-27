@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
             'name' =>'Saria',
             'username' =>'saria',
             'email' =>'saria@gmail.com',
-            'nid' =>1365465465464,
+            'nid' =>1365465465,
             'password' =>bcrypt('123456'),
             'role' =>'admin',
+            'area_id' =>1,
         ]);
         
 

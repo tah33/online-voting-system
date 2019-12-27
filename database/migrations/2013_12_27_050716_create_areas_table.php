@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElectionsTable extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateElectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('elections', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->boolean('status')->default(0);
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->date('election_date');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateElectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('elections');
+        Schema::dropIfExists('areas');
     }
 }

@@ -22,6 +22,11 @@ class CreatePartiesTable extends Migration
             $table->unsignedBigInteger('election_id');
             $table->integer('seats')->default(0);
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('election_id')->references('id')->on('elections')
+            ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

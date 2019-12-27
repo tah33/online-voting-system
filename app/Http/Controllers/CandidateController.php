@@ -79,7 +79,7 @@ class CandidateController extends Controller
 
     public function apply()
     {
-        $applies = Election::where('status',1)->get();
+        $applies = Election::where('status',1)->whereDate('start_date','<=',Carbon::now('Asia/Dhaka'))->whereDate('end_date','>=',Carbon::now('Asia/Dhaka'))->get();
         return view('candidate.list',compact('applies'));
     }
 
