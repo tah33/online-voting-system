@@ -19,7 +19,7 @@ class CreateCandidatesTable extends Migration
             $table->unsignedBigInteger('election_id');
             $table->boolean('status')->default(0);
             $table->integer('votes')->default(0);
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->unsignedBigInteger('area_id');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('area_id')->references('id')->on('areas')

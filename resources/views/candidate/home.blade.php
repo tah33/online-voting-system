@@ -1,6 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
 
-@section('content')
+@section('master.content')
 <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
@@ -17,7 +18,7 @@
               <a href="{{url('ongoing')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
           </div>
-          
+
           <div class="col-lg-3 col-6">
             <!-- Card for Students -->
             <div class="small-box bg-primary">
@@ -35,5 +36,5 @@
 
              </div>
       </div>
-          
+
 @stop

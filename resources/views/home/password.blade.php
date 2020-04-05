@@ -1,48 +1,31 @@
-@extends('layouts.app')
-@section('content')
-    @if ($message = Session::get('error'))
-        <div class="alert alert-error alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-    @endif
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-    @endif
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
+
     <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Edit Password</p>
-            <form action="{{ url( 'update-password',$user->id) }}" method="post" enctype="multipart/form-data" 
-                onsubmit="return confirm('Do you really want to change the Password?');">
+            <form action="{{ url( 'update-password',$user->id) }}" method="post">
                 {{ csrf_field() }}
 
-                <div class="form-group has-feedback {{ $errors->has('old') ? 'has-error' : '' }}">
+                <div class="form-group has-feedback">
                     <input type="password" name="old" class="form-control" placeholder="Current Password">
-                    <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
-                    @if ($errors->has('old'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('old') }}</strong>
-                        </span>
-                    @endif
+                    <span class="fa fa-eye-slash form-control-feedback"></span>
+                    <span class="text-danger">{{$errors->first('old')}}</span>
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
+                <div class="form-group has-feedback">
                     <input type="password" name="password" class="form-control" placeholder="New Password">
-                    <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
-                    @if ($errors->has('password'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
+                    <span class="fa fa-eye-slash form-control-feedback"></span>
+                    <span class="text-danger">{{$errors->first('password')}}</span>
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
+
+                <div class="form-group has-feedback">
                     <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password">
                     <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
                 </div>
 
-                <input type="submit" value="Update Password" class="btn btn-success">
+                <input type="submit" value="Update Password" class="btn btn-primary btn-sm btn-flat">
             </form>
         </div>
         <!-- /.form-box -->

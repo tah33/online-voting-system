@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
         <div class="box" >
             <div class="box-body">
                 <center>
@@ -15,22 +17,22 @@
             <th>Elections</th>
             <th>Election Date</th>
         </tr>
-    
+
         </thead>
-@php 
+@php
 $userElections = [];
 $ids = [];
 $user_elections = [];
 $user = 1;
 @endphp
         <tbody>
-            @foreach ($elections as $election)                
+            @foreach ($elections as $election)
             @foreach($election->candidates as $key => $candidate)
             <tr>
               <td>{{$key+1}}</td>
               <td>{{$candidate->user->name}}</td>
                @if (!in_array($candidate->user_id, $ids))
-        @php  
+        @php
         $ids[] = $candidate->user_id ;
         @endphp
               <td rowspan="{{count($election->candidates->where('area',$candidate->area))}}">
@@ -43,7 +45,7 @@ $user = 1;
               @if (!in_array($election->updated_at, $userElections))
         @php $userElections[] = $election->updated_at; @endphp
               <td rowspan="{{count($election->candidates)}}">{{$election->updated_at->toDateString()}}</td>
-              @endif 
+              @endif
             </tr>
             @endforeach
             @endforeach

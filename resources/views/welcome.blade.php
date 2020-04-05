@@ -5,7 +5,9 @@
         <title>Online Voting System</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="{{URL::asset('dist/css/main.css')}}" />
+        <link rel="stylesheet" href="{{URL::to('bower_components/font-awesome/css/font-awesome.min.css')}}">
+
     </head>
     <body>
 
@@ -18,7 +20,7 @@
                         <a href="{{route('login')}}">Login</a>
                         <a href="{{route('register')}}">Registration</a>
                         <a href="#about_us">About Us</a>
-                        
+
                     </nav>
                     <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
                 </div>
@@ -62,22 +64,22 @@
                 <div class="inner section-padding" id="about_us">
                     <h2 style="color: white">About Us</h2>
                     <p style="color: white">
-                    Presently voting is performed using ballot paper and the counting is done 
-                    manually, hence it consumes a lot of time. There can be possibility of 
-                    invalid votes. All these make election a tedious task. 
+                    Presently voting is performed using ballot paper and the counting is done
+                    manually, hence it consumes a lot of time. There can be possibility of
+                    invalid votes. All these make election a tedious task.
                     In our Online Voting System, voting and counting is done with the help
                     of computer. It saves time, avoid error in counting and there will be no
-                    invalid votes. It makes the election process easy. The user interface is 
-                    designed keeping in mind that many people are not computer savvy. 
-                    It is very user friendly and convenient application to use. 
-                    It minimizes human errors as everything is automated and is integrated 
+                    invalid votes. It makes the election process easy. The user interface is
+                    designed keeping in mind that many people are not computer savvy.
+                    It is very user friendly and convenient application to use.
+                    It minimizes human errors as everything is automated and is integrated
                     with systematic procedure.</p>
                 </div>
             </section>
 
 
 
-       
+
         <!-- Footer -->
             <footer id="footer">
 

@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -33,7 +35,7 @@
                                    <form action="{{url('elections',$election->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Delete This Election?');">
                                    	@csrf
                                    	@method('delete')
-									<button type="submit" style="float: left" class="btn btn-danger"><i class="fa fa-trash"></i></button>                                    	
+									<button type="submit" style="float: left" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                    </form>
                             </td>
                         </tr>

@@ -19,12 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('nid');
+            $table->string('nid')->unique();
             $table->string('role');
             $table->string('gender')->nullable();
             $table->date('dob')->nullable();
             $table->string('phone')->nullable();
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->unsignedBigInteger('area_id');
             $table->string('image')->nullable();
             $table->softDeletes();
             $table->timestamps();

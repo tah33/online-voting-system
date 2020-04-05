@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table id="search" class="table table-hover table-bordered">
@@ -17,7 +19,7 @@
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $election->name }}</td>
                             <td> <a href="{{url('result-election/'.$election->id)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                
+
                             </td>
                         </tr>
                     @endforeach

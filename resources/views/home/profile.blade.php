@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 @if($user->role == 'admin')
 <div class="col-md-6">
         <div class="box box-primary">
@@ -92,7 +94,7 @@
                                <b>Age</b> <a class="pull-right">{{Carbon\Carbon::createFromDate($user->dob)->diff(Carbon\Carbon::now())->format('%y years')}}</a>
                             </li>
                         </ul>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +109,7 @@
                                     <div class="col-md-5">
                                         <div class="card">
                                             <ul class="list-group list-group-unbordered">
-                            
+
                             <li class="list-group-item">
                                <b>Party</b> <a class="pull-right">{{$user->party->name}}</a>
                             </li>
@@ -117,7 +119,7 @@
                             <li class="list-group-item"><b>Symbol</b>
                             <img class="card-img-top" width="50%" src="{{asset('images/'.$user->party->symbol)}}" class="img-circle">
                         </ul>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -127,17 +129,17 @@
 
                     </div>
                     <!-- /.tab-content -->
-                 
+
 
                         <!-- /.tab-pane -->
 
-        
+
                 </div>
                 <!-- /.nav-tabs-custom -->
             </div>
             <!-- /.col -->
         </div>
 
-    </div> 
+    </div>
 @endif
 @stop

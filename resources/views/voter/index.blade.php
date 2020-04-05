@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 @if ($message = Session::get('warning'))
 <div class="alert alert-danger alert-block">
     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -34,10 +36,10 @@
                 <tr>
 
                     <td>{{$candidate->user->name}}</td>
-                <td><a href="{{url('voters',$candidate->id)}}" onclick="return confirm('Are you Sure You want to vote this candidates?')"> 
+                <td><a href="{{url('voters',$candidate->id)}}" onclick="return confirm('Are you Sure You want to vote this candidates?')">
                     <img src="{{url('images/'.$candidate->user->party->symbol)}}" height="50px" width="50px"></a></td>
                 </tr>
-                @endforeach    
+                @endforeach
                     @endforeach
                     </tr>
                 </tbody>

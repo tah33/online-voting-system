@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Edit Profile</p>

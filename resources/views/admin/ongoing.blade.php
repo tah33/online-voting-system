@@ -1,6 +1,8 @@
-@extends('layouts.app')
-@section('content')
-    <div class="row"> 
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
+    <div class="row">
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table id="search" class="table table-hover table-bordered">
@@ -30,7 +32,7 @@
                                    <form action="{{url('elections',$ongoing->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Delete This Election?');">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" style="float: left" class="btn btn-danger"><i class="fa fa-trash"></i></button>                                       
+                                    <button type="submit" style="float: left" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                    </form>
                                    @else
                                    <a href="{{url('election-candidate',$ongoing->id)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>

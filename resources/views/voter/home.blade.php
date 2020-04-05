@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">

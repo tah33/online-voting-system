@@ -1,13 +1,15 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>{{ $message }}</strong>
         </div>
     @endif
-    <div class="row"> 
-        <div class="box">            
+    <div class="row">
+        <div class="box">
             <div class="box-body">
                 <center>
 <a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
@@ -44,7 +46,7 @@
                                    <form action="{{url('users',$user->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Block This User?');">
                                    	@csrf
                                    	@method('delete')
-									<button type="submit" style="float: left" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>                                    	
+									<button type="submit" style="float: left" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>
                                    </form>
                             </td>
                         </tr>

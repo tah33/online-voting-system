@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
         <div class="box">
             <div class="box-body">
                 <table id="search" class="table table-hover table-bordered">

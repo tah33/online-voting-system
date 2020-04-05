@@ -1,93 +1,61 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>OVS</title>
-    <link rel="shortcut icon" href="{{ asset('public/favicon.jpg') }}">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="{{asset('https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')}}"></script>
-    <script src="{{asset('https://oss.maxcdn.com/respond/1.4.2/respond.min.js')}}"></script>
-    <![endif]-->
-    <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-          <link rel="stylesheet" href="{{URL::asset('bower_components/datatables/css/dataTables.bootstrap.min.css')}}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
 
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="{{url('home')}}" class="logo">
-            <!-- mini logo for siiiidebar mini 50x50 pixels -->
-            <span class="logo-mini">{{Auth::user()->name}}</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Dashboard</span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
+                    </ul>
 
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <ul class="dropdown-menu">
-                            <ul class="menu">
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            @if(Auth::user()->image == "")
-                                <img src="{{asset('images/avatar.png')}}" class="user-image">
-                            @else
-                                <img src="{{asset('images/'.Auth::user()->image)}}" class="user-image">
                             @endif
-                            <span class="hidden-xs">{{Auth::user()->name}}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- User image -->
-                            <li class="user-header">
-                                @if(Auth::user()->image =='')
-                                    <img src="{{asset('images/avatar.png')}}" class="img-circle">
-                                @else
-                                    <img src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
-                                @endif
-                                <p>
-                                     {{Auth::user()->name}}
-                                    <small>Member since {{Auth::user()->created_at->diffForHumans()}}</small>
-                                </p>
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="{{url('profile')}}" class="btn btn-default btn-flat">Profile</a>
-                                </div>
-                                <div class="pull-right">
-                                     <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -98,165 +66,15 @@
                                     </form>
                                 </div>
                             </li>
-                        </ul>
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-                </ul>
+                        @endguest
+                    </ul>
+                </div>
             </div>
         </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    @if(Auth::user()->image =='')
-                        <img src="{{asset('images/avatar.png')}}" class="img-circle">
-                    @else
-                        <img src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
-                    @endif
-                </div>
-                <div class="pull-left info">
-                    <p>{{Auth::user()->name}}</p>
-                </div>
-            </div>
-            <br>
-            <br><ul class="sidebar-menu" data-widget="tree">
-            <li><a href="{{url('password')}}"><i class="glyphicon glyphicon-cog"></i>Change Password</a></li>
 
-                @if(Auth::user()->role == 'admin')
-                        <li>
-                                    <a href="{{url('users')}}"><i class="fa fa-users"></i> View Registered Users</a>
-                                </li>
-                                <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-share"></i> <span>Election</span>
-                            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{url('elections/create')}}"><i class="fa fa-plus-square"></i> Create Election</a></li>
-                                <li>
-                                    <a href="{{url('elections')}}"><i class="fa fa-eye"></i> Elections</a>
-                                </li>
-                        </ul>
-                        </li>
-                        @endif
-                           <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-share"></i> <span>Application</span>
-                            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            @if(Auth::user()->role == 'candidate')
-                            <li><a href="{{url('applies')}}"><i class="fa fa-check"></i>Apply</a></li>
-                        @endif
-
-                                <li>
-                                    <a href="{{url('pending-application')}}"><i class="fa fa-hourglass-3"></i> Pending Application</a>
-                                </li>
-                                <li>
-                                    <a href="{{url('reject-applications')}}"><i class="fa fa-user-times"></i> Reject Application</a>
-                                </li>
-                        </ul>
-                        </li>
-                     
-                                <li>
-                                    <a href="{{url('candidates')}}"><i class="fa fa-user"></i>Candidates</a>
-                                </li>
-                       
-
-                                <li>
-                                    <a href="{{url('voters')}}"><i class="fa fa-area-chart"></i>Voter Area</a>
-                                </li>
-                                 <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-share"></i> <span>Result</span>
-                            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{url('winner')}}"><i class="fa fa-check"></i>Winner</a></li>
-
-                                <li>
-                                    <a href="{{url('results')}}"><i class="glyphicon glyphicon-filter"></i> Area Wise</a>
-                                </li>
-                        </ul>
-                        </li>
-
-            </ul>
-            @yield('sidebar')
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-        </section>
-
-        <section class="content">
+        <main class="py-4">
             @yield('content')
-        </section>
-        <!-- /.content -->
+        </main>
     </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.4.18
-        </div>
-        <strong>©<?php echo date("Y"); ?> Copyright. <a
-                href="https://www.datatrixsoft.com">Online Voting</a>.</strong> All rights
-        reserved.
-    </footer>
-
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
-</div>
-<!-- jQuery 3 -->
-<script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('dist/js/demo.js')}}"></script>
-<script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<script src="{{URL::asset('bower_components/datatables/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{URL::asset('bower_components/datatables/js/dataTables.bootstrap.min.js')}}"></script>
-<script src="sweetalert2.all.min.js"></script>
-@stack('script-file');
-<script>
-    $(function () {
-        $(".select2").select2();
-        $(".btn-success").click(function () {
-            var html = $(".clone").html();
-            $(".increment").after(html);
-        });
-
-        $("body").on("click", ".btn-danger", function () {
-            $(this).parents(".control-group").remove();
-        });
-        $('#search').DataTable({
-                language: {
-                    searchPlaceholder: "Type Something to Search"
-                }
-            });
-        $("#formButton").click(function () {
-            $("#form1").toggle();
-        });
-});
-</script>
-
 </body>
-
 </html>

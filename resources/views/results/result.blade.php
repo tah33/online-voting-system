@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
         <div class="box" style="width: 600px">
             <div class="box-body">
                 <table id="search" class="table table-hover table-bordered">
@@ -19,7 +21,7 @@
                     $count = 1;
                     @endphp
                     <tbody align="center">
-                        @if(count($parties) > 0) 
+                        @if(count($parties) > 0)
                     @foreach ($parties as $key => $party)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
@@ -32,7 +34,7 @@
                             @php
                     $count = 0;
                     @endphp
-                            
+
                         </tr>
                     @endforeach
                     @endif

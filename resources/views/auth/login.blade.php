@@ -1,113 +1,56 @@
-<!DOCTYPE HTML>
-
-<html>
-
-<head>
-    <title>Login</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="login_components/images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/css/util.css">
-    <link rel="stylesheet" type="text/css" href="login_components/css/main.css">
-    <!--===============================================================================================-->
-</head>
-
-<body>
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="login_components/images/img-01.png" alt="IMG">
-                </div>
-                <form class="login100-form validate-form" action="{{route('login')}}" method="post">
-                    @csrf
-                    <span class="login100-form-title">
-                        Login
-                    </span>
-                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email" placeholder="Email">
-                        @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                        @endif
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="password" placeholder="Password">
-                        @if ($errors->has('password'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('password') }}</strong>
-                        </span>
-                        @endif
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">
-                            Login
-                        </button>
-                    </div>
-                    <div class="text-center">
-                        <a class="txt2" href="{{route('register')}}">
-                            Create your Account
-                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    <div class="text-center">
-                            <a class="txt2" href="#">
-                                Forgot Password ? <a href="#" data-toggle="modal" data-target="#modal-reset">Click Here</a>
-                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    <div class="text-center p-t-12">
-                        <span style="font-size: 20px" class="txt1">
-                            Go to
-                        </span>
-                        <a style="font-size: 20px" class="txt2" href="{{url('/')}}">
-                            Home
-                        </a>
-                    </div>
-
-                </form>
-            </div>
+@extends('layouts.backend.base')
+@section('base.content')
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{url('/')}}"><b>BANK</b>ATM</a>
         </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            <form action="{{route('login')}}" method="post">@csrf
+                <div class="form-group has-feedback">
+                    <input type="text" name="email" class="form-control" placeholder="Username/Email">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                </div>
+
+                <div class="row">
+                    @if(\Illuminate\Support\Facades\Session::has('msg'))
+                        <span class="text-danger">{{\Illuminate\Support\Facades\Session::get('msg')}}</span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        {{--<div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox"> Remember Me
+                            </label>
+                        </div>--}}
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+
+            <a href="javascript:void(0)" data-target="#modal-reset" data-toggle="modal">I forgot my password</a><br>
+            <a href="{{url('register')}}" class="text-center"><i class="fa fa-user-plus"></i> Register a new membership</a><br>
+            <a href="{{url('/')}}" class="text-center"><i class="fa fa-home"></i> Go Home</a>
+
+        </div>
+        <!-- /.login-box-body -->
     </div>
-    @include('email.modal')
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/bootstrap/js/popper.js"></script>
-    <script src="login_components/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/select2/select2.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/tilt/tilt.jquery.min.js"></script>
-    <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
-        })
-    </script>
-    <!--===============================================================================================-->
-    <script src="js/main.js"></script>
-
-</body>
-
-</html>
+    <!-- /.login-box -->
+    {{--    @include('users.reset_link')--}}
+@endsection

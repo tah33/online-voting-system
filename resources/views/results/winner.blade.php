@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 <a href="{{url('area-pdf/'.$users->first()->area)}}" target="_blank" class="btn btn-primary">Get PDF</a>
 <div class="panel panel-primary">
 	<div class="panel-heading">{{$users->first()->userarea->name}}</div>
@@ -17,15 +19,15 @@
     <img class="card-img-bottom" src="{{url('images/'.$user->party->symbol)}}" alt="Card image" style="width:100px; height: 50px"><br>
     <b><u>Result</u></b><br>
       <h5 class="card-title"><b>Vote : {{$user->candidate->votes}}</b></h5>
-       @if($user->candidate->votes == $max) 
+       @if($user->candidate->votes == $max)
         @if($users_max_vote->count()>1)
-          <font color="red">  Draw between 
-            @foreach($users_max_vote as $vote) 
-               {{$vote->name}} 
-            @endforeach 
+          <font color="red">  Draw between
+            @foreach($users_max_vote as $vote)
+               {{$vote->name}}
+            @endforeach
             </font>
         @else
-            <font color="green"><h3>Winner</h3></font> 
+            <font color="green"><h3>Winner</h3></font>
         @endif
         @endif
     </div>

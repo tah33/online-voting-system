@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.backend.master')
+@section('backend.title', $title)
+
+@section('master.content')
 @if ($message = Session::get('error'))
         <div class="alert alert-danger alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -25,7 +27,7 @@
                               @foreach($candidates as $key => $candidate)
                               <table class="table table-hover table-bordered">
                               <tr><td>
-                                <b>{{$key+1}} </b>:  <b>{{$candidate->user->name}}</b> 
+                                <b>{{$key+1}} </b>:  <b>{{$candidate->user->name}}</b>
                                 </td></tr>
                             </table>
                               @endforeach
