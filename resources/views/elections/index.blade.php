@@ -2,46 +2,58 @@
 @section('backend.title', $title)
 
 @section('master.content')
-@if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-    @endif
-        <div class="box" style="width: 600px">
-            <div class="box-body">
-                <table id="search" class="table table-hover table-bordered">
-                    <caption>Election List</caption>
-                    <thead>
-                    <tr>
-                        <th style="text-align: center">No.</th>
-                        <th style="text-align: center">Election Name</th>
-                        <th style="text-align: center">Status</th>
-                        <th style="text-align: center">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody align="center">
-                    @foreach ($elections as $key => $election)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <table id="search" class="table table-hover table-bordered">
+                        <caption>Election List</caption>
+                        <thead >
                         <tr>
-                            <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $election->name }}</td>
-                            <td style="text-align: center">{{ $election->status == 0 ? "Inactive" : "Active"  }}</td>
-                            <td>@if($election->status == 0)
-                                <a href="{{url('elections',$election->id)}}" style="float: left;" class="btn btn-success" onclick="return confirm('Are you sure you want to Active This Election?');"><i class="glyphicon glyphicon-ok"></i></a>
-                                @else
-                                <a href="{{url('elections',$election->id)}}" style="float: left;" class="btn btn-danger" onclick="return confirm('Are you sure you want to hold This Election?');"><i class="glyphicon glyphicon-remove"></i></a>
-                                @endif
-                                <a href="{{url('elections/'.$election->id.'/edit')}}" style="float: left" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
-                                   <form action="{{url('elections',$election->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Delete This Election?');">
-                                   	@csrf
-                                   	@method('delete')
-									<button type="submit" style="float: left" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                   </form>
-                            </td>
+                            <th>No.</th>
+                            <th>Election Name</th>
+                            <th>Election Date</th>
+                            <th>Application Start Date</th>
+                            <th>Application End Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody >
+                        @foreach ($elections as $key => $election)
+                            <tr align="left">
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ $election->name }}</td>
+                                <td>{{ $election->election_date }}</td>
+                                <td>{{ $election->start_date }}</td>
+                                <td>{{ $election->end_date }}</td>
+                                <td>{!! $election->statusname !!}</td>
+                                <td>@if($election->status == 0)
+                                        <a href="{{url('elections',$election->id)}}" class="btn btn-success btn-sm btn-flat"
+                                           onclick="return confirm('Are you sure you want to Active This Election?');"><i
+                                                class="fa fa-check"></i></a>
+                                    @else
+                                        <a href="{{url('elections',$election->id)}}"
+                                           class="btn btn-danger btn-sm btn-flat"
+                                           onclick="return confirm('Are you sure you want to hold This Election?');"><i
+                                                class="fa fa-hand-stop-o"></i></a>
+                                    @endif
+                                    <a href="{{url('elections/'.$election->id.'/edit')}}"
+                                       class="btn btn-warning btn-sm btn-flat"><i class="fa fa-pencil"></i></a>
+                                    <form action="{{url('elections',$election->id)}}" method="post" style="display: inline"
+                                          onsubmit="return confirm('Are you sure you want to Delete This Election?');">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm btn-flat"><i
+                                                class="fa fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+    </div>
 @endsection

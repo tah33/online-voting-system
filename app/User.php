@@ -6,12 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable /*implements MustVerifyEmail*/
 {
     use Notifiable,SoftDeletes;
 
     protected $fillable = [
-        'name', 'email', 'password','username','dob','role','nid','phone','area','image','symbol','gender',
+        'name', 'email', 'password','username','dob','role','nid','phone','area_id','image','symbol','gender',
     ];
 
 
@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
- 
+
     public function getRoleNameAttribute()
     {
         return ucwords($this->role);
@@ -30,12 +30,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function candidate()
     {
-        return $this->hasOne(Candidate::class);
+        return $this->hasOne(Candidate::class)->latest();
     }
 
-    public function userArea()
+    public function area()
     {
-        return $this->belongsTo(Area::class,'area');
+        return $this->belongsTo(Area::class);
     }
 
     public function party()

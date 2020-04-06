@@ -21,7 +21,8 @@
                 </div>
 
                 <div class="form-group has-feedback">
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password">
+                    <input type="password" name="password_confirmation" class="form-control"
+                           placeholder="Confirm Password">
                     <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
                 </div>
 

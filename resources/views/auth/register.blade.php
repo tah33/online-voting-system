@@ -1,282 +1,177 @@
-<!DOCTYPE HTML>
+@extends('layouts.backend.base')
+@section('base.content')
 
-<html>
+    <div class="col-md-12">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registration Form</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <form action="{{route('register')}}" method="post" enctype="multipart/form-data">@csrf
+                    <div class="col-md-4">
 
-<head>
-    <title>Registration</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="login_components/images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="login_components/css/util.css">
-    <link rel="stylesheet" type="text/css" href="login_components/css/main.css">
-    <!--===============================================================================================-->
-</head>
+                        <label for="">Name</label>
+                        <div class="form-group has-feedback">
+                            <input type="text" name="name" class="form-control" placeholder="Enter Name"
+                                   value="{{old('name')}}" autofocus>
+                            <span class="fa fa-user form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        </div>
 
-<body>
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="login_components/images/img-01.png" alt="IMG">
+                        <label for="">Username</label>
+                        <div class="form-group has-feedback">
+                            <input type="text" name="username" class="form-control" placeholder="Enter Username"
+                                   value="{{old('username')}}">
+                            <span class="fa fa-user form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('username') }}</span>
+                        </div>
+
+                        <label for="">Email</label>
+                        <div class="form-group has-feedback">
+                            <input type="email" name="email" class="form-control" placeholder="Enter Email"
+                                   value="{{old('email')}}">
+                            <span class="fa fa-envelope form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                        </div>
+
+                        <label for="">Password</label>
+                        <div class="form-group has-feedback">
+                            <input type="password" name="password" class="form-control" placeholder="Enter Pasword">
+                            <span class="fa fa-lock form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('password') }}</span>
+                        </div>
+
+                        <label for="">Confirm Password</label>
+                        <div class="form-group has-feedback">
+                            <input type="password" name="password_confirmation" class="form-control"
+                                   placeholder="Confirm Password">
+                            <span class="fa fa-lock form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('password') }}</span>
+                        </div>
+
+                        <label for="">Area</label>
+                        <div class="form-group has-feedback">
+                            <select name="area" class="form-control">
+                                @foreach($areas as $area)
+                                    <option value="{{$area->id}}">{{$area->name}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('area') }}</span>
+                        </div>
+                        <input type="submit" class="btn btn-primary btn-sm btn-flat" value="Create Account">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label for="">NID</label>
+                        <div class="form-group has-feedback">
+                            <input type="number" name="nid" class="form-control" placeholder="Enter NID"
+                                   value="{{old('nid')}}">
+                            <span class="fa fa-building-o form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('nid') }}</span>
+                        </div>
+
+                        <label for="">Date of Birth</label>
+                        <div class="form-group has-feedback">
+                            <input type="text" name="dob" class="form-control datepicker"
+                                   placeholder="Enter Date Of Birth"
+                                   value="{{old('dob')}}">
+                            <span class="fa fa-calendar-check-o form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('dob') }}</span>
+                        </div>
+
+                        <label for="">Gender</label>
+                        <div class="form-group has-feedback">
+                            <select name="gender" class="form-control">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <span class="text-danger">{{ $errors->first('gender') }}</span>
+                        </div>
+
+                        <label for="">Role</label>
+                        <div class="form-group has-feedback">
+                            <select name="role" class="form-control role">
+                                <option value="">Registered As</option>
+                                <option value="candidate">Candidate</option>
+                                <option value="voter">Voter</option>
+                            </select>
+                            <span class="text-danger">{{ $errors->first('role') }}</span>
+                        </div>
+
+                        <label for="">Phone</label>
+                        <div class="form-group has-feedback">
+                            <input type="tel" name="phone" class="form-control"
+                                   placeholder="Enter Symbol Name"
+                                   value="{{old('phone')}}">
+                            <span class="fa fa-phone form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('phone') }}</span>
+                        </div>
+
+                        <label for="">Image</label>
+                        <div class="form-group has-feedback">
+                            <input type="file" name="image" class="form-control">
+                            <span class="fa fa-image form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('image') }}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="panel panel-primary candidate col-md-4" style="display: none">
+                        <div class="panel panel-heading">Party Details</div>
+                        <label for="">Party Name</label>
+                        <div class="form-group has-feedback">
+                            <input type="text" name="party" class="form-control"
+                                   placeholder="Enter Party Name"
+                                   value="{{old('party')}}">
+                            <span class="fa fa-user form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('party') }}</span>
+                        </div>
+
+                        <label for="">Symbol Name</label>
+                        <div class="form-group has-feedback">
+                            <input type="text" name="symbol_name" class="form-control"
+                                   placeholder="Enter Symbol Name" value="{{old('symbol_name')}}">
+                            <span class="fa fa-user form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('symbol_name') }}</span>
+                        </div>
+
+                        <label for="">Symbol</label>
+                        <div class="form-group has-feedback">
+                            <input type="file" name="symbol" class="form-control">
+                            <span class="fa fa-image form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('symbol') }}</span>
+                        </div>
+                    </div>
+
+                    </form>
+
+                    <!-- /.col -->
                 </div>
-                <form class="login100-form" action="{{route('register')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <span class="login100-form-title">
-                        Registration
-                    </span>
-                    <div class="wrap-input100">
-                        <input class="input100" type="text" name="name" placeholder="Name" value="{{old('name')}}">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('name'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('name') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="text" name="username" placeholder="Username"
-                            value="{{old('username')}}">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('username'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('username') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="text" name="email" placeholder="Email" value="{{old('email')}}">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="password" name="password" placeholder="Password">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('password'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('password') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="password" name="password_confirmation"
-                            placeholder="Confirm Password">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="number" name="nid" placeholder="NID" value="{{old('nid')}}">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('nid'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('nid') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="date" name="dob" placeholder="Date of Birth"
-                            value="{{old('dob')}}">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('dob'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('dob') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <select name="gender" class="input100">
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('gender'))
-                        <span class="help-block">
-                            <strong style="color : red">{{ $errors->first('gender') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <select name="role" class="input100 role"
-                            onchange="choiceSelected('role', this.selectedIndex);">
-                            <option>Registered As</option>
-                            <option value="voter">Voter</option>
-                            <option value="candidate">Candidate</option>
-                        </select>
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('role'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('role') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="candidate" style="display: none">
-                        <div class="wrap-input100">
-                            <input class="input100" type="text" name="party" placeholder="Name"
-                                value="{{old('party')}}">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
-                            @if ($errors->has('party'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('party') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class="wrap-input100 validate-input">
-                            <input type="file" name="symbol" placeholder="Image">
-
-                            @if ($errors->has('symbol'))
-                            <span class="help-block">
-                                <strong style="font-color : red">{{ $errors->first('symbol') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class="wrap-input100">
-                            <input class="input100" type="text" name="symbol_name" placeholder="Symbol Name"
-                                value="{{old('symbol_name')}}">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
-                            @if ($errors->has('symbol_name'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('symbol_name') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="wrap-input100">
-                        <input class="input100" type="tel" name="phone" placeholder="Phone" value="{{old('phone')}}">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        @if ($errors->has('phone'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('phone') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                        <select name="area" class="input100 select2">
-                            <option>Choose Area</option>
-                            @foreach($areas as $area)
-                            <option value="{{$area->id}}">{{$area->name}}</option>
-                            @endforeach
-                        </select>
-
-                        @if ($errors->has('area'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('area') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="wrap-input100">
-                        <input type="file" name="image" placeholder="Image">
-
-                        @if ($errors->has('image'))
-                        <span class="help-block">
-                            <strong style="font-color : red">{{ $errors->first('image') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">
-                            Create Account
-                        </button>
-                    </div>
-                    <div class="text-center">
-                        <a class="txt2" href="#">
-                            Already Registered ? <a href="{{route('login')}}">Log in Here</a>
-                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="text-center p-t-12">
-                        <span style="font-size: 20px" class="txt1">
-                            Go to
-                        </span>
-                        <a style="font-size: 20px" class="txt2" href="{{url('/')}}">
-                            Home
-                        </a>
-                    </div>
-
-                </form>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <p class="text-muted">Already Have an Accunt? <a href="{{route('login')}}"><i class="fa fa-sign-in"></i> Click Here</a></p>
+                <p class="text-muted">Go Home <a href="{{url('/')}}"><i class="fa fa-home"></i> Click Here</a></p>
             </div>
         </div>
     </div>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/bootstrap/js/popper.js"></script>
-    <script src="login_components/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/select2/select2.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="login_components/vendor/tilt/tilt.jquery.min.js"></script>
+    <!-- /.box -->
+
+@endsection
+@push('base.js')
     <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
+        $(document).on('change','.role',function(){
+            let role = $(this).val();
+            if(role == 'candidate')
+                $('.candidate').show();
+            else
+                $('.candidate').hide();
         })
-        $(".select2").select2();
-        $('.role').on('change', function () {
-            if ($(".role").val() === "candidate") {
-                $(".candidate").show()
-            } else {
-                $(".candidate").hide()
-            }
-        });
     </script>
-    <!--===============================================================================================-->
-    <script src="js/main.js"></script>
-
-</body>
-
-</html>
+    @endpush

@@ -19,10 +19,10 @@ class CreatePartiesTable extends Migration
             $table->string('name');
             $table->string('symbol');
             $table->string('symbol_name');
-            $table->unsignedBigInteger('election_id');
+            $table->unsignedBigInteger('election_id')->nullable();
             $table->integer('seats')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users')
             ->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('election_id')->references('id')->on('elections')

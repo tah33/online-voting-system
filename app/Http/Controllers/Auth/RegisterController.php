@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Party;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class RegisterController extends Controller
             'gender' => ['required'],
             'dob' => "required|date|before:$min",
             'party' => ['required_if:role,==,candidate'],
-            'symbol' => ['required_if:role,==,candidate'],
+            'symbol' => ['required_if:role,==,candidate','unique:parties,symbol'],
             'symbol_name' => ['required_if:role,==,candidate'],
 
         ]);
@@ -47,16 +48,18 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $request = app('request');
+
+        $symbol=$ext='';
      if ($request->hasFile('image')) {
             $file=$request->File('image');
             $ext=$request->username.".".$file->clientExtension();
             $path = public_path(). '/images/';
             $file->move($path,$ext);
         }
-        $symbol='';
+
         if ($request->hasFile('symbol')) {
             $file=$request->File('symbol');
-            $symbol=$request->email.".".$file->clientExtension();
+            $symbol=$request->symbol.".".$file->clientExtension();
             $path = public_path(). '/images/';
             $file->move($path,$symbol);
         }
@@ -69,8 +72,8 @@ class RegisterController extends Controller
             'role' => $data['role'],
             'nid' => $data['nid'],
             'phone' => $data['phone'],
-            'area' => $data['area'],
-            'dob' => $data['dob'],
+            'area_id' => $data['area'],
+            'dob' =>    Carbon::createFromFormat('m/d/Y',$data['dob']) ,
             'gender' => $data['gender'],
             'image' => $ext,
         ]);
@@ -83,7 +86,7 @@ class RegisterController extends Controller
             ]);
 
         }
+        Toastr::success('Account Has Been Created','Success!');
             return $user;
-        
     }
 }

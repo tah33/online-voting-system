@@ -19,4 +19,17 @@ class Candidate extends Model
     {
     	return $this->belongsTo(Election::class);
     }
+
+    public function getApplyAttribute()
+    {
+        return "<span class='label label-success'>Applied</span>";
+    }
+
+    public function getApprovalAttribute()
+    {
+        if ($this->status == 0)
+            return "<span class='label label-warning'>PENDING</span>";
+        else
+            return "<span class='label label-success'>Approved</span>";
+    }
 }

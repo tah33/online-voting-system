@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('welcome');
+    }
+
     public function welcome()
     {
         $data = [
@@ -50,66 +56,57 @@ class HomeController extends Controller
     public function updateProfile(Request $request, $id)
     {
         $min = Carbon::now()->subYear(18);
-        if (Auth::user()->role == 'admin') {
+
             $request->validate([
                 'name' => 'required|string|max:255',
                 'username' => 'required|unique:users,username,' . $id,
                 'email' => 'required|unique:users,email,' . $id,
                 'image' => 'nullable',
-                'phone' => 'nullable',
+                'phone' => Auth::user()->role == 'admin' ?'nullable' : 'required|max:14|min:11|unique:users,phone,' . $id,
+                'gender' => Auth::user()->role == 'admin' ?'nullable' : 'required',
+                'dob' => Auth::user()->role == 'admin' ?'nullable' : "required|date|before:$min",
+                'party' => Auth::user()->role == 'candidate' ?'required' : "nullable",
+                'symbol' => Auth::user()->role == 'candidate' ?'required' : "nullable",
+                'symbol_name' => Auth::user()->role == 'candidate' ?'required' : "nullable",
 
             ]);
-        } else {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'username' => 'required|unique:users,username,' . $id,
-                'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-                'phone' => 'required|max:14|min:11|unique:users,phone,' . $id,
-                'area' => ['required'],
-                'image' => ['nullable'],
-                'gender' => ['required'],
-                'dob' => "required|date|before:$min",
-                'party' => "nullable",
-                'symbol' => "nullable",
-                'symbol_name' => "nullable",
-            ]);
-        }
+
         $user = User::find($id);
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->area = $request->area;
         if ($request->hasFile('image')) {
             $file = $request->File('image');
             $ext = $request->username . "." . $file->clientExtension();
-            $path = public_path() . '/images/';
-            $file->move($path, $ext);
+            $file->storeAs('images/', $ext);
             $user->image = $ext;
         }
         if ($user->role == 'candidate') {
-            $party = Party::find($user->party->id);
+            $party = new Party();
             $party->name = $request->party;
+            $party->user_id = Auth::id();
             $party->symbol_name = $request->symbol_name;
             if ($request->hasFile('symbol')) {
                 $file = $request->File('symbol');
-                $symbol = $request->email . "." . $file->clientExtension();
-                $path = public_path() . '/images/';
-                $file->move($path, $symbol);
+                $symbol = $request->username . "." . $file->clientExtension();
+                $file->storeAs('images/', $symbol);
                 $party->symbol = $symbol;
             }
             $party->save();
 
         }
         $user->save();
-        return redirect('home');
+
+        Toastr::success('Profile Has been Updated','Success!');
+        return back();
     }
 
     public function password()
     {
         $data = [
             'user' => Auth::user(),
-            'title' => 'Profile::Page'
+            'title' => 'Change::Password'
         ];
         return view('home.password')->with($data);
     }
@@ -147,22 +144,27 @@ class HomeController extends Controller
                 'ongoing' => Election::whereDate('election_date', '<=', Carbon::now())->get()
             ];
 
-            Toastr::success('Successfully Logged In', 'Success!');
             return view('admin.home')->with($data);
 
         } elseif (Auth::user()->role == 'candidate') {
-            $elections = Election::all();
-            $ongoings = Election::whereDate('election_date', '=', Carbon::now())->get();
 
-            Toastr::success('Successfully Logged In', 'Success!');
-            return view('candidate.home', compact('elections', 'ongoings'));
+            $data = [
+                'title' => 'Candidate::Dashboard',
+                'elections' => Election::all(),
+                'ongoings' => Election::whereDate('election_date', '=', Carbon::now())->get(),
+            ];
+
+            return view('candidate.home')->with($data);
 
         } elseif (Auth::user()->role == 'voter') {
-            $ongoings = Election::whereDate('election_date', '=', Carbon::now())->get();
-            $elections = Election::all();
 
-            Toastr::success('Successfully Logged In', 'Success!');
-            return view('voter.home', compact('ongoings', 'elections'));
+            $data = [
+                'title' => 'Voter::Dashboard',
+                'elections' => Election::all(),
+                'ongoings' => Election::whereDate('election_date', '=', Carbon::now())->get(),
+            ];
+
+            return view('voter.home')->with($data);
         }
 
     }

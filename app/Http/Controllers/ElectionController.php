@@ -3,20 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Election;
+use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ElectionController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $elections=Election::all();
-        return view('elections.index',compact('elections'));
+        $data = [
+            'title' => "Election::List" ,
+            'elections' => Election::all(),
+        ];
+        return view('elections.index')->with($data);
     }
 
     public function create()
     {
-        return view('elections.create');
+        $title = "Create::Election";
+        return view('elections.create',compact('title'));
     }
 
     public function store(Request $request)
@@ -27,29 +38,39 @@ class ElectionController extends Controller
             'start_date' =>'required|before:election_date',
             'end_date' =>'required|after:start_date|before:election_date',
         ]);
-        Election::create($request->all());
-        return back()->with('success','Election Created Successffully');
+
+        $election = new Election;
+        $election->name = $request->name;
+        $election->start_date = Carbon::createFromFormat('m/d/Y',$request->start_date) ;
+        $election->election_date = Carbon::createFromFormat('m/d/Y',$request->election_date);
+        $election->end_date = Carbon::createFromFormat('m/d/Y',$request->end_date);
+        $election->save();
+
+        Toastr::success('Election Created Successfully','Success!');
+        return back();
     }
 
     public function show(Election $election)
     {
-        if ($election->status == 0) 
+        if ($election->status == 0)
             $election->status=1;
         else
             $election->status=0;
+
         $election->save();
-        return redirect('elections')->with('success','Election Succesfylly Modified');
+        Toastr::success('Election Succesfylly Modified','Success!');
+
+        return redirect('elections');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Election  $election
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Election $election)
     {
-        return view('elections.edit',compact('election'));
+        $data = [
+          'title' => 'Election::edit',
+          'election' => $election,
+        ];
+        return view('elections.edit')->with($data);
     }
 
     public function update(Request $request, Election $election)
@@ -66,13 +87,17 @@ class ElectionController extends Controller
         $election->start_date=$request->start_date;
         $election->end_date=$request->end_date;
         $election->save();
-        return redirect('elections')->with('success','Election info Succesfylly Updated');
+
+        Toastr::success('Election info Successfully Updated','Success!');
+        return redirect('elections');
     }
 
     public function destroy(Election $election)
     {
         $election->candidates()->delete();
         $election->delete();
-        return back()->with('success','Election was Succesfylly Deleted');
+
+        Toastr::success('Election was Succesfylly Deleted','Success!');
+        return back();
     }
 }

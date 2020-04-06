@@ -10,8 +10,8 @@
 
             <form action="{{route('login')}}" method="post">@csrf
                 <div class="form-group has-feedback">
-                    <input type="text" name="email" class="form-control" placeholder="Username/Email">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <input type="email" value="{{old('email')}}" name="email" class="form-control" placeholder="Enter Email">
+                    <span class="fa fa-envelope form-control-feedback"></span>
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 </div>
 
@@ -23,7 +23,7 @@
 
                 <div class="form-group has-feedback">
                     <input type="password" name="password" class="form-control" placeholder="Password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="fa fa-lock form-control-feedback"></span>
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                 </div>
 
@@ -44,7 +44,7 @@
             </form>
 
 
-            <a href="javascript:void(0)" data-target="#modal-reset" data-toggle="modal">I forgot my password</a><br>
+            <a href="javascript:void(0)" data-target="#modal_reset" data-toggle="modal">I forgot my password</a><br>
             <a href="{{url('register')}}" class="text-center"><i class="fa fa-user-plus"></i> Register a new membership</a><br>
             <a href="{{url('/')}}" class="text-center"><i class="fa fa-home"></i> Go Home</a>
 
@@ -52,5 +52,5 @@
         <!-- /.login-box-body -->
     </div>
     <!-- /.login-box -->
-    {{--    @include('users.reset_link')--}}
+        @include('email.modal')
 @endsection

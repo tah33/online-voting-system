@@ -11,19 +11,28 @@ class AdminController extends Controller
 {
     public function voter()
     {
-    	$voters = User::where('role','voter')->get();
-    	return view('admin.voters',compact('voters'));
+        $data = [
+            'title' => "Voter::Page" ,
+          'voters' => User::where('role','voter')->get(),
+        ];
+    	return view('admin.voters')->with($data);
     }
 
     public function candidate()
     {
-    	$candidates = User::where('role','candidate')->get();
-    	return view('admin.candidates',compact('candidates'));
+        $data = [
+            'title' => "Voter::Page" ,
+            'voters' => User::where('role','voter')->get(),
+        ];
+    	return view('admin.candidates')->with($data);
     }
 
      public function ongoing()
     {
-        $ongoings = Election::whereDate('election_date','<=',Carbon::now())->where('status',1)->get();
-        return view('admin.ongoing',compact('ongoings'));
+        $data = [
+            'title' => "Voter::Page" ,
+            'ongoings' => Election::whereDate('election_date','<=',Carbon::now('Asia/Dhaka'))->where('status',1)->get(),
+        ];
+        return view('admin.ongoing')->with($data);
     }
 }

@@ -12,5 +12,12 @@ class Election extends Model
     {
         return $this->hasMany(Candidate::class);
     }
-    
+
+    public function getStatusNameAttribute()
+    {
+        if($this->status == 1)
+            return "<span class='label label-success'>Active</span>";
+        else
+            return "<span class='label label-danger'>Inactive</span>";
+    }
 }

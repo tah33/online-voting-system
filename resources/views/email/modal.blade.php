@@ -1,4 +1,4 @@
-  <div class="modal fade" id="modal-reset" data-backdrop="static" data-keyboard="false">
+  <div class="modal fade" id="modal_reset" data-backdrop="static" data-keyboard="false">
          <div class="modal-dialog">
            <div class="modal-content">
              <div class="modal-header">
@@ -6,7 +6,7 @@
                  <span aria-hidden="true">&times;</span></button>
                <h4 class="modal-title">Reset Password</h4>
              </div>
-        
+
             <form action="{{url('emails')}}" method="post">@csrf
               <div class="modal-body">
               <div class="form-group row">

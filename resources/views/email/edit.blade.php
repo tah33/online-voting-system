@@ -1,52 +1,45 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-<style>
-.pass_show{position: relative} 
+@extends('layouts.backend.base')
+@section('base.content')
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{url('/')}}"><b>BANK</b>ATM</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Change Password</p>
 
-.pass_show .ptxt { 
+            <form action="{{url('emails/'.$user->id)}}" method="post">@csrf
+                @method('put')
+                <div class="form-group has-feedback">
+                    <input type="password" value="{{old('password')}}" name="password" class="form-control" placeholder="Enter Password">
+                    <span class="fa fa-lock form-control-feedback"></span>
+                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                </div>
 
-position: absolute; 
+                <div class="form-group has-feedback">
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password">
+                    <span class="fa fa-lock form-control-feedback"></span>
+                </div>
 
-top: 50%; 
+                <div class="row">
+                    <div class="col-xs-6">
+                        {{--<div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox"> Remember Me
+                            </label>
+                        </div>--}}
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-6">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Change Password</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
 
-right: 10px; 
-
-z-index: 1; 
-
-color: #f36c01; 
-
-margin-top: -10px; 
-
-cursor: pointer; 
-
-transition: .3s ease all; 
-
-} 
-
-.pass_show .ptxt:hover{color: #333333;} 
-</style>
-<div class="container" style="background-color: grey; margin:auto">
-	<div class="row">
-		<div class="col-sm-4">
-        <form action="{{url('emails',$user->id)}}" method="post">
-            @csrf
-            @method('put')
-		    <label>Current Password</label>		
-		       <label>New Password</label>
-            <div class="form-group pass_show"> 
-                <input type="password" name="password" class="form-control" placeholder="New Password"> 
-                @if($errors->has('password'))
-            <strong style="color:red">{{$errors->first('password')}}</strong>
-            @endif
-            </div> 
-		       <label>Confirm Password</label>
-            <div class="form-group pass_show"> 
-                <input type="password" name="password_confirmation"  class="form-control" placeholder="Confirm Password"> 
-            </div> 
-            <button type="submit" class="btn btn-primary">Change Password</button>
-        </form>
-		</div>  
-	</div>
-</div>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+    @include('email.modal')
+@endsection

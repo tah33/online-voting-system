@@ -6,43 +6,60 @@ use App\Candidate;
 use App\Election;
 use App\User;
 use App\Party;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class CandidateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $users='';
         $ids=[];
         $elections = Election::where('status',1)->get();
-        foreach ($elections as $key => $election) {
+        /*foreach ($elections as $key => $election) {
         foreach ($election->candidates as $candidate)
             $ids [] = $candidate->user_id;
         }
         if(!empty($ids))
-            $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();
-        return view('candidate.index',compact('elections'));
+            $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();*/
+
+        $data = [
+            'title' => "Candidate::List" ,
+            'elections' => Election::where('status',1)->whereDate('election_date','>=',Carbon::now('Asia/Dhaka'))->get(),
+        ];
+        return view('candidate.index')->with($data);
     }
- 
+
     public function create()
     {
         //
     }
- 
+
     public function store(Request $request,$id)
     {
-        $canidate_exist = Candidate::where('user_id',Auth::id())
+        $candidate_exist = Candidate::where('user_id',Auth::id())
                         ->where('election_id',$id)->exists();
-        if ($canidate_exist) {
-            return back()->with('error','You are alaredy Applied');
+        if ($candidate_exist) {
+
+            Toastr::error('You are alaredy Applied','Error!');
+            return back();
         }
         $candidate = new Candidate;
         $candidate->user_id = Auth::id();
         $candidate->election_id = $id;
-        $candidate->area = Auth::user()->area;
+        $candidate->area_id = Auth::user()->area_id;
         $candidate->save();
-        return back()->with('success','Succesfully Your application has been sent');
+
+        Toastr::success('Your application has been sent Successfully','Success!');
+        return back();
     }
 
     public function show($id)
@@ -57,7 +74,9 @@ class CandidateController extends Controller
         $party = Party::where('user_id',$candidate->user_id)->latest()->first();
         $party->election_id = $candidate->election_id;
         $party->save();
-        return back()->with('success','Candidate Approved Succesfully');
+
+        Toastr::success('Candidate Approved Successfully','Success!');
+        return back();
     }
 
 
@@ -74,43 +93,69 @@ class CandidateController extends Controller
     public function destroy(Candidate $candidate)
     {
         $candidate->delete();
-        return back()->with('success','Candidate Rejected Succesfully');
+
+        Toastr::success('Candidate Rejected Successfully','Success!');
+        return back();
     }
 
     public function apply()
     {
-        $applies = Election::where('status',1)->whereDate('start_date','<=',Carbon::now('Asia/Dhaka'))->whereDate('end_date','>=',Carbon::now('Asia/Dhaka'))->get();
-        return view('candidate.list',compact('applies'));
+        $data = [
+            'title' => "Voter::Page" ,
+            'applies' => Election::where('status',1)->whereDate('start_date','<=',Carbon::now('Asia/Dhaka'))
+                ->whereDate('end_date','>=',Carbon::now('Asia/Dhaka'))->get(),
+        ];
+
+        return view('candidate.list')->with($data);
     }
 
      public function pending()
     {
-        $applies=Candidate::where('status',0)->get();
-        return view('candidate.pending',compact('applies'));
+        $data = [
+            'title' => "Pending::Application" ,
+            'applies' => Candidate::where('status',0)->get(),
+        ];
+
+        return view('candidate.pending')->with($data);
     }
 
      public function reject()
     {
-        $rejects=Candidate::onlyTrashed()->get();
-        return view('candidate.reject',compact('rejects'));
+        $data = [
+            'title' => "Reject::Application" ,
+            'rejects' => Candidate::onlyTrashed()->get(),
+        ];
+
+        return view('candidate.reject')->with($data);
     }
 
     public function candidate()
     {
         $candidate = $candidates = '';
-        $user = Auth::id();
-        $candidate = Candidate::where('user_id',$user)->latest()->first();
+
+        $candidate = Candidate::where('user_id',Auth::id())->latest()->first();
         if($candidate)
             $candidates = Candidate::where('election_id',$candidate->election_id)->get();
-        return view('candidate.candidates',compact('candidates','candidate'));
-        
+
+        $data = [
+        'title' => "Voter::Page" ,
+        'candidate' => Candidate::where('user_id',Auth::id())->latest()->first(),
+        'candidates' => Candidate::where('election_id',$candidate->election_id)->get(),
+        ];
+
+        return view('candidate.candidates')->with($data);
+
     }
 
     public function upcoming()
     {
-        $upcomings = Election::whereDate('election_date','<',Carbon::now())
-        ->whereYear('election_date','=',Carbon::now())->get();
-        return view('candidate.candidates',compact('upcomings'));
-        
+        $data = [
+            'title' => "Voter::Page" ,
+            'upcomings' => Election::whereDate('election_date','<',Carbon::now())
+                ->whereYear('election_date','=',Carbon::now())->get(),
+        ];
+
+        return view('candidate.candidates')->with($data);
+
     }
 }

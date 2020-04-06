@@ -5,8 +5,10 @@
         <div class="box">
             <div class="box-body">
                 <center>
-<a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked Users</a>
-<a href="{{url('candidate-pdf')}}" class="btn btn-primary" target="_blank" style="text-align:  center;">Get PDF</a>
+                    <a href="{{url('blocked-users')}}" class="btn btn-info" style="text-align:  center;">Blocked
+                        Users</a>
+                    <a href="{{url('candidate-pdf')}}" class="btn btn-primary" target="_blank"
+                       style="text-align:  center;">Get PDF</a>
                 </center>
                 <table id="search" class="table table-hover table-bordered">
                     <caption>Candidates List</caption>
@@ -33,14 +35,18 @@
                             <td style="text-align: center">{{ $candidate->nid }}</td>
                             <td style="text-align: center">{{ $candidate->phone }}</td>
                             <td style="text-align: center">{{ $candidate->rolename }}</td>
-                            <td style="text-align: center"><img src="{{asset('images/'.$candidate->image)}}" width="80px" height="42px"></td>
+                            <td style="text-align: center"><img src="{{asset('images/'.$candidate->image)}}"
+                                                                width="80px" height="42px"></td>
                             <td style="text-align: center">
-                                <a href="{{url('users',$candidate->id)}}" style="float: left" class="btn btn-success"><i class="fa fa-eye"></i></a>
-                                   <form action="{{url('users',$candidate->id)}}" method="post" onsubmit="return confirm('Are you sure you want to Block This User?');">
-                                   	@csrf
-                                   	@method('delete')
-									<button type="submit" style="float: left" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>
-                                   </form>
+                                <a href="{{url('users',$candidate->id)}}" style="float: left" class="btn btn-success"><i
+                                        class="fa fa-eye"></i></a>
+                                <form action="{{url('users',$candidate->id)}}" method="post"
+                                      onsubmit="return confirm('Are you sure you want to Block This User?');">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" style="float: left" class="btn btn-danger"><i
+                                            class="glyphicon glyphicon-remove-circle"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

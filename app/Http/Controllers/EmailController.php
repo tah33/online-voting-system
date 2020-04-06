@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Mail\Password;
 use App\User;
@@ -26,8 +27,12 @@ class EmailController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user) {
             Mail::to($user->email)->send(new Password($user));
+
+            Toastr::success('Successfully Emailed with Info, Check Your Email','Success!');
             return back();
         } else {
+
+            Toastr::error("Couldn't Fid Your Email, Please Tre Again",'Success!');
             return back();
         }
     }
@@ -39,8 +44,12 @@ class EmailController extends Controller
 
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('email.edit', compact('user'));
+        $data = [
+            'title' => 'Email',
+            'user' => User::find($id),
+        ];
+
+        return view('email.edit')->with($data);
     }
 
     public function update(Request $request, $id)
@@ -50,7 +59,10 @@ class EmailController extends Controller
         ]);
         $user = User::find($id);
         $user->password = bcrypt($request->password);
-        $user->save();    
+        $user->save();
+
+        Toastr::success('Password was Changed Successfully, You Can Log In Now','Success!');
+        return redirect('login');
     }
 
     public function destroy($id)
