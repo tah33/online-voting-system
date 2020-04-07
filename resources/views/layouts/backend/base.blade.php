@@ -30,6 +30,7 @@
 {{--    login page css--}}
     <link rel="stylesheet" href="{{URL::to('plugins/iCheck/square/blue.css')}}">
     <link rel="stylesheet" href="{{URL::to('dist/css/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
 
 @stack('base.css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -87,6 +88,7 @@
 {{--    login page js--}}
     <script src="{{URL::to('plugins/iCheck/icheck.min.js')}}"></script>
     <script src="{{URL::to('dist/js/toastr.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 
     {!! Toastr::message() !!}
 
@@ -104,7 +106,7 @@
             }
         });
         //Select2
-        // $(".select2").select2();
+        $(".select2").select2();
     });
 
     function goBack() {

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AccountDeletion;
+use App\Mail\Unblock;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -123,7 +126,10 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete($id);
 
-        Toastr::success('Users Blocked Successfully', 'Success!');
+        if ($user->role != 'admin')
+            Mail::to($user->email)->send(new AccountDeletion($user->name));
+
+        Toastr::success('Users Blocked Successfully and has Been notified via Email', 'Success!');
         return back();
     }
 
@@ -142,7 +148,10 @@ class UserController extends Controller
         $user = User::withTrashed()->where('id', $id)->first();
         $user->restore();
 
-        Toastr::success('Users UnBlocked Successfully', 'Success!');
+        if ($user->role != 'admin')
+            Mail::to($user->email)->send(new Unblock($user->name));
+
+        Toastr::success('Users UnBlocked Successfully and has Been notified via Email', 'Success!');
         return back();
     }
 }

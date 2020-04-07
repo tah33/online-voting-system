@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Candidate;
 use App\Election;
+use App\Mail\CandidateApprove;
+use App\Mail\CandidateReject;
 use App\User;
 use App\Party;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CandidateController extends Controller
 {
@@ -33,7 +36,7 @@ class CandidateController extends Controller
 
         $data = [
             'title' => "Candidate::List" ,
-            'elections' => Election::where('status',1)->whereDate('election_date','>=',Carbon::now('Asia/Dhaka'))->get(),
+            'elections' => Election::where('status',1)/*->whereDate('election_date','>=',Carbon::now('Asia/Dhaka'))*/->paginate(15),
         ];
         return view('candidate.index')->with($data);
     }
@@ -75,7 +78,9 @@ class CandidateController extends Controller
         $party->election_id = $candidate->election_id;
         $party->save();
 
-        Toastr::success('Candidate Approved Successfully','Success!');
+        $data = ['name' => $candidate->user->name,'election' => $candidate->election->name,'date' => $candidate->election->election_date];
+        Mail::to($candidate->user->email)->send(new CandidateApprove($data));
+        Toastr::success('Candidate Has been approved and notified via Email','Success!');
         return back();
     }
 
@@ -94,7 +99,9 @@ class CandidateController extends Controller
     {
         $candidate->delete();
 
-        Toastr::success('Candidate Rejected Successfully','Success!');
+        $data = ['name' => $candidate->user->name,'election' => $candidate->election->name,'date' => $candidate->election->election_date];
+        Mail::to($candidate->user->email)->send(new CandidateReject($data));
+        Toastr::success('Candidate Has been rejected and notified via Email','Success!');
         return back();
     }
 

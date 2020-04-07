@@ -20,14 +20,15 @@
                             <tr>
                                 <td style="text-align: center">{{ $key+1 }}</td>
                                 <td style="text-align: center">{{ $apply->name }}</td>
-                                @if( Auth::user()->role == 'candidate' && !$apply->candidates()->exists())
+                                @if( Auth::user()->role == 'candidate' && !\Illuminate\Support\Facades\Auth::user()->candidate()->exists())
                                     <td>
                                         <a href="{{url('candidate-store',$apply->id)}}" class="btn btn-success btn-flat btn-sm"
-                                           onclick="return confirm('Are you Sure you want  to apply for this position')"><i
-                                                class="glyphicon glyphicon-ok"></i></a>
-                                        @endif
+                                           onclick="return confirm('Are you Sure you want  to apply for this election')"><i
+                                                class="fa fa-check"></i></a>
                                     </td>
-                                    <td>{!! \Illuminate\Support\Facades\Auth::user()->candidate->Apply !!}</td>
+                                @else
+                                    <td>{!! \Illuminate\Support\Facades\Auth::user()->candidate->approval !!}</td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

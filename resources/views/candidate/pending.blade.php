@@ -31,7 +31,7 @@
                                               onsubmit="return confirm('Are you sure you want to Reject?');">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger"><i
+                                            <button type="submit" class="btn btn-danger btn-sm btn-flat"><i
                                                     class="fa fa-times"></i></button>
                                         </form>
 

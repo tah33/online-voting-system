@@ -52,14 +52,16 @@
                         </div>
 
                         <label for="">Area</label>
-                        <div class="form-group has-feedback">
-                            <select name="area" class="form-control">
+                        <div class="form-group">
+                            <select name="area" class="form-control select2">
+                                <option value="">Select Area</option>
                                 @foreach($areas as $area)
                                     <option value="{{$area->id}}">{{$area->name}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('area') }}</span>
                         </div>
+
                         <input type="submit" class="btn btn-primary btn-sm btn-flat" value="Create Account">
 
                     </div>

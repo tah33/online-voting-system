@@ -25,6 +25,11 @@ class Candidate extends Model
         return "<span class='label label-success'>Applied</span>";
     }
 
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
+
     public function getApprovalAttribute()
     {
         if ($this->status == 0)

@@ -33,27 +33,37 @@
                                 <tr>
                                     <td>{{$key+1}}</td>
                                     <td>{{$candidate->user->name}}</td>
-                                    @if (!in_array($candidate->user_id, $ids))
+                                    @if (!in_array($candidate->area_id, $ids))
                                         @php
-                                            $ids[] = $candidate->user_id ;
+                                            $ids[] = $candidate->area_id ;
                                         @endphp
-                                        <td rowspan="{{count($election->candidates->where('area',$candidate->area))}}">
-                                            {{$candidate->user->area->name}}</td>
+                                        <td rowspan="{{count($election->candidates->where('area_id',$candidate->area_id))}}">
+                                            {{$candidate->area->name}}</td>
                                     @endif
                                     @if (!in_array($election->name, $userElections))
-                                        @php $userElections[] = $election->name; @endphp
-                                        <td rowspan="{{count($election->candidates)}}">{{$election->name}}</td>
-                                    @endif
-                                    @if (!in_array($election->updated_at, $userElections))
-                                        @php $userElections[] = $election->updated_at; @endphp
-                                        <td rowspan="{{count($election->candidates)}}">{{$election->updated_at->toDateString()}}</td>
+                                        @php
+                                            $userElections[] = $election->name;
+                                            $now = \Carbon\Carbon::now('Asia/Dhaka')->format('Y-m-d');
+                                            /*dd($now,$election->election_date);*/
+                                        @endphp
+                                        <td rowspan="{{count($election->candidates)}}">{{$election->name}}
+                                            @if($election->election_date >= $now)
+                                            <span class="label label-success">Active</span>
+                                            @endif
+                                        </td>
+
+                                        <td rowspan="{{count($election->candidates)}}">{{$election->election_date}}</td>
                                     @endif
                                 </tr>
                             @endforeach
+                            @php
+                                $ids = $userElections = [];
+                            @endphp
                         @endforeach
 
                         </tbody>
                     </table>
+                    {{$elections->links()}}
                 </div>
             </div>
 
