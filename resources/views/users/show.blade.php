@@ -47,7 +47,8 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab" data-toggle="tab">About</a></li>
                     @if($user->role == 'candidate')
-                        <li><a href="#tab1" data-toggle="tab">Party</a></li>
+                        <li><a href="#party" data-toggle="tab">Party</a></li>
+                        <li><a href="#social" data-toggle="tab">Social</a></li>
                     @endif
                 </ul>
                 <div class="tab-content">
@@ -83,7 +84,7 @@
                     <!-- /.tab-pane -->
                     @if($user->role == 'candidate')
 
-                        <div class="tab-pane" id="tab1">
+                        <div class="tab-pane" id="party">
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-md-5">
@@ -108,6 +109,30 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="tab-pane" id="social">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-5">
+                                        @foreach($user->socials as $key=>$social)
+                                            <div class="card" style="width: 38rem;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Organization Name : {{$social->organization_name}}</h5>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Position Name : {{$social->title}}</h6>
+                                                    <h5 class="card-title"><b>Description</b></h5>
+                                                    <p class="card-text">{{$social->description}}.</p>
+                                                </div>
+                                            </div>
+                                            @if(count($user->socials)-1 > $key)
+                                                <hr>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     @endif
 
                 </div>

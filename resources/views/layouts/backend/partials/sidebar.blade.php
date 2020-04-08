@@ -51,6 +51,22 @@
             </li>
             @endif
 
+            @if(Auth::user()->role == 'candidate')
+            <li class="header">Applications</li>
+            <li class="treeview {{\Illuminate\Support\Facades\Request::is('socials') || \Illuminate\Support\Facades\Request::is('socials/*')  ? 'active' : ''}}">
+                <a href="#">
+                    <i class="fa fa-share"></i> <span>Social Activities</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                        <li class="{{\Illuminate\Support\Facades\Request::is('socials/create') ? 'active' : ''}}"><a href="{{url('socials/create')}}"><i class="fa fa-check"></i>Add Social Activity</a></li>
+                    <li class="{{\Illuminate\Support\Facades\Request::is('socials') ? 'active' : ''}}"><a href="{{url('socials')}}"><i class="fa fa-eye"></i> All Social Activities</a></li>
+                </ul>
+            </li>
+            @endif
+
             <li class="header">Candidates</li>
             <li class="{{\Illuminate\Support\Facades\Request::is('candidates') ? 'active' : ''}}"><a href="{{url('candidates')}}"><i class="fa fa-user"></i>Candidates</a></li>
 

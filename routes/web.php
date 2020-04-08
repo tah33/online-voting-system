@@ -21,12 +21,15 @@ Route::get('pending-application','CandidateController@pending');
 Route::get('reject-applications','CandidateController@reject');
 Route::get('candidate','CandidateController@candidate');
 Route::get('applies','CandidateController@apply');
+Route::post('candidate-search','CandidateController@candidateFind');
 //VoterController
 Route::resource('voters','VoterController');
+
 //ResultController
 Route::resource('results','ResultController');
 Route::get('winner','ResultController@winner');
 Route::get('result-election/{id}','ResultController@result');
+
 //AdminController
 Route::get('all-voter','AdminController@voter');
 Route::get('all-candidate','AdminController@candidate');
@@ -43,3 +46,5 @@ Route::get('candidate-pdf','PdfController@candidate');
 Route::get('elections-pdf','PdfController@elections');
 //EmailController
 Route::resource('emails','EmailController');
+//SocialController
+Route::resource('socials','SocialController');

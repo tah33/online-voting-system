@@ -73,46 +73,40 @@ class ResultController extends Controller
     }
     public function result($id)
     {
+        $user_ids=[];
+        $candidates = Candidate::where('election_id',$id)->groupBy('area_id')->get();
 
-        $seat = Party::where('election_id',$id)->orderBy('id','desc')
-            ->max('seats');
-        $parties = Party::groupBy('name')->selectRaw('*, sum(seats) as seats')
-            ->where('election_id',$id)->get();
-        $winner = Party::where('election_id',$id)->orderBy('id','desc')
-            ->where('seats',$seat)->first();
-        $candidates =Candidate::where('election_id',$id)->groupBy('area')->get();
-        if($winner->seat == 0){
-            foreach ($candidates as $key => $candidate) {
-                // $areas [] = $candidate->area;
-                $max_vote = Candidate::where('election_id',$id)
-                    ->where('area',$candidate->area)->max('votes');
-
-                $areaWinner = Candidate::where('votes',$max_vote)
-                    ->where('election_id',$id)
-                    ->where('area',$candidate->area)->first();
-                $party = Party::where('user_id',$candidate->user_id)
-                    ->where('election_id',$candidate->election_id)->latest()->first();
-                if(!empty($party)){
-                    $count = 1;
-                    $party->seats =  $count;
-                    $party->save();
-                    $count++;
-                }
+        foreach ($candidates as $candidate)
+        {
+            $max_votes = Candidate::where('election_id',$id)
+                ->where('area_id',$candidate->area_id)->max('votes');
+            $area_winner = Candidate::where('votes',$max_votes)->first();
+            $party = Party::where('user_id',$area_winner->user_id)->first();
+            if ($party) {
+                $party->election_id = $id;
+                $seats[$candidate->area_id] = $max_votes;
+                $party->seats = $seats;
+                $party->count = 1;
+                $party->save();
+                $user_ids[] = $area_winner;
+                unset($seats);
             }
         }
 
-        $data = [
-          'title' => 'Area:Winner',
-          'seat' => $seat,
-          'parties' => $parties,
-          'winner' => $winner,
-        ];
-
-        return view('results.result')->with($data);
+        $parties = Party::whereNotIn('user_id',$user_ids)->where('election_id',$id)->get();
+        foreach ($parties as $party)
+        {
+            $party->election_id = $id;
+            $party->count = 1;
+            $party->save();
+        }
+        dd(true);
+        return view('results.result');
     }
 
     public function winner()
     {
+//        dd(Carbon::now('Asia/Dhaka')->format('H:i:s'));
         $data = [
           'title' => 'Result::Page',
             'elections' => Election::where('status',1)->get(),

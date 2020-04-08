@@ -47,4 +47,9 @@ class User extends Authenticatable /*implements MustVerifyEmail*/
     {
         return $this->hasOne(Verify::class);
     }
+
+    public function socials()
+    {
+        return $this->hasMany(Social::class);
+    }
 }

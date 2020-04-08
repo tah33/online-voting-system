@@ -52,37 +52,41 @@ class VoterController extends Controller
 
     public function show($id)
     {
-        $candidate = Candidate::find($id);
-        $voter = Voter::where('user_id', Auth::id())->where('election_id', $candidate->election_id)->first();
-        if ($voter) {
-            if ($voter->wrong_attempt == 1) {
-                Auth::logout();
-                $user = User::find($voter->user_id);
-                $user->delete();
-                return redirect('login');
+     /*   if (Carbon::now('Asia/Dhaka')->format('H:i:s') > Carbon::createFromTime(8, 00, 00, 'Asia/Dhaka')
+            && Carbon::now('Asia/Dhaka')->format('H:i:s') == Carbon::createFromTime(16, 00, 00, 'Asia/Dhaka')) {*/
+            $candidate = Candidate::find($id);
+            $voter = Voter::where('user_id', Auth::id())->where('election_id', $candidate->election_id)->first();
+            if ($voter) {
+                if ($voter->wrong_attempt == 1) {
+                    Auth::logout();
+                    $user = User::find($voter->user_id);
+                    $user->delete();
+                    return redirect('login');
+                }
+
+                $voter->wrong_attempt = 1;
+                $voter->save();
+
+                Toastr::warning('You Already Voted for this Election', 'Warning!');
+                return back();
+            } else {
+                $voter = new Voter;
+                $voter->user_id = Auth::id();
+                $voter->candidate_id = $id;
+                $voter->election_id = $candidate->election_id;
+                $voter->save();
             }
 
-            $voter->wrong_attempt = 1;
-            $voter->save();
+            if ($voter->save()) {
+                $candidate->votes += 1;
+                $candidate->save();
+            }
 
-            Toastr::warning('You Already Voted for this Election', 'Warning!');
+            Toastr::success('Your valuable vote was successfully submitted', 'Success!');
             return back();
-        }
-        else {
-            $voter = new Voter;
-            $voter->user_id = Auth::id();
-            $voter->candidate_id = $id;
-            $voter->election_id = $candidate->election_id;
-            $voter->save();
-        }
-
-        if ($voter->save()) {
-            $candidate->votes += 1;
-            $candidate->save();
-        }
-
-        Toastr::success('Your valuable vote was successfully submitted', 'Success!');
-        return back()->with('success', 'Your valuable vote was successfully submitted');
+    /*    }
+        Toastr::error('Sorry Deadline is Over', 'Error!');
+        return back();*/
     }
 
     public function edit($id)

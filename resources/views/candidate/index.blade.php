@@ -5,10 +5,22 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Candidates List</h3>
+                </div>
+
+                <form action="javascript:void(0)" method="post">
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group has-feedback">
+                            <input type="text" name="name" class="form-control election_search" placeholder="Search By Election Name..."
+                                   value="{{old('name')}}" autofocus>
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="box-body">
-                    {{--<center>
-                        <a href="{{url('elections-pdf')}}" target="_blank" class="btn btn-primary">Get Pdf</a>
-                    </center>--}}
                     <table id="search" class="table table-hover table-bordered" width="300">
                         <thead>
                         <tr>
@@ -27,7 +39,7 @@
                             $user_elections = [];
                             $user = 1;
                         @endphp
-                        <tbody>
+                        <tbody id="election_data">
                         @foreach ($elections as $election)
                             @foreach($election->candidates as $key => $candidate)
                                 <tr>
@@ -48,7 +60,7 @@
                                         @endphp
                                         <td rowspan="{{count($election->candidates)}}">{{$election->name}}
                                             @if($election->election_date >= $now)
-                                            <span class="label label-success">Active</span>
+                                                <span class="label label-success">Active</span>
                                             @endif
                                         </td>
 
@@ -70,4 +82,23 @@
         </div>
     </div>
 @stop
-
+@push('base.js')
+    <script>
+        $(document).on('keyup','.election_search',function(){
+            let name = $(this).val();
+            console.log(name);
+            $.ajax({
+                method : "POST",
+                url : "{{url('candidate-search')}}",
+                data : {
+                    name : name,
+                    "_token" : "{{csrf_token()}}",
+                },
+                success : function(result){
+                    console.log(result);
+                    $('#election_data').html(result);
+                }
+            })
+        })
+    </script>
+    @endpush
