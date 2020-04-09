@@ -8,7 +8,7 @@ class Party extends Model
 {
     protected $fillable = ['user_id','name','symbol','symbol_name','seats'];
 
-    protected $casts = ['seats','array'];
+    protected $casts = ['seats' => 'array'];
 
     public function user()
     {

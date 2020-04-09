@@ -71,9 +71,22 @@ class ResultController extends Controller
 
         return view('results.winner')->with($data);
     }
+
+    public function winner()
+    {
+//        dd(Carbon::now('Asia/Dhaka')->format('H:i:s'));
+        $data = [
+            'title' => 'Result::Page',
+            'elections' => Election::where('status',1)->get(),
+        ];
+
+        return view('results.election-winner')->with($data);
+    }
+
     public function result($id)
     {
         $user_ids=[];
+        $seat =1;
         $candidates = Candidate::where('election_id',$id)->groupBy('area_id')->get();
 
         foreach ($candidates as $candidate)
@@ -81,37 +94,37 @@ class ResultController extends Controller
             $max_votes = Candidate::where('election_id',$id)
                 ->where('area_id',$candidate->area_id)->max('votes');
             $area_winner = Candidate::where('votes',$max_votes)->first();
-            $party = Party::where('user_id',$area_winner->user_id)->first();
-            if ($party) {
-                $party->election_id = $id;
-                $seats[$candidate->area_id] = $max_votes;
-                $party->seats = $seats;
-                $party->count = 1;
-                $party->save();
-                $user_ids[] = $area_winner;
-                unset($seats);
+            $area_candidates = Candidate::where('user_id',$area_winner->user_id)->where('election_id',$id)->where('votes',$max_votes)->get();
+
+                foreach ($area_candidates as $area_candidate) {
+                    $party = Party::where('user_id',$area_candidate->user_id)->first();
+                    $party->election_id = $id;
+                    $party->seats = $seat;
+                    $party->count = 1;
+                    $party->save();
+                    $user_ids[] = $area_winner;
+                $seat++;
             }
+                $seat = 1;
         }
 
-        $parties = Party::whereNotIn('user_id',$user_ids)->where('election_id',$id)->get();
-        foreach ($parties as $party)
+        $loose_parties = Party::whereNotIn('user_id',$user_ids)->where('election_id',$id)->get();
+        foreach ($loose_parties as $party)
         {
             $party->election_id = $id;
             $party->count = 1;
             $party->save();
         }
-        dd(true);
-        return view('results.result');
-    }
 
-    public function winner()
-    {
-//        dd(Carbon::now('Asia/Dhaka')->format('H:i:s'));
+        $parties = Party::where('election_id',$id)->get();
+
+
         $data = [
-          'title' => 'Result::Page',
-            'elections' => Election::where('status',1)->get(),
+            'title' => "Result::Declaration",
+            'parties' => $parties,
+//            'candidates' => $candidates,
         ];
 
-        return view('results.election-winner')->with($data);
+        return view('results.result')->with($data);
     }
 }

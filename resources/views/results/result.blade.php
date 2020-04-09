@@ -23,14 +23,27 @@
                 <tbody align="center">
                 @if(count($parties) > 0)
                     @foreach ($parties as $key => $party)
-                        <tr>
-                            <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $party->name }}</td>
-                            <td style="text-align: center">{{ $party->seats }}</td>
-                            @if($count != 0)
-                                <td rowspan="{{count($parties)}}"
-                                    style="text-align: center">{{ count(($party->election->candidates->groupBy('area'))) }}</td>
-                                <td rowspan="{{count($parties)}}" style="text-align: center">{{$winner->name}}</td>
+                        <tr style="text-align: center">
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $party->name }}</td>
+                            <td>{{ $party->seats }}</td>
+                            @php
+                                $winner = $parties->where('seats',$parties->max('seats'));
+                            @endphp
+                        @if($count != 0)
+                                <td rowspan="{{count($parties)}}">{{ count(($party->election->candidates->groupBy('area_id'))) }}</td>
+                                <td rowspan="{{count($parties)}}">
+                                    @if (count($winner) > 1)
+                                        @foreach($winner as $win)
+                                        @php
+                                            $names[] = $win->name;
+                                        @endphp
+                                            @endforeach
+                                        {{$names[array_rand($names)]}}
+                                        @else
+                                        {{$parties->where('seats',$parties->max('seats'))->first()->name}}
+                                        @endif
+                                </td>
                             @endif
                             @php
                                 $count = 0;
