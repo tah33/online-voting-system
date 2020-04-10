@@ -17,7 +17,7 @@ class Candidate extends Model
 
     public function election()
     {
-    	return $this->belongsTo(Election::class);
+    	return $this->belongsTo(Election::class)->latest()->where('status',1);
     }
 
     public function getApplyAttribute()

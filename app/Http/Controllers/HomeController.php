@@ -83,13 +83,14 @@ class HomeController extends Controller
             $user->image = $ext;
         }
         if ($user->role == 'candidate') {
-            $party = new Party();
+            $party = Party::where('user_id',Auth::id())->latest()->first();
             $party->name = $request->party;
             $party->user_id = Auth::id();
             $party->symbol_name = $request->symbol_name;
+
             if ($request->hasFile('symbol')) {
                 $file = $request->File('symbol');
-                $symbol = $request->username . "." . $file->clientExtension();
+                $symbol = $request->symbol_name . "." . $file->clientExtension();
                 $file->storeAs('images/', $symbol);
                 $party->symbol = $symbol;
             }

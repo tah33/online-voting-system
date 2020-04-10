@@ -3,11 +3,11 @@
 
 @section('master.content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
 
             <div class="box">
                 <div class="box-body">
-                    <table id="search" class="table table-hover table-bordered">
+                    <table id="" class="table table-hover table-bordered search">
                         <caption>Election List</caption>
                         <thead>
                         <tr>
@@ -23,8 +23,8 @@
                                 <td style="text-align: center">{{ $key+1 }}</td>
                                 <td style="text-align: center">{{ $election->name }}</td>
                                 <td>{{$election->updated_at->toDateString()}}</td>
-                                <td><a href="{{url('results/'.$election->id)}}" class="btn btn-primary"><i
-                                            class="glyphicon glyphicon-eye-open"></i></a>
+                                <td><a href="{{url('results/'.$election->id)}}" class="btn btn-primary btn-sm btn-flat"><i
+                                            class="fa fa-eye"></i></a>
 
                                 </td>
                             </tr>

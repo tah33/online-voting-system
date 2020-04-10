@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <table id="search" class="table table-hover table-bordered">
+                    <table class="table table-hover table-bordered search">
                         <caption>Election List</caption>
                         <thead >
                         <tr>

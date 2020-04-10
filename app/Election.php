@@ -10,7 +10,12 @@ class Election extends Model
 
     public function candidates()
     {
-        return $this->hasMany(Candidate::class);
+        return $this->hasMany(Candidate::class)->latest()->where('status',1);
+    }
+
+    public function parties()
+    {
+        return $this->hasMany(Party::class)->latest();
     }
 
     public function getStatusNameAttribute()

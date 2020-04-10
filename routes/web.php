@@ -29,6 +29,7 @@ Route::resource('voters','VoterController');
 Route::resource('results','ResultController');
 Route::get('winner','ResultController@winner');
 Route::get('result-election/{id}','ResultController@result');
+Route::post('result-search','ResultController@resultFind');
 
 //AdminController
 Route::get('all-voter','AdminController@voter');
@@ -39,7 +40,7 @@ Route::get('election-candidate/{id}','VoterController@edit');
 Route::get('upcoming','CandidateController@upcoming');
 
 //PDFController
-Route::get('area-pdf/{area}','PdfController@area');
+Route::get('area-pdf/{id}','PdfController@area');
 Route::get('users-pdf','PdfController@user');
 Route::get('voters-pdf','PdfController@voter');
 Route::get('candidate-pdf','PdfController@candidate');

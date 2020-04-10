@@ -16,12 +16,12 @@ class PdfController extends Controller
         $this->middleware('auth');
     }
 
-    public function area($area)
+    public function area($id)
     {
-        $area = Area::find($area);
+        $area = Area::find($id);
         $max = $area->users->max('candidate.votes');
         $users_max_vote = $area->users->where('candidate.votes', $max);
-        $voters = User::where('area',$area)->where('role','voter')->get();
+        $voters = User::where('area_id',$id)->where('role','voter')->get();
         $pdf = PDF::loadView('pdf.area',compact('area','max','users_max_vote','voters'));
         return $pdf->stream("{$area->name}.pdf");
     }

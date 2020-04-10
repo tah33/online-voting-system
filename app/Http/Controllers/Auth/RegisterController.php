@@ -59,7 +59,7 @@ class RegisterController extends Controller
 
         if ($request->hasFile('symbol')) {
             $file=$request->File('symbol');
-            $symbol=$request->symbol.".".$file->clientExtension();
+            $symbol=$request->symbol_name.".".$file->clientExtension();
             $path = public_path(). '/images/';
             $file->move($path,$symbol);
         }

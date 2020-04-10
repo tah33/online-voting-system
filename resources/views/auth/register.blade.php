@@ -105,6 +105,16 @@
                             <span class="text-danger">{{ $errors->first('role') }}</span>
                         </div>
 
+                        <label for="">Role</label>
+                        <div class="form-group has-feedback">
+                            <select name="role" class="form-control role">
+                                <option value="">Registered As</option>
+                                <option value="candidate">Candidate</option>
+                                <option value="voter">Voter</option>
+                            </select>
+                            <span class="text-danger">{{ $errors->first('role') }}</span>
+                        </div>
+
                         <label for="">Phone</label>
                         <div class="form-group has-feedback">
                             <input type="tel" name="phone" class="form-control"

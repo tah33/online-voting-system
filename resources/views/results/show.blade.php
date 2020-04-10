@@ -3,11 +3,13 @@
 
 @section('master.content')
     <div class="box" style="width: 600px">
+        @if(! empty($users))
+            <div class="box-header with-border">
+                <h3 class="box-title">Candidate Areas for {{$users->first()->candidate->election->name}}</h3>
+            </div>
+        @endif
         <div class="box-body">
             <table id="search" class="table table-hover table-bordered">
-                @if(! empty($users))
-                    <caption>Canidate Areas for {{$users->first()->candidate->election->name}}</caption>
-                @endif
                 <thead>
                 <tr>
                     <th style="text-align: center">No.</th>
@@ -20,9 +22,9 @@
                     @foreach ($users as $key => $user)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $user->userarea->name }}</td>
-                            <td><a href="{{url('results/'.$user->area.'/edit')}}" class="btn btn-primary"><i
-                                        class="glyphicon glyphicon-eye-open"></i></a>
+                            <td style="text-align: center">{{ $user->area->name }}</td>
+                            <td><a href="{{url('results/'.$user->area_id.'/edit')}}" class="btn btn-primary btn-sm btn-flat"><i
+                                        class="fa fa-eye"></i></a>
                             </td>
                         </tr>
                     @endforeach

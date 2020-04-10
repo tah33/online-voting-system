@@ -74,7 +74,8 @@
             <li class="{{\Illuminate\Support\Facades\Request::is('voters') ? 'active' : ''}}"><a href="{{url('voters')}}"><i class="fa fa-area-chart"></i>Voter Area</a></li>
 
             <li class="header">Result Area</li>
-            <li class="treeview {{\Illuminate\Support\Facades\Request::is('results') || \Illuminate\Support\Facades\Request::is('winner')  ? 'active' : ''}}">
+            <li class="treeview {{\Illuminate\Support\Facades\Request::is('results') || \Illuminate\Support\Facades\Request::is('winner')
+                                || \Illuminate\Support\Facades\Request::is('result-election/*')? 'active' : ''}}">
                 <a href="#">
                     <i class="fa fa-share"></i> <span>Result</span>
                     <span class="pull-right-container">

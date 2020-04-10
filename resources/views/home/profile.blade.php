@@ -125,7 +125,7 @@
                                                                             class="pull-right">{{$user->party ? $user->party->symbol_name : ""}}</a>
                                                                     </li>
                                                                     <li class="list-group-item"><b>Symbol</b>
-                                                                        <img class="card-img-top" width="50%"
+                                                                        <img class="card-img-top" style="width: 50%;margin-left: 150px"
                                                                              src="{{asset('images/'.($user->party ? $user->party->symbol : ""))}}"
                                                                              class="img-circle">
                                                                 </ul>

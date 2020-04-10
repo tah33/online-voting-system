@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Party;
 use App\Voter;
 use App\Election;
 use App\User;
 use App\Candidate;
-use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VoterController extends Controller
 {
@@ -32,7 +33,7 @@ class VoterController extends Controller
 
         $data = [
             'title' => 'Voting::Area',
-            'elections' => Election::where('status', 1)->whereDate('election_date',Carbon::now('Asia/Dhaka'))->get(),
+            'elections' => Election::where('status', 1)->whereDate('election_date', Carbon::now('Asia/Dhaka'))->get(),
             'candidates' => $candidates,
         ];
 
@@ -52,41 +53,81 @@ class VoterController extends Controller
 
     public function show($id)
     {
-     /*   if (Carbon::now('Asia/Dhaka')->format('H:i:s') > Carbon::createFromTime(8, 00, 00, 'Asia/Dhaka')
-            && Carbon::now('Asia/Dhaka')->format('H:i:s') == Carbon::createFromTime(16, 00, 00, 'Asia/Dhaka')) {*/
-            $candidate = Candidate::find($id);
-            $voter = Voter::where('user_id', Auth::id())->where('election_id', $candidate->election_id)->first();
-            if ($voter) {
-                if ($voter->wrong_attempt == 1) {
-                    Auth::logout();
-                    $user = User::find($voter->user_id);
-                    $user->delete();
-                    return redirect('login');
-                }
+        /*   if (Carbon::now('Asia/Dhaka')->format('H:i:s') > Carbon::createFromTime(8, 00, 00, 'Asia/Dhaka')
+               && Carbon::now('Asia/Dhaka')->format('H:i:s') == Carbon::createFromTime(16, 00, 00, 'Asia/Dhaka')) {*/
+        $vote_getter = Candidate::find($id);
 
-                $voter->wrong_attempt = 1;
-                $voter->save();
-
-                Toastr::warning('You Already Voted for this Election', 'Warning!');
-                return back();
-            } else {
-                $voter = new Voter;
-                $voter->user_id = Auth::id();
-                $voter->candidate_id = $id;
-                $voter->election_id = $candidate->election_id;
-                $voter->save();
+        $voter = Voter::where('user_id', Auth::id())->where('election_id', $vote_getter->election_id)->first();
+        if ($voter) {
+            if ($voter->wrong_attempt == 1) {
+                Auth::logout();
+                $user = User::find($voter->user_id);
+                $user->delete();
+                return redirect('login');
             }
 
-            if ($voter->save()) {
-                $candidate->votes += 1;
-                $candidate->save();
-            }
+            $voter->wrong_attempt = 1;
+            $voter->save();
 
-            Toastr::success('Your valuable vote was successfully submitted', 'Success!');
+            Toastr::warning('You Already Voted for this Election', 'Warning!');
             return back();
-    /*    }
-        Toastr::error('Sorry Deadline is Over', 'Error!');
-        return back();*/
+        } else {
+            $voter = new Voter;
+            $voter->user_id = Auth::id();
+            $voter->candidate_id = $id;
+            $voter->election_id = $vote_getter->election_id;
+            $voter->save();
+        }
+
+        if ($voter->save()) {
+            $vote_getter->votes += 1;
+            $vote_getter->save();
+        }
+
+        $votes = [];
+
+        $candidates = Candidate::where('election_id', $vote_getter->election_id)->where('status', 1)->where('user_id', '!=', $vote_getter->user_id)
+            ->where('area_id', $vote_getter->area_id)->get();
+
+        foreach ($candidates as $candidate)
+            $votes[] = $candidate->votes;
+
+        $draw_candidates = Candidate::where('election_id', $vote_getter->election_id)->where('status', 1)->where('area_id', $vote_getter->area_id)->get();
+
+        foreach ($draw_candidates as $draw_candidate) {
+            if (!empty($votes) && $vote_getter->votes == max($votes)) {
+                $party = Party::where('user_id', $draw_candidate->user_id)->where('election_id', $vote_getter->election_id)->where('seats','>', 0)->latest()->first();
+                if ($party) {
+                    $party->seats -= 1;
+                    $party->save();
+                }
+            }
+        }
+
+        $seat_getter = Party::where('election_id', $vote_getter->election_id)->where('user_id', $vote_getter->user_id)->where('seats', 0)->latest()->first();
+
+        if ($seat_getter && !empty($votes) && $vote_getter->votes > max($votes)) { //One Problem, party stand from one seat then it also got to the inside condition
+            $seat_getter->seats += 1;
+            $seat_getter->save();
+//            dd(true);
+        }
+
+        $parties = Party::where('election_id', $vote_getter->election_id)->where('seats', '>=', 1)->where('user_id', '!=', $vote_getter->user_id)->get();
+
+        foreach ($parties as $party) {
+            if ($party->user->area_id == $vote_getter->area_id && $vote_getter->votes > max($votes)) {
+                $party->seats -= 1;
+                $party->save();
+//                    dd(false);
+            }
+        }
+
+
+        Toastr::success('Your valuable vote was successfully submitted', 'Success!');
+        return back();
+        /*    }
+            Toastr::error('Sorry Deadline is Over', 'Error!');
+            return back();*/
     }
 
     public function edit($id)

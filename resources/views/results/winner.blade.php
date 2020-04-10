@@ -2,9 +2,11 @@
 @section('backend.title', $title)
 
 @section('master.content')
-    <a href="{{url('area-pdf/'.$users->first()->area)}}" target="_blank" class="btn btn-primary">Get PDF</a>
     <div class="panel panel-primary">
-        <div class="panel-heading">{{$users->first()->userarea->name}}</div>
+        <div class="panel-heading">{{$users->first()->area->name}}
+            <a href="{{url('area-pdf/'.$users->first()->area_id)}}" target="_blank" class="btn btn-danger pull-right" style="margin-top: -10px">Get PDF</a>
+        </div>
+
         <div class="panel-body">
             @foreach($users->where('role','candidate') as $key => $user)
                 <div class="panel panel-primary" style="width:400px;  float: left; margin-right: 10px">

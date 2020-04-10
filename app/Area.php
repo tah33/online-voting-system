@@ -10,6 +10,6 @@ class Area extends Model
 
     public function users()
     {
-    	return $this->hasMany(User::class,'area');
+    	return $this->hasMany(User::class);
     }
 }

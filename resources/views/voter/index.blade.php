@@ -18,20 +18,24 @@
                 </thead>
                 <tbody align="center">
                 @foreach ($elections as $election)
-                    <tr>
-                        <td rowspan="{{count($election->candidates)+1}}">{{$election->name}}</td>
-                    @foreach ($election->candidates as $candidate)
                         <tr>
+                            <td rowspan="{{count($election->candidates)+1}}">{{$election->name}}</td>
+                        @foreach ($election->candidates as $candidate)
+{{--                            @if($candidate->area_id == \Illuminate\Support\Facades\Auth::user()->area_id)--}}
+                                <tr>
 
-                            <td>{{$candidate->user->name}}</td>
-                            <td><a href="{{url('voters',$candidate->id)}}"
-                                   onclick="return confirm('Are you Sure You want to vote this candidates?')">
-                                    <img src="{{url('images/'.$candidate->user->party->symbol)}}" height="50px"
-                                         width="50px"></a></td>
-                        </tr>
+                                <td>{{$candidate->user->name}}</td>
+                                <td><a href="{{url('voters',$candidate->id)}}"
+                                       onclick="return confirm('Are you Sure You want to vote this candidates?')">
+                                        <img src="{{url('images/'.$candidate->user->party->symbol)}}" height="50px"
+                                             width="50px"></a></td>
+                            </tr>
+{{--                                @endif--}}
+                            @endforeach
+                            </tr>
+
                         @endforeach
-                        @endforeach
-                        </tr>
+
                 </tbody>
             </table>
         </div>
