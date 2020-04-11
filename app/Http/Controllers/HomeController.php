@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Seat;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\User;
@@ -48,7 +49,7 @@ class HomeController extends Controller
         $data = [
             'title' => 'Profile::Page',
             'user' => Auth::user(),
-            'areas' => Area::all(),
+            'parties' => Party::all(),
         ];
         return view('home.profile-form')->with($data);
     }
@@ -57,19 +58,21 @@ class HomeController extends Controller
     {
         $min = Carbon::now()->subYear(18);
 
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'username' => 'required|unique:users,username,' . $id,
-                'email' => 'required|unique:users,email,' . $id,
-                'image' => 'nullable',
-                'phone' => Auth::user()->role == 'admin' ?'nullable' : 'required|max:14|min:11|unique:users,phone,' . $id,
-                'gender' => Auth::user()->role == 'admin' ?'nullable' : 'required',
-                'dob' => Auth::user()->role == 'admin' ?'nullable' : "required|date|before:$min",
-                'party' => Auth::user()->role == 'candidate' ?'required' : "nullable",
-                'symbol' => Auth::user()->role == 'candidate' ?'required' : "nullable",
-                'symbol_name' => Auth::user()->role == 'candidate' ?'required' : "nullable",
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|unique:users,username,' . $id,
+            'email' => 'required|unique:users,email,' . $id,
+            'image' => 'nullable',
+            'phone' => Auth::user()->role == 'admin' ? 'nullable' : 'required|max:14|min:11|unique:users,phone,' . $id,
+            'gender' => Auth::user()->role == 'admin' ? 'nullable' : 'required',
+            'dob' => Auth::user()->role == 'admin' ? 'nullable' : "required|date|before:$min",
+            'party' => Auth::user()->role == 'candidate' ? 'required_if:party_name,==,null' : 'nullable',
+            'party_name' => Auth::user()->role == 'candidate' ? 'required_if:party,==,null' : 'nullable',
+            'symbol' => Auth::user()->role == 'candidate' ? 'required_with:party_name' : "nullable",
+            'symbol_name' => Auth::user()->role == 'candidate' ? 'required_with:party_name|unique:parties,name' : 'nullable',
+        ]);
 
-            ]);
+        $ext = $symbol = '';
 
         $user = User::find($id);
         $user->name = $request->name;
@@ -83,27 +86,38 @@ class HomeController extends Controller
             $user->image = $ext;
         }
         if ($user->role == 'candidate') {
-            $party = Party::where('user_id',Auth::id())->latest()->first();
-            $party->name = $request->party;
-            $party->user_id = Auth::id();
-            $party->symbol_name = $request->symbol_name;
-
-            if ($request->hasFile('symbol')) {
-                $file = $request->File('symbol');
-                $symbol = $request->symbol_name . "." . $file->clientExtension();
-                $file->storeAs('images/', $symbol);
-                $party->symbol = $symbol;
+            if (!$request->party_name) {
+                $seat = Seat::where('user_id', Auth::id())->first();
+                $seat->party_id = $request->party;
+                $seat->save();
             }
-            $party->save();
 
+            elseif ($request->party_name) {
+                $party = new Party();
+                $party->name = $request->party_name;
+                $party->symbol_name = $request->symbol_name;
+
+                if ($request->symbol) {
+                    $file = $request->File('symbol');
+                    $symbol = $request->symbol_name . "." . $file->clientExtension();
+                    $file->storeAs('images/', $symbol);
+                    $party->symbol = $symbol;
+                }
+
+                $party->save();
+
+                $seat = Seat::where('user_id', Auth::id())->first();
+                $seat->party_id = $party->id;
+                $seat->save();
+            }
         }
-        $user->save();
 
-        Toastr::success('Profile Has been Updated','Success!');
+        Toastr::success('Profile Has been Updated', 'Success!');
         return back();
     }
 
-    public function password()
+    public
+    function password()
     {
         $data = [
             'user' => Auth::user(),
@@ -112,7 +126,8 @@ class HomeController extends Controller
         return view('home.password')->with($data);
     }
 
-    public function updatePassword(Request $request, $id)
+    public
+    function updatePassword(Request $request, $id)
     {
         $request->validate([
             'password' => 'required|confirmed|min:6',
@@ -133,7 +148,8 @@ class HomeController extends Controller
         }
     }
 
-    public function home()
+    public
+    function home()
     {
         if (Auth::user()->role == 'admin') {
             $data = [

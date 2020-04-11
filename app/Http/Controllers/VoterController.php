@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Party;
+use App\Seat;
 use App\Voter;
 use App\Election;
 use App\User;
@@ -96,27 +97,27 @@ class VoterController extends Controller
 
         foreach ($draw_candidates as $draw_candidate) {
             if (!empty($votes) && $vote_getter->votes == max($votes)) {
-                $party = Party::where('user_id', $draw_candidate->user_id)->where('election_id', $vote_getter->election_id)->where('seats','>', 0)->latest()->first();
+                $party = Seat::where('user_id', $draw_candidate->user_id)->where('election_id', $vote_getter->election_id)->where('seat','>', 0)->latest()->first();
                 if ($party) {
-                    $party->seats -= 1;
+                    $party->seat -= 1;
                     $party->save();
                 }
             }
         }
 
-        $seat_getter = Party::where('election_id', $vote_getter->election_id)->where('user_id', $vote_getter->user_id)->where('seats', 0)->latest()->first();
+        $seat_getter = Seat::where('election_id', $vote_getter->election_id)->where('user_id', $vote_getter->user_id)->where('seat', 0)->latest()->first();
 
-        if ($seat_getter && !empty($votes) && $vote_getter->votes > max($votes)) { //One Problem, party stand from one seat then it also got to the inside condition
-            $seat_getter->seats += 1;
+        if ($seat_getter && !empty($votes) && $vote_getter->votes > max($votes)) {
+            $seat_getter->seat += 1;
             $seat_getter->save();
 //            dd(true);
         }
 
-        $parties = Party::where('election_id', $vote_getter->election_id)->where('seats', '>=', 1)->where('user_id', '!=', $vote_getter->user_id)->get();
+        $parties = Seat::where('election_id', $vote_getter->election_id)->where('seat', '>=', 1)->where('user_id', '!=', $vote_getter->user_id)->get();
 
         foreach ($parties as $party) {
             if ($party->user->area_id == $vote_getter->area_id && $vote_getter->votes > max($votes)) {
-                $party->seats -= 1;
+                $party->seat -= 1;
                 $party->save();
 //                    dd(false);
             }

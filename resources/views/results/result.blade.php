@@ -39,24 +39,15 @@
                             @foreach ($parties as $key => $party)
                                 <tr style="text-align: center">
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $party->name }}</td>
+                                    <td>{{ $party->party->name }}</td>
                                     <td>{{ $party->seats  }} </td>
-                                    @php
-                                        $winner = $parties->where('seats',$parties->max('seats'));
-                                    @endphp
+                                  {{--  @php
+                                        $winner = $parties->where('seat',$parties->max('seat'));
+                                    @endphp--}}
                                     @if($count != 0)
                                         <td rowspan="{{count($parties)}}">{{ count(($party->election->candidates->groupBy('area_id'))) }}</td>
-                                        <td rowspan="{{count($parties)}}">{{$parties->where('seats',$parties->max('seats'))->first()->name}}
-                                           {{-- @if (count($winner) > 1)
-                                                @foreach($winner as $win)
-                                                    @php
-                                                        $names[] = $win->name;
-                                                    @endphp
-                                                @endforeach
-                                                {{$names[array_rand($names)]}}
-                                            @else
-                                                {{$parties->where('seats',$parties->max('seats'))->first()->name}}
-                                            @endif--}}
+                                        <td rowspan="{{count($parties)}}">{{$party->election->winner}}
+
                                         </td>
                                         <td rowspan="{{count($parties)}}">{{$party->election->name}}</td>
                                         <td valign="bottom" rowspan="{{count($parties)}}"><a href="{{url('results',$party->election_id)}}" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-eye"></i></a></td>

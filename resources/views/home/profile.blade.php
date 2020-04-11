@@ -118,15 +118,15 @@
 
                                                                     <li class="list-group-item">
                                                                         <b>Party</b> <a
-                                                                            class="pull-right">{{$user->party ? $user->party->name : ""}}</a>
+                                                                            class="pull-right">{{$user->seat ? $user->seat->party->name : ""}}</a>
                                                                     </li>
                                                                     <li class="list-group-item">
                                                                         <b>Symbol Name</b> <a
-                                                                            class="pull-right">{{$user->party ? $user->party->symbol_name : ""}}</a>
+                                                                            class="pull-right">{{$user->seat ? $user->seat->party->symbol_name : ""}}</a>
                                                                     </li>
                                                                     <li class="list-group-item"><b>Symbol</b>
                                                                         <img class="card-img-top" style="width: 50%;margin-left: 150px"
-                                                                             src="{{asset('images/'.($user->party ? $user->party->symbol : ""))}}"
+                                                                             src="{{asset('images/'.($user->seat->party ? $user->seat->party->symbol : ""))}}"
                                                                              class="img-circle">
                                                                 </ul>
 

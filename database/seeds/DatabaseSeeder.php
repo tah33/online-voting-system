@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-use App\Candidate;
+use App\Party;
 
 class DatabaseSeeder extends Seeder
 {
@@ -38,6 +38,23 @@ class DatabaseSeeder extends Seeder
             'password' =>bcrypt('password'),
             'role' =>'admin',
             'area_id' =>1,
+        ]);
+
+        Party::create([
+            'name' =>'Bangladesh Awami League',
+            'symbol_name' =>'Boat',
+            'symbol' =>'Boat.jpeg',
+        ]);
+
+        Party::create([
+            'name' =>'Bangladesh Nationalist Party',
+            'symbol_name' =>'Crops',
+            'symbol' =>'Crops.jpeg',
+        ]);
+        Party::create([
+            'name' =>'Jatiya Party (Ershad)',
+            'symbol_name' =>'Axe',
+            'symbol' =>'Axe.jpeg',
         ]);
     }
 }

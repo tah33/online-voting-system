@@ -27,7 +27,7 @@
                                 <td>{{$candidate->user->name}}</td>
                                 <td><a href="{{url('voters',$candidate->id)}}"
                                        onclick="return confirm('Are you Sure You want to vote this candidates?')">
-                                        <img src="{{url('images/'.$candidate->user->party->symbol)}}" height="50px"
+                                        <img src="{{url('images/'.$candidate->user->seat->party->symbol)}}" height="50px"
                                              width="50px"></a></td>
                             </tr>
 {{--                                @endif--}}

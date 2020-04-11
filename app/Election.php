@@ -13,7 +13,7 @@ class Election extends Model
         return $this->hasMany(Candidate::class)->latest()->where('status',1);
     }
 
-    public function parties()
+    public function seats()
     {
         return $this->hasMany(Party::class)->latest();
     }

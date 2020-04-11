@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Party;
+use App\Seat;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,30 +20,24 @@ class RegisterController extends Controller
 
     protected $redirectTo = '/home';
 
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
     protected function validator(array $data)
     {
         $min = Carbon::now()->subYear(18);
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'role' => ['required'],
+            'name' => 'required|string|max:255',
+            'username' => 'required',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required',
             'nid' => 'required|regex:/\+?[1-9][0-9]{9}\b/|min:10|unique:users,nid',
-            'phone' => ['required','max:14','min:11','unique:users,phone'],
-            'area' => ['required'],
-            'image' => ['nullable','required'],
-            'gender' => ['required'],
+            'phone' => 'required', 'max:14', 'min:11', 'unique:users,phone',
+            'area' => 'required',
+            'gender' => 'required',
             'dob' => "required|date|before:$min",
-            'party' => ['required_if:role,==,candidate'],
-            'symbol' => ['required_if:role,==,candidate','unique:parties,symbol'],
-            'symbol_name' => ['required_if:role,==,candidate'],
-
+            'party' => 'required_if:role,==,candidate&party_name,==,null ',
+            'party_name' => 'required_if:role,==,candidate&party,==,null ',
+            'symbol' => 'required_with:party_name',
+            'symbol_name' => 'required_with:party_name|unique:parties,name',
         ]);
     }
 
@@ -49,22 +45,22 @@ class RegisterController extends Controller
     {
         $request = app('request');
 
-        $symbol=$ext='';
-     if ($request->hasFile('image')) {
-            $file=$request->File('image');
-            $ext=$request->username.".".$file->clientExtension();
-            $path = public_path(). '/images/';
-            $file->move($path,$ext);
+        $symbol = $ext = '';
+        if ($request->hasFile('image')) {
+            $file = $request->File('image');
+            $ext = $request->username . "." . $file->clientExtension();
+            $path = public_path() . '/images/';
+            $file->move($path, $ext);
         }
 
         if ($request->hasFile('symbol')) {
-            $file=$request->File('symbol');
-            $symbol=$request->symbol_name.".".$file->clientExtension();
-            $path = public_path(). '/images/';
-            $file->move($path,$symbol);
+            $file = $request->File('symbol');
+            $symbol = $request->symbol_name . "." . $file->clientExtension();
+            $path = public_path() . '/images/';
+            $file->move($path, $symbol);
         }
 
-        $user =  User::create([
+        $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
@@ -73,20 +69,36 @@ class RegisterController extends Controller
             'nid' => $data['nid'],
             'phone' => $data['phone'],
             'area_id' => $data['area'],
-            'dob' =>    Carbon::createFromFormat('m/d/Y',$data['dob']) ,
+            'dob' => Carbon::createFromFormat('m/d/Y', $data['dob']),
             'gender' => $data['gender'],
             'image' => $ext,
         ]);
-        if ($request->role == 'candidate') {
-            Party::create([
-                'name' =>$data['party'],
-                'user_id' =>$user->id,
-                'symbol' =>$symbol,
-                'symbol_name' =>$data['symbol_name']
+        if (!empty($data['party_name']) && empty($data['party'])) {
+            $party = new Party();
+            $party->name = $data['party_name'];
+            $party->symbol_name = $data['symbol_name'];
+            $party->symbol = $symbol;
+            $party->save();
+        }
+
+        if ($data['role'] == 'candidate')
+            Seat::create([
+                'party_id' => empty($data['party']) ? $party->id : $data['party'],
+                'user_id' => $user->id,
             ]);
 
-        }
-        Toastr::success('Account Has Been Created','Success!');
-            return $user;
+        Toastr::success('Account Has Been Created', 'Success!');
+        return back();
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        return redirect('login');
     }
 }

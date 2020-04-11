@@ -38,9 +38,9 @@ class User extends Authenticatable /*implements MustVerifyEmail*/
         return $this->belongsTo(Area::class);
     }
 
-    public function party()
+    public function seat()
     {
-        return $this->hasOne(Party::class);
+        return $this->hasOne(Seat::class)->latest();
     }
 
     public function verify()

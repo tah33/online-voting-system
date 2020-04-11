@@ -6,6 +6,7 @@ use App\Candidate;
 use App\Election;
 use App\Mail\CandidateApprove;
 use App\Mail\CandidateReject;
+use App\Seat;
 use App\User;
 use App\Party;
 use Brian2694\Toastr\Facades\Toastr;
@@ -50,11 +51,21 @@ class CandidateController extends Controller
     {
         $candidate_exist = Candidate::where('user_id', Auth::id())
             ->where('election_id', $id)->exists();
-        if ($candidate_exist) {
 
+        if ($candidate_exist) {
             Toastr::error('You are already Applied', 'Error!');
             return back();
         }
+        $seats = Seat::where('party_id',Auth::user()->seat->party_id)->where('user_id','!=',Auth::id())->latest()->get();
+
+        foreach ($seats as $seat) {
+            if ($seat->user->area_id == Auth::user()->area_id)
+            {
+                Toastr::error('SomeOne Already Stand from Your Party', 'Error!');
+                return back();
+            }
+        }
+
         $candidate = new Candidate;
         $candidate->user_id = Auth::id();
         $candidate->election_id = $id;
@@ -73,9 +84,10 @@ class CandidateController extends Controller
         }
         $candidate->status = 1;
         $candidate->save();
-        $party = Party::where('user_id', $candidate->user_id)->latest()->first();
-        $party->election_id = $candidate->election_id;
-        $party->save();
+
+        $seat = Seat::where('user_id', $candidate->user_id)->latest()->first();
+        $seat->election_id = $candidate->election_id;
+        $seat->save();
 
         $data = ['name' => $candidate->user->name, 'election' => $candidate->election->name, 'date' => $candidate->election->election_date];
         Mail::to($candidate->user->email)->send(new CandidateApprove($data));
@@ -97,6 +109,10 @@ class CandidateController extends Controller
     public function destroy(Candidate $candidate)
     {
         $candidate->delete();
+
+        $seat = Seat::where('user_id', $candidate->user_id)->latest()->first();
+        $seat->election_id = null;
+        $seat->save();
 
         $data = ['name' => $candidate->user->name, 'election' => $candidate->election->name, 'date' => $candidate->election->election_date];
         Mail::to($candidate->user->email)->send(new CandidateReject($data));
@@ -182,14 +198,14 @@ class CandidateController extends Controller
                                     <td>{$candidate->user->name}</td>";
                 if (!in_array($candidate->area_id, $ids)) {
                     $ids[] = $candidate->area_id;
-                    $output .= '<td rowspan="{count($election->candidates->where(\'area_id\',$candidate->area_id))}">
+                    $output .= '<td rowspan="'.count($election->candidates->where('area_id',$candidate->area_id)).'">
                                             ' . $candidate->area->name . '</td>';
                 }
 
                 if (!in_array($election->name, $userElections)) {
                     $userElections[] = $election->name;
-                    $output .= '<td rowspan="{count($election->candidates)}">' . $election->name . '</td>
-                                <td rowspan="{count($election->candidates)}">' . $election->election_date . '</td>
+                    $output .= '<td rowspan="'.count($election->candidates).'">' . $election->name . '</td>
+                                <td rowspan="'.count($election->candidates).'">' . $election->election_date . '</td>
                                 </tr>';
                 }
 

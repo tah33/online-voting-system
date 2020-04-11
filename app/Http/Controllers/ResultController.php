@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Seat;
 use Illuminate\Http\Request;
 use App\Area;
 use App\Election;
@@ -124,60 +125,80 @@ class ResultController extends Controller
 //            'candidates' => $candidates,
         ];*/
 
-       /* $seat = Party::where('election_id', $id)->orderBy('id', 'desc')
-            ->max('seats');
-        $parties = Party::selectRaw('*, sum(seats) as seats')->where('election_id', $id)
-            ->groupBy('name')->get();
-        $winner = Party::where('election_id', $id)->orderBy('id', 'desc')
-            ->where('seats', $seat)->first();
-        $candidates = Candidate::where('election_id', $id)->groupBy('area_id')->get();
+        /* $seat = Party::where('election_id', $id)->orderBy('id', 'desc')
+             ->max('seats');
+         $parties = Party::selectRaw('*, sum(seats) as seats')->where('election_id', $id)
+             ->groupBy('name')->get();
+         $winner = Party::where('election_id', $id)->orderBy('id', 'desc')
+             ->where('seats', $seat)->first();
+         $candidates = Candidate::where('election_id', $id)->groupBy('area_id')->get();
 
-        if ($parties->last()->seat == 0) {
-            foreach ($candidates as $key => $candidate) {
-                // $areas [] = $candidate->area;
-                $max_vote = Candidate::where('election_id', $id)
-                    ->where('area_id', $candidate->area_id)->max('votes');
+         if ($parties->last()->seat == 0) {
+             foreach ($candidates as $key => $candidate) {
+                 // $areas [] = $candidate->area;
+                 $max_vote = Candidate::where('election_id', $id)
+                     ->where('area_id', $candidate->area_id)->max('votes');
 
-                $areaWinner = Candidate::where('votes', $max_vote)
-                    ->where('election_id', $id)
-                    ->where('area_id', $candidate->area_id)->first();
+                 $areaWinner = Candidate::where('votes', $max_vote)
+                     ->where('election_id', $id)
+                     ->where('area_id', $candidate->area_id)->first();
 
-                $party = Party::where('user_id', $candidate->user_id)
-                    ->where('election_id', $candidate->election_id)->latest()->first();
-                if (!empty($party)) {
-                    $count = 1;
-                    $party->seats = $count;
-                    $party->count = 1;
-                    $party->save();
-                    $count++;
-                }
-                $looserparties = Party::where('user_id', '!=', $candidate->user_id)
-                    ->where('election_id', $id)->orderBy('id', 'desc')->get();
-                foreach ($looserparties as $key => $party) {
-                    $party->seats += 0;
-                    $party->count = 1;
-                    $party->save();
-                }
-                // $looserparties = Party::where('user_id','!=',$candidate->user_id)
-                //                 ->where('election_id',$id)->orderBy('id','desc')->get();
-                //                 foreach ($looserparties as $key => $party) {
-                //                     $party->seats += 0;
-                //                     $party->save();
-                //                 }
-            }
-        }
-       */
-       $data = [
+                 $party = Party::where('user_id', $candidate->user_id)
+                     ->where('election_id', $candidate->election_id)->latest()->first();
+                 if (!empty($party)) {
+                     $count = 1;
+                     $party->seats = $count;
+                     $party->count = 1;
+                     $party->save();
+                     $count++;
+                 }
+                 $looserparties = Party::where('user_id', '!=', $candidate->user_id)
+                     ->where('election_id', $id)->orderBy('id', 'desc')->get();
+                 foreach ($looserparties as $key => $party) {
+                     $party->seats += 0;
+                     $party->count = 1;
+                     $party->save();
+                 }
+                 // $looserparties = Party::where('user_id','!=',$candidate->user_id)
+                 //                 ->where('election_id',$id)->orderBy('id','desc')->get();
+                 //                 foreach ($looserparties as $key => $party) {
+                 //                     $party->seats += 0;
+                 //                     $party->save();
+                 //                 }
+             }
+         }
+        */
+        $data = [
             'title' => "Result::Page",
-            'parties' => Party::where('election_id',$id)->groupBy('name')->selectRaw('sum(seats) as seats, name,election_id')->get(),
-       ];
+            'parties' => Seat::where('election_id', $id)->groupBy('party_id')->selectRaw('sum(seat) as seats,election_id,party_id')->get(),
+        ];
+        if (count($data['parties']) > 0) {
+
+            $results = $data['parties']->where('seat', $data['parties']->max('seat'));
+
+            foreach ($results as $result)
+                $names[] = $result->party->name;
+
+            if (count($results) > 1)
+                $winner = $names[array_rand($names)];
+            else
+                $winner = $data['parties']->where('seats', $data['parties']->max('seats'))->first()->party->name;
+
+            $election = Election::find($id);
+            $election->winner = $winner;
+            $election->save();
+            $data = [
+              'winner' => $election->winner,
+            ];
+        }
 
         return view('results.result')->with($data);
     }
 
     public function resultFind(Request $request)
     {
-        $output = '';$count = 1;
+        $output = '';
+        $count = 1;
         $ids = $userElections = [];
 
         if ($request->name)
@@ -186,8 +207,7 @@ class ResultController extends Controller
             $elections = Election::where('status', 1)->get();
 
         foreach ($elections as $election) {
-            foreach ($parties = Party::where('election_id',$election->id)->groupBy('name')->selectRaw('sum(seats) as seats, name,election_id')->get()   as $key => $party)
-            {
+            foreach ($parties = Party::where('election_id', $election->id)->groupBy('name')->selectRaw('sum(seats) as seats, name,election_id')->get() as $key => $party) {
                 $key += 1;
                 $output .= "<tr>
                               <td>{$key}</td>
@@ -195,9 +215,9 @@ class ResultController extends Controller
                                     <td>{$party->seats}</td>
                                     ";
                 if ($count != 0) {
-                    $output .= '<td rowspan="'.count($election->parties).'">' . count(($party->election->candidates->groupBy('area_id'))) . '</td>
-                                <td rowspan="'.count($election->parties).'">'.$election->parties->where('seats',$election->parties->max('seats'))->first()->name.'</td>
-                                <td rowspan="'.count($election->parties).'">'.$election->parties->first()->election->name.'</td>
+                    $output .= '<td rowspan="' . count($election->parties) . '">' . count(($party->election->candidates->groupBy('area_id'))) . '</td>
+                                <td rowspan="' . count($election->parties) . '">' . $election->parties->where('seats', $election->parties->max('seats'))->first()->name . '</td>
+                                <td rowspan="' . count($election->parties) . '">' . $election->parties->first()->election->name . '</td>
                                 </tr>';
                 }
                 $count = 0;

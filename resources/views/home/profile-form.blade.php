@@ -74,23 +74,37 @@
                                 <span class="text-danger">{{$errors->first('image')}}</span>
                             </div>
 
+                            <div class="candidate">
+                                <label for="">Party</label>
+                                <div class="form-group has-feedback">
+                                    <select name="party" class="form-control" id="party">
+                                        <option value="{{$user->seat->party->id}}">{{$user->seat->party->name}}</option>
+                                    @foreach($parties->except($user->seat->party->id) as $party)
+                                            <option value="{{$party->id}}">{{$party->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger">{{ $errors->first('party') }}</span>
+                                </div>
+                                <a href="javascript:void(0)" class="add_party">Not Listed Here? Click to add Yours</a>
+                            </div>
+
                             @if($user->role == 'candidate')
 
-                                <div class="panel panel-primary" style="padding: 10px">
+                                <div class="panel panel-primary party" style="padding: 10px; display: none">
                                     <div class="panel-heading" >Party Info</div>
 
-                                    <div class="form-group has-feedback {{ $errors->has('party') ? 'has-error' : '' }}" >
-                                        <input type="party" name="party" class="form-control"
-                                               value="{{$user->party ? $user->party->name : old('party')}}"
+                                    <div class="form-group has-feedback {{ $errors->has('party_name') ? 'has-error' : '' }}" >
+                                        <input type="text" name="party_name" class="form-control party_name"
+                                               value="{{ old('party_name') }}"
                                                placeholder="Enter Party Name">
                                         <span class="fa fa-user form-control-feedback"></span>
-                                        <span class="text-danger">{{$errors->first('party')}}</span>
+                                        <span class="text-danger">{{$errors->first('party_name')}}</span>
                                     </div>
 
                                     <div
                                         class="form-group has-feedback {{ $errors->has('symbol_name') ? 'has-error' : '' }}">
-                                        <input type="text" name="symbol_name" class="form-control"
-                                               value="{{$user->party ?  $user->party->symbol_name : old('symbol_name')}}"
+                                        <input type="text" name="symbol_name" class="form-control symbol_name"
+                                               value="{{ old('symbol_name') }}"
                                                placeholder="Enter Party Symobol Name">
                                         <span class="fa fa-asterisk form-control-feedback"></span>
                                         <span class="text-danger">{{$errors->first('symbol_name')}}</span>
@@ -98,10 +112,11 @@
 
                                     <div
                                         class="form-group has-feedback {{ $errors->has('symbol') ? 'has-error' : '' }}">
-                                        <input type="file" name="symbol" class="form-control">
+                                        <input type="file" name="symbol" class="form-control symbol">
                                         <span class="fa fa-image form-control-feedback"></span>
                                         <span class="text-danger">{{$errors->first('symbol')}}</span>
                                     </div>
+                                    <a href="javascript:void(0)" class="btn btn-warning cancel">Cancel</a>
 
                                 </div>
                             @endif
@@ -113,3 +128,21 @@
             </div><!-- /.register-box -->
         </div>
 @stop
+@push('base.js')
+    <script>
+        $(document).on('click', '.add_party', function () {
+            $('.symbol_name').val('');
+            $('.symbol').val('');
+            $('.party_name').val('');
+            $('.party').toggle();
+            $('.candidate').toggle();
+        });
+        $(document).on('click', '.cancel', function () {
+            $('.symbol_name').val('');
+            $('.symbol').val('');
+            $('.party_name').val('');
+            $('.party').toggle();
+            $('.candidate').toggle();
+        });
+    </script>
+@endpush

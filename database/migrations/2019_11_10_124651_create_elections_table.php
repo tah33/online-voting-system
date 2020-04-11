@@ -20,6 +20,7 @@ class CreateElectionsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->date('election_date');
+            $table->string('winner')->nullable();
             $table->timestamps();
         });
     }

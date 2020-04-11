@@ -3,6 +3,7 @@
 namespace Illuminate\Foundation\Auth;
 
 use App\Area;
+use App\Party;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,12 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $areas = Area::all();
-        return view('auth.register',compact('areas'));
+        $data = [
+          'title' => 'Registration::Area',
+          'areas' => Area::all(),
+          'parties' => Party::all(),
+        ];
+        return view('auth.register')->with($data);
     }
 
     /**
