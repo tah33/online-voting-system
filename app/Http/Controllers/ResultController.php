@@ -185,10 +185,12 @@ class ResultController extends Controller
                 $winner = $data['parties']->where('seats', $data['parties']->max('seats'))->first()->party->name;
 
             $election = Election::find($id);
-            $election->winner = $winner;
-            $election->save();
+            if(empty($election->winner)) {
+                $election->winner = $winner;
+                $election->save();
+            }
             $data = [
-              'winner' => $election->winner,
+              'election' => $election,
             ];
         }
 

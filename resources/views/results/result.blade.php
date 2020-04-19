@@ -45,11 +45,11 @@
                                         $winner = $parties->where('seat',$parties->max('seat'));
                                     @endphp--}}
                                     @if($count != 0)
-                                        <td rowspan="{{count($parties)}}">{{ count(($party->election->candidates->groupBy('area_id'))) }}</td>
-                                        <td rowspan="{{count($parties)}}">{{$party->election->winner}}
+                                        <td rowspan="{{count($parties)}}">{{ count(($election->candidates->groupBy('area_id'))) }}</td>
+                                        <td rowspan="{{count($parties)}}">{{$election->winner}}
 
                                         </td>
-                                        <td rowspan="{{count($parties)}}">{{$party->election->name}}</td>
+                                        <td rowspan="{{count($parties)}}">{{$election->name}}</td>
                                         <td valign="bottom" rowspan="{{count($parties)}}"><a href="{{url('results',$party->election_id)}}" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-eye"></i></a></td>
                                     @endif
                                     @php
