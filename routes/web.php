@@ -24,6 +24,7 @@ Route::get('applies','CandidateController@apply');
 Route::post('candidate-search','CandidateController@candidateFind');
 //VoterController
 Route::resource('voters','VoterController');
+Route::get('voters_list','VoterController@elections');
 
 //ResultController
 Route::resource('results','ResultController');

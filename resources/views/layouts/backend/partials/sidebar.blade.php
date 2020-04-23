@@ -70,8 +70,25 @@
             <li class="header">Candidates</li>
             <li class="{{\Illuminate\Support\Facades\Request::is('candidates') ? 'active' : ''}}"><a href="{{url('candidates')}}"><i class="fa fa-user"></i>Candidates</a></li>
 
-            <li class="header">Voting Area</li>
+            <li class="header">Voters Area</li>
+        @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                <li class="treeview {{\Illuminate\Support\Facades\Request::is('voters') || \Illuminate\Support\Facades\Request::is('voters/*') ||
+                                      \Illuminate\Support\Facades\Request::is('voters/list')? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-share"></i> <span>Vote</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{\Illuminate\Support\Facades\Request::is('voters/list') ? 'active' : ''}}"><a href="{{url('voters_list')}}"><i class="fa fa-check"></i>Voters List</a></li>
+
+                        <li class="{{\Illuminate\Support\Facades\Request::is('voters') ? 'active' : ''}}"><a href="{{url('voters')}}"><i class="fa fa-area-chart"></i>Voting Area</a></li>
+                    </ul>
+                </li>
+                @else
             <li class="{{\Illuminate\Support\Facades\Request::is('voters') ? 'active' : ''}}"><a href="{{url('voters')}}"><i class="fa fa-area-chart"></i>Voter Area</a></li>
+            @endif
 
             <li class="header">Result Area</li>
             <li class="treeview {{\Illuminate\Support\Facades\Request::is('results') || \Illuminate\Support\Facades\Request::is('winner')

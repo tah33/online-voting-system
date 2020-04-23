@@ -18,6 +18,11 @@ class Election extends Model
         return $this->hasMany(Party::class)->latest();
     }
 
+    public function voters()
+    {
+        return $this->hasMany(Voter::class)->latest();
+    }
+
     public function getStatusNameAttribute()
     {
         if($this->status == 1)

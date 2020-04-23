@@ -21,6 +21,16 @@ class VoterController extends Controller
         $this->middleware('auth');
     }
 
+    public function elections()
+    {
+        $data = [
+            'title' => 'Elections::List',
+            'elections' => Election::where('status',1)->get()
+            ];
+
+        return view('voter.election')->with($data);
+    }
+
     public function index()
     {
         $ids = [];
@@ -134,11 +144,11 @@ class VoterController extends Controller
     public function edit($id)
     {
         $data = [
-            'title' => '::Page',
+            'title' => 'Voter::List',
             'election' => Election::find($id)
         ];
 
-        return view('voter.election')->with($data);
+        return view('voter.list')->with($data);
     }
 
     public function update(Request $request, Voter $voter)
