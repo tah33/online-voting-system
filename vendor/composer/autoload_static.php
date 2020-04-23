@@ -23,8 +23,8 @@ class ComposerStaticInit93fa4c59ceae2dc70a9f164f9851375f
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'b6ec61354e97f32c0ae683041c78392a' => __DIR__ . '/..' . '/scrivo/highlight.php/HighlightUtilities/functions.php',
-        'caf23243e9cb3afd48d0414815ebf07e' => __DIR__ . '/..' . '/brian2694/laravel-toastr/src/helper.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
+        'caf23243e9cb3afd48d0414815ebf07e' => __DIR__ . '/..' . '/brian2694/laravel-toastr/src/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -476,6 +476,7 @@ class ComposerStaticInit93fa4c59ceae2dc70a9f164f9851375f
         'App\\Http\\Controllers\\PartyController' => __DIR__ . '/../..' . '/app/Http/Controllers/PartyController.php',
         'App\\Http\\Controllers\\PdfController' => __DIR__ . '/../..' . '/app/Http/Controllers/PdfController.php',
         'App\\Http\\Controllers\\ResultController' => __DIR__ . '/../..' . '/app/Http/Controllers/ResultController.php',
+        'App\\Http\\Controllers\\SeatController' => __DIR__ . '/../..' . '/app/Http/Controllers/SeatController.php',
         'App\\Http\\Controllers\\SocialController' => __DIR__ . '/../..' . '/app/Http/Controllers/SocialController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\VerifyController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifyController.php',
@@ -488,7 +489,6 @@ class ComposerStaticInit93fa4c59ceae2dc70a9f164f9851375f
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Mail\\AccountDeletion' => __DIR__ . '/../..' . '/app/Mail/AccountDeletion.php',
         'App\\Mail\\CandidateApprove' => __DIR__ . '/../..' . '/app/Mail/CandidateApprove.php',
         'App\\Mail\\CandidateReject' => __DIR__ . '/../..' . '/app/Mail/CandidateReject.php',
         'App\\Mail\\ElectionActive' => __DIR__ . '/../..' . '/app/Mail/ElectionActive.php',

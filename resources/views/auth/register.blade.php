@@ -68,6 +68,7 @@
                                 <span class="text-danger">{{ $errors->first('area') }}</span>
                             </div>
 
+                            <label for="">NID</label>
                             <div class="form-group has-feedback">
                                 <input type="number" name="nid" class="form-control" placeholder="Enter NID"
                                        value="{{old('nid')}}">
@@ -80,9 +81,6 @@
                         </div>
 
                         <div class="col-md-4">
-
-                            <label for="">NID</label>
-
                             <label for="">Date of Birth</label>
                             <div class="form-group has-feedback">
                                 <input type="text" name="dob" class="form-control datepicker"
