@@ -8,7 +8,7 @@
                 <div class="box-body">
                     <table id="search" class="table table-hover table-bordered">
                         <caption>Reject List</caption>
-                        <thead>
+                        <thead class="bg-gray">
                         <tr>
                             <th style="text-align: center">No.</th>
                             <th style="text-align: center">Candidate Name</th>
@@ -17,6 +17,7 @@
                         </tr>
                         </thead>
                         <tbody align="center">
+                        @if(count($rejects) > 0)
                         @foreach ($rejects as $key => $reject)
                             <tr>
                                 <td style="text-align: center">{{ $key+1 }}</td>
@@ -27,6 +28,11 @@
                                             class="fa fa-check"></i></a></td>
                             </tr>
                         @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4">No matching records found</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

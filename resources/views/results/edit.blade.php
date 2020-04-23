@@ -24,7 +24,7 @@
     <div class="panel-body">
         <table class="table table-bordered table-hover">
             <caption>{{$area->name}}</caption>
-            <thead>
+            <thead class="bg-gray">
             <tr>
                 <th>Serial</th>
                 <th>Candidate</th>

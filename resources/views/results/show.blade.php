@@ -10,7 +10,7 @@
         @endif
         <div class="box-body">
             <table id="search" class="table table-hover table-bordered">
-                <thead>
+                <thead class="bg-gray">
                 <tr>
                     <th style="text-align: center">No.</th>
                     <th style="text-align: center">Area</th>
@@ -18,7 +18,7 @@
                 </tr>
                 </thead>
                 <tbody align="center">
-                @if(!empty($users))
+                @if(!empty($users) )
                     @foreach ($users as $key => $user)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
@@ -28,6 +28,10 @@
                             </td>
                         </tr>
                     @endforeach
+                    @else
+                    <tr>
+                        <td colspan="3">No matching records found</td>
+                    </tr>
                 @endif
                 </tbody>
             </table>

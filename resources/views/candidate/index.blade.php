@@ -13,7 +13,7 @@
                     <div class="col-md-4 pull-right">
                         <div class="form-group has-feedback">
                             <input type="text" name="name" class="form-control election_search" placeholder="Search By Election Name..."
-                                   value="{{old('name')}}" autofocus>
+                                   value="{{old('name')}}">
                             <span class="fa fa-search form-control-feedback"></span>
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         </div>
@@ -22,7 +22,7 @@
 
                 <div class="box-body">
                     <table id="search" class="table table-hover table-bordered" width="300">
-                        <thead>
+                        <thead class="bg-gray">
                         <tr>
                             <th>Serial</th>
                             <th>Candidate</th>
@@ -40,6 +40,7 @@
                             $user = 1;
                         @endphp
                         <tbody id="election_data">
+                        @if(count($elections->first()->candidates) > 0)
                         @foreach ($elections as $election)
                             @foreach($election->candidates as $key => $candidate)
                                 <tr>
@@ -72,6 +73,11 @@
                                 $ids = $userElections = [];
                             @endphp
                         @endforeach
+                        @else
+                            <tr>
+                                <td colspan="5">No matching records found</td>
+                            </tr>
+                        @endif
 
                         </tbody>
                     </table>

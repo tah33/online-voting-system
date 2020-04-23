@@ -8,7 +8,7 @@
                 <div class="box-body">
                     <table class="table table-hover table-bordered search">
                         <caption>Election List</caption>
-                        <thead >
+                        <thead class="bg-gray">
                         <tr>
                             <th>No.</th>
                             <th>Election Name</th>
@@ -20,6 +20,7 @@
                         </tr>
                         </thead>
                         <tbody >
+                        @if(count($elections) > 0)
                         @foreach ($elections as $key => $election)
                             <tr align="left">
                                 <td>{{ $key+1 }}</td>
@@ -50,6 +51,11 @@
                                 </td>
                             </tr>
                         @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7">No matching records found</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

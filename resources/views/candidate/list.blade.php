@@ -8,7 +8,7 @@
                 <div class="box-body">
                     <table id="search" class="table table-hover table-bordered">
                         <caption>Apply Area</caption>
-                        <thead>
+                        <thead class="bg-gray">
                         <tr>
                             <th style="text-align: center">No.</th>
                             <th style="text-align: center">Election</th>
@@ -16,6 +16,7 @@
                         </tr>
                         </thead>
                         <tbody align="center">
+                        @if(count($applies) > 0)
                         @foreach ($applies as $key => $apply)
                             <tr>
                                 <td style="text-align: center">{{ $key+1 }}</td>
@@ -31,6 +32,11 @@
                                 @endif
                             </tr>
                         @endforeach
+                        @else
+                            <tr>
+                                <td colspan="5">No matching records found</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

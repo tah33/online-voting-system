@@ -12,9 +12,9 @@
                            style="text-align:  center;">Get
                             PDF</a>--}}
                     </center>
-                    <table class="table table-hover table-bordered" id="search">
+                    <table class="table table-hover table-bordered search">
                         <caption>Users List</caption>
-                        <thead>
+                        <thead class="bg-gray">
                         <tr>
                             <th style="text-align: center">No.</th>
                             <th style="text-align: center">Name</th>
@@ -27,6 +27,7 @@
                         </tr>
                         </thead>
                         <tbody align="center">
+                        @if(count($users) > 0)
                         @foreach ($users as $key => $user)
                             <tr>
                                 <td style="text-align: center">{{ $key+1 }}</td>
@@ -49,6 +50,11 @@
                                 </td>
                             </tr>
                         @endforeach
+                            @else
+                            <tr>
+                                <td colspan="8">No matching records found</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

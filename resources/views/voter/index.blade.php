@@ -6,7 +6,7 @@
         <div class="box-body">
             <table id="search" class="table table-hover table-bordered">
                 <caption>Voting Area</caption>
-                <thead>
+                <thead class="bg-gray">
                 <tr>
                     <th rowspan="2" style="text-align: center">Election Name</th>
                     <th colspan="2" style="text-align: center">Candidates</th>

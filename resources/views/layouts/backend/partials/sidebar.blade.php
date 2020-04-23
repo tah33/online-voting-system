@@ -75,7 +75,7 @@
 
             <li class="header">Result Area</li>
             <li class="treeview {{\Illuminate\Support\Facades\Request::is('results') || \Illuminate\Support\Facades\Request::is('winner')
-                                || \Illuminate\Support\Facades\Request::is('result-election/*')? 'active' : ''}}">
+                                || \Illuminate\Support\Facades\Request::is('results/*') || \Illuminate\Support\Facades\Request::is('result-election/*')? 'active' : ''}}">
                 <a href="#">
                     <i class="fa fa-share"></i> <span>Result</span>
                     <span class="pull-right-container">
@@ -85,7 +85,7 @@
                 <ul class="treeview-menu">
                     <li class="{{\Illuminate\Support\Facades\Request::is('winner') ? 'active' : ''}}"><a href="{{url('winner')}}"><i class="fa fa-check"></i>Winner</a></li>
 
-                    <li class="{{\Illuminate\Support\Facades\Request::is('results') ? 'active' : ''}}"><a href="{{url('results')}}"><i class="glyphicon glyphicon-filter"></i> Area Wise</a></li>
+                    <li class="{{\Illuminate\Support\Facades\Request::is('results') ? 'active' : ''}}"><a href="{{url('results')}}"><i class="fa fa-filter"></i> Area Wise</a></li>
                 </ul>
             </li>
 

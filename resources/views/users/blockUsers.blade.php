@@ -6,7 +6,7 @@
         <div class="box-body">
             <table id="search" class="table table-hover table-bordered">
                 <caption>Blocked Users List</caption>
-                <thead>
+                <thead class="bg-gray">
                 <tr>
                     <th style="text-align: center">No.</th>
                     <th style="text-align: center">Name</th>

@@ -20,7 +20,7 @@
                 </form>--}}
                 <div class="box-body">
                     <table class="table table-hover table-bordered">
-                        <thead>
+                        <thead class="bg-gray">
                         <tr>
                             <th style="text-align: center">No.</th>
                             <th style="text-align: center">Party Name</th>
@@ -58,6 +58,10 @@
 
                                 </tr>
                             @endforeach
+                            @else
+                            <tr>
+                                <td colspan="7">No matching records found</td>
+                            </tr>
                         @endif
                         </tbody>
                     </table>

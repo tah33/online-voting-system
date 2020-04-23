@@ -52,7 +52,7 @@ class ResultController extends Controller
             $users = User::whereIn('id', $ids)->groupBy('area_id')->get();
 
         $data = [
-            'title' => 'Page',
+            'title' => 'Result::Page',
             'users' => $users
         ];
 

@@ -25,16 +25,6 @@ class CandidateController extends Controller
 
     public function index()
     {
-        $users = '';
-        $ids = [];
-        $elections = Election::where('status', 1)->get();
-        /*foreach ($elections as $key => $election) {
-        foreach ($election->candidates as $candidate)
-            $ids [] = $candidate->user_id;
-        }
-        if(!empty($ids))
-            $users = User::whereIn('id',$ids)->orderBy('area','asc')->get();*/
-
         $data = [
             'title' => "Candidate::List",
             'elections' => Election::where('status', 1)->paginate(15),
@@ -190,28 +180,34 @@ class CandidateController extends Controller
         else
             $elections = Election::where('status', 1)->get();
 
-        foreach ($elections as $election) {
-            foreach ($election->candidates as $key => $candidate) {
-                $key += 1;
-                $output .= "<tr>
+        if (count($elections) > 0) {
+
+            foreach ($elections as $election) {
+                foreach ($election->candidates as $key => $candidate) {
+                    $key += 1;
+                    $output .= "<tr>
                               <td>{$key}</td>
                                     <td>{$candidate->user->name}</td>";
-                if (!in_array($candidate->area_id, $ids)) {
-                    $ids[] = $candidate->area_id;
-                    $output .= '<td rowspan="'.count($election->candidates->where('area_id',$candidate->area_id)).'">
+                    if (!in_array($candidate->area_id, $ids)) {
+                        $ids[] = $candidate->area_id;
+                        $output .= '<td rowspan="' . count($election->candidates->where('area_id', $candidate->area_id)) . '">
                                             ' . $candidate->area->name . '</td>';
-                }
+                    }
 
-                if (!in_array($election->name, $userElections)) {
-                    $userElections[] = $election->name;
-                    $output .= '<td rowspan="'.count($election->candidates).'">' . $election->name . '</td>
-                                <td rowspan="'.count($election->candidates).'">' . $election->election_date . '</td>
+                    if (!in_array($election->name, $userElections)) {
+                        $userElections[] = $election->name;
+                        $output .= '<td rowspan="' . count($election->candidates) . '">' . $election->name . '</td>
+                                <td rowspan="' . count($election->candidates) . '">' . $election->election_date . '</td>
                                 </tr>';
-                }
+                    }
 
+                }
+                $ids = $userElections = [];
             }
-            $ids = $userElections = [];
         }
+        else
+            $output .= '<tr><td colspan="5">No matching records found</td></tr>';
+
         return $output;
     }
 }
