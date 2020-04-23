@@ -2,7 +2,7 @@
 @section('base.content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{url('/')}}"><b>BANK</b>ATM</a>
+            <a href="{{url('/')}}"><b>Online</b>Voting</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
